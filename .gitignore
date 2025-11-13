@@ -36,3 +36,4 @@ yarn-error.log*
 
 # ignore for the sake of StackBlitz
 package-lock.json
+.env
