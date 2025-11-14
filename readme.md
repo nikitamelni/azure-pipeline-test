@@ -23,3 +23,5 @@ Both SSR (default) and SSG are supported, see `/pages/[[...slug]].tsx.ssg` and `
 ## Edge personalization on Vercel
 
 See the steps in `middleware.ts.disabled` on how to activate the mode.
+
+updated
