@@ -12,6 +12,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      UNIFORM_API_KEY: ${{ secrets.UNIFORM_API_KEY }}
+      UNIFORM_PROJECT_ID: ${{ secrets.UNIFORM_PROJECT_ID }}
+      UNIFORM_PREVIEW_SECRET: ${{ secrets.UNIFORM_PREVIEW_SECRET }}
     permissions:
       contents: read #This is required for actions/checkout
 
