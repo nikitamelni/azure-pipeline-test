@@ -53,7 +53,6 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      az login --identity
       az afd endpoint purge \
         --resource-group $RESOURCE_GROUP \
         --profile-name $PROFILE_NAME \
