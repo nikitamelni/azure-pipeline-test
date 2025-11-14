@@ -12,6 +12,7 @@ variables:
   ENDPOINT_DOMAIN: 'pfg-uniform-g8bxgge7aqhwb2by.z01.azurefd.net'
   STORAGE_ACCOUNT_NAME: 'pfgpoc'
   CONTENT_PATHS: '["/*"]'  
+  ENDPOINT_NAME: 'pfg-uniform'
 
 pool:
   vmImage: ubuntu-latest
@@ -58,3 +59,4 @@ steps:
         --profile-name $PROFILE_NAME \
         --domains $ENDPOINT_DOMAIN \
         --content-paths $CONTENT_PATHS
+        --endpoint-name $ENDPOINT_NAME
