@@ -18,10 +18,9 @@ Recommended as a good starting point for green field projects or learning.
 3. `npm run dev` and open localhost:3000
 
 ## Rendering modes
+
 Both SSR (default) and SSG are supported, see `/pages/[[...slug]].tsx.ssg` and `/pages/[[...slug]].tsx.ssr` and enable the right mode for your use case.
 
 ## Edge personalization on Vercel
 
 See the steps in `middleware.ts.disabled` on how to activate the mode.
-
-updated
