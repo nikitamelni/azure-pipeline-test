@@ -58,5 +58,5 @@ steps:
         --resource-group $RESOURCE_GROUP \
         --profile-name $PROFILE_NAME \
         --domains $ENDPOINT_DOMAIN \
-        --content-paths $CONTENT_PATHS
+        --content-paths $CONTENT_PATHS \
         --endpoint-name $ENDPOINT_NAME
