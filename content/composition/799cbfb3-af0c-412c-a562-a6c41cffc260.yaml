@@ -1,0 +1,11 @@
+composition:
+  _name: Our Locations
+  _id: 799cbfb3-af0c-412c-a562-a6c41cffc260
+  _slug: our-locations
+  type: page
+  _locales:
+    - en
+  _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
+created: '2025-11-19T12:33:51.968422+00:00'
+modified: '2025-11-19T12:33:51.968422+00:00'
+pattern: false

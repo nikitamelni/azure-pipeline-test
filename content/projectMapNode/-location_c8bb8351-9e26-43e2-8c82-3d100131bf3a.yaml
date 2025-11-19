@@ -1,0 +1,10 @@
+id: c8bb8351-9e26-43e2-8c82-3d100131bf3a
+name: Location
+order: 500
+path: /:locale/our-locations/:location
+type: composition
+pathSegment: ':location'
+data:
+  previewValue: ''
+compositionId: 823fdf87-58fc-4d31-b949-29de74243e3d
+projectMapId: 537d11ff-9ebe-4420-9682-36694477e2f9

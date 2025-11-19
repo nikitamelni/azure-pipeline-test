@@ -1,0 +1,9 @@
+id: c7f90287-ade6-4d38-af0a-cb828640b4e0
+name: Our Locations
+order: 500
+path: /:locale/our-locations
+type: composition
+pathSegment: our-locations
+data: {}
+compositionId: 799cbfb3-af0c-412c-a562-a6c41cffc260
+projectMapId: 537d11ff-9ebe-4420-9682-36694477e2f9

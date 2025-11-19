@@ -1,17 +1,10 @@
 :root {
-	--button-primary: #0052ED;
-	--button-primary-hover: #0B4ECA;
-	--button-secondary: #b10d00;
-	--button-secondary-hover: #920A00;
-	--button-tertiary: #FFFFFF;
-	--button-tertiary-hover: #E6E6E6;
-	--text-primary: #001242;
-	--text-secondary: #ffffff;
-	--text-tertiary: #0052ed;
 	--general-color-1: #FFFFFF;
-	--general-color-2: #041142;
-	--general-color-3: #0052ed;
-	--general-color-4: #df0000;
-	--general-color-5: #001c6c;
-	--page-background-primary: #FFFFFF;
+	--general-color-2: #000000;
+	--general-color-3: #B5121B;
+	--button-primary: var(--general-color-3);
+	--general-color-5: #AC1622;
+	--general-color-6: #E5E6EA;
+	--general-color-7: #f6f6f8;
+	--general-color-8: #252525;
 	}

@@ -1,5 +1,4 @@
 :root {
-	--dm-sans: custom-font;
-	--space-mono: custom-font;
-	--default-font: var(--dm-sans);
+	--helvetica-neue: custom-font;
+	--default-font: var(--helvetica-neue);
 }

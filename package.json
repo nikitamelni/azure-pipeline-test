@@ -28,14 +28,8 @@
     "pull:locales": "csk-cli pull -l",
     "pull:content": "uniform sync pull",
     "push:content": "uniform sync push",
-    "pull:content:simple": "uniform sync pull --config ./uniform.config.simple.ts",
-    "push:content:simple": "uniform sync push --config ./uniform.config.simple.ts",
-    "pull:content:dev": "uniform sync pull --config ./uniform.config.dev.ts",
-    "push:content:dev": "uniform sync push --config ./uniform.config.dev.ts",
     "uniform:pull": "run-s pull:dex apply:dex pull:content",
     "uniform:push": "run-s push:dex push:content",
-    "uniform:simple:pull": "run-s pull:dex apply:dex pull:content:simple",
-    "uniform:simple:push": "run-s push:dex push:content:simple",
     "uniform:publish": "uniform context manifest publish"
   },
   "dependencies": {
