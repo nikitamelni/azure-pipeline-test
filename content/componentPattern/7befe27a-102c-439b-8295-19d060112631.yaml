@@ -1,0 +1,47 @@
+composition:
+  _name: Hero (Image Dark Background)
+  _id: 7befe27a-102c-439b-8295-19d060112631
+  type: fixedHero
+  parameters:
+    titleTag:
+      type: dex-segmented-control-parameter
+      value: h2
+    textColor:
+      type: dex-color-palette-parameter
+      value: text-secondary
+    displayName:
+      type: text
+      locales:
+        en: Hero (Image Background)
+    overlayAutoTint:
+      type: dex-slider-control-parameter
+      value: '0.2'
+    contentAlignment:
+      type: dex-segmented-control-parameter
+      value: center
+    primaryButtonTextColor:
+      type: dex-color-palette-parameter
+      value: text-secondary
+  _overridability:
+    parameters:
+      $viz: 'yes'
+      image: 'yes'
+      height: 'no'
+      titleTag: 'yes'
+      textColor: 'no'
+      titleText: 'yes'
+      displayName: 'yes'
+      descriptionText: 'yes'
+      overlayAutoTint: 'no'
+      contentAlignment: 'no'
+      eyebrowTitleText: 'yes'
+      primaryButtonLink: 'yes'
+      primaryButtonText: 'yes'
+      primaryButtonTextColor: 'no'
+    hideLockedParameters: true
+  _locales:
+    - en
+created: '2025-10-09T11:11:27.668729+00:00'
+modified: '2025-10-09T13:22:28.111824+00:00'
+pattern: true
+categoryId: f22b05f0-c4bf-4158-8ebc-4856e4d453af
