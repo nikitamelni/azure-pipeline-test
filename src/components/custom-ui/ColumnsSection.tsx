@@ -27,7 +27,9 @@ const ColumnsSection: FC<ColumnsSectionProps> = ({
         fluidContent
         backgroundColor={leftColumnBackground}
         spacing={leftColumnSpacing}
-        className={cn('fixed w-[30%] min-w-[360px] max-w-[568px] h-screen flex justify-center items-center')}
+        className={cn(
+          'fixed w-[30%] min-w-[360px] max-w-[568px] lg:min-w-[568px] h-screen flex justify-center items-center'
+        )}
       >
         <div className="w-full relative flex flex-col justify-end">{leftColumnContent}</div>
       </Container>
@@ -36,7 +38,7 @@ const ColumnsSection: FC<ColumnsSectionProps> = ({
         backgroundColor={rightColumnBackground}
         spacing={rightColumnSpacing}
         wrapperClassName={cn(
-          'left-[30%] lg:left-[568px] w-full max-w-[70%] lg:max-w-[calc(100%-568px)] min-h-screen h-auto relative flex items-start'
+          'left-[360px] lg:left-[568px] w-full max-w-[70%] lg:max-w-[calc(100%-568px)] min-h-screen h-auto relative flex items-start'
         )}
         className={cn('w-full h-full')}
       >

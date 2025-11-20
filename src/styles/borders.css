@@ -1,0 +1,6 @@
+:root {
+	--border-dropdown-radius: 0px;
+	--border-dropdown-width: 0 0 1px 0;
+	--border-dropdown-color: var(--general-color-9);
+	--border-dropdown-style: solid;
+	}

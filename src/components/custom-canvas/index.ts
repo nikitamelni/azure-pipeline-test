@@ -2,6 +2,7 @@ import { ComponentMapping } from '@uniformdev/csk-components/utils/createCompone
 import ColumnsSection from './ColumnsSection';
 import Container from './Container';
 import CustomComponent from './CustomComponent';
+import Header from './Header/header';
 
 // Here, you can add your own component or customize an existing CSK component with your logic or styles.
 export const customComponentsMapping: ComponentMapping = {
@@ -10,4 +11,5 @@ export const customComponentsMapping: ComponentMapping = {
   // This is an overridden CSK Container component.
   container: Container,
   columnsSection: ColumnsSection,
+  header: Header,
 };

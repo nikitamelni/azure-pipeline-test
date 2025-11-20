@@ -1,2 +1,8 @@
-@source inline("{lg:,md:,}border-");
+@source inline("{lg:,md:,}border-border-dropdown");
 
+.border-dropdown {
+	border-style: var(--border-dropdown-style);
+	border-radius: var(--border-dropdown-radius);
+	border-width: var(--border-dropdown-width);
+	border-color: var(--border-dropdown-color);
+}

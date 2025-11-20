@@ -45,14 +45,16 @@ composition:
       value:
         mobile:
           paddingTop: container-md
-          paddingLeft: container-lg
           paddingBottom: container-md
     displayName:
       type: text
       value: Header
-    backgroundColor:
+    leftSectionBackgroundColor:
       type: dex-color-palette-parameter
       value: general-color-1
+    rightSectionBackgroundColor:
+      type: dex-color-palette-parameter
+      value: general-color-6
   slots:
     headerLeftContent:
       - _id: 896d7fd9-641a-4065-9360-a3f55eca3c75
@@ -220,6 +222,12 @@ composition:
             type: dex-slider-control-parameter
             value:
               mobile: '16'
+          spacing:
+            type: dex-space-control-parameter
+            value:
+              mobile:
+                paddingLeft: container-lg
+                paddingRight: container-lg
           direction:
             type: dex-segmented-control-parameter
             value:
@@ -234,15 +242,30 @@ composition:
             type: text
             locales:
               en: Logo Section
+          justifyContent:
+            type: dex-segmented-control-parameter
+            value:
+              mobile: between
+              tablet: between
+              desktop: between
         _overridability:
           hideLockedParameters: true
     headerCenterContent:
-      - _id: 09b1471d-7aa8-419c-85e1-ba30947775ca
-        type: navigationLink
-        _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
-      - _id: af0e8859-9cc9-4db7-87a6-92db71e075a4
-        type: navigationLink
-        _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+      - _id: e3456e46-eda5-44b6-8f38-12278cfe145e
+        type: navigationGroup
+        _pattern: 3e4fb7c2-da1b-4008-b735-f77642b895d5
+      - _id: 1d47fded-eb32-4251-b782-6a2899ccf9a7
+        type: navigationGroup
+        _pattern: 3e4fb7c2-da1b-4008-b735-f77642b895d5
+      - _id: be523a18-e00b-4bbf-a69a-9f391f52a1d7
+        type: navigationGroup
+        _pattern: 3e4fb7c2-da1b-4008-b735-f77642b895d5
+      - _id: 2a9dc3d8-0284-45f2-a222-c7f0088d4824
+        type: navigationGroup
+        _pattern: 3e4fb7c2-da1b-4008-b735-f77642b895d5
+      - _id: 3f228861-6dc8-4bcc-b081-92999d2ef6b2
+        type: navigationGroup
+        _pattern: 3e4fb7c2-da1b-4008-b735-f77642b895d5
   _overrides:
     09b1471d-7aa8-419c-85e1-ba30947775ca:
       parameters:
@@ -254,23 +277,766 @@ composition:
               type: url
         text:
           type: text
-          value: Get Started
-    af0e8859-9cc9-4db7-87a6-92db71e075a4:
+          value: Customers We Serve
+    09fa78d6-3e55-42d3-a89d-27eef53b0b33:
       parameters:
         link:
           type: link
-          value:
-            path: https://dev-csk-marketing-site.vercel.app/components
-            type: url
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
         text:
           type: text
-          value: Components
+          value: Responsibility
+    0e9bec0b-5683-4f4b-80d3-fe2feae34e30:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Customers We Serve
+    1d47fded-eb32-4251-b782-6a2899ccf9a7:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Products & Services
+    23497c24-343a-4868-ab9d-18f854a91f48:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Leadership
+    2a9dc3d8-0284-45f2-a222-c7f0088d4824:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Get Inspired
+    3f228861-6dc8-4bcc-b081-92999d2ef6b2:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Join Our Family
+    43b0b7e3-d19c-4341-9009-70da811d6864:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Performance Rewards
+    4f78a100-82bd-4aa3-b68b-04543b0a434e:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Events
+    52145baf-fdf9-43a4-af5f-a2abbfe2fa24:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Leadership
+    5435add4-c1d0-473e-a553-559cd0da0598:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Performance Rewards
+    550218af-2068-4854-8a57-c2780c60a3ec:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Events
+    55f776c3-0dc8-4f45-8099-cf25a7a60e77:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Events
+    6733a07e-46b9-480c-ba05-eaa927274517:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Performance Rewards
+    85f882c7-6b31-493a-9ffc-ba3c98254e9c:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Responsibility
+    88eede44-eb31-4c61-abb7-f173a9fe9adc:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Events
+    90fee64b-19ef-45a0-93e1-1155117e804b:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Events
+    aedfeb5e-b00f-4b68-8fae-89abfff7ebf9:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Performance Rewards
+    be523a18-e00b-4bbf-a69a-9f391f52a1d7:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Your Operation
+    c1cf3855-4ca3-4017-9320-ec6e41fafd8e:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Leadership
+    cbaeaf1c-e8ea-4b9c-80f5-3f12d8536e05:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Responsibility
+    d5b02daa-3e30-4609-b553-72f6d9674c31:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Leadership
+    d65035fc-e479-438b-b01f-647d5ae9baad:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Customers We Serve
+    d6c26faf-7187-4726-90d4-745b52578362:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Responsibility
+    dc9e31af-342b-4e12-a364-bcf5e3a95ebc:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Responsibility
+    e0020bd2-766f-409c-a413-bfeab77645a3:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Customers We Serve
+    e4945241-85aa-45b2-a2d5-f239cb4c774e:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Performance Rewards
+    e566c773-9593-4df9-82ff-eec61b7d1d4e:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Leadership
+    f9fa3edc-76cf-45c6-a9fa-a6ac5115a4b4:
+      parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: https://dev-csk-marketing-site.vercel.app/get-started
+              type: url
+        text:
+          type: text
+          value: Customers We Serve
+    13bbd942-f2a7-4d24-8a9a-554b85392966|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: d6c26faf-7187-4726-90d4-745b52578362
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    1677f965-3bd2-48b4-8d19-02844fe00115|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 85f882c7-6b31-493a-9ffc-ba3c98254e9c
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    1ab3f497-95f7-491d-85f2-5dbfd474f01d|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: e4945241-85aa-45b2-a2d5-f239cb4c774e
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    1d47fded-eb32-4251-b782-6a2899ccf9a7|eecf34b7-2dc0-4302-8e1e-426de96b063d:
+      slots:
+        $slotSectionItems:
+          - _id: c951d593-bab2-44a6-81e6-03ad5096f531
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 8a5784c5-39b2-4d27-872d-5e2808679e23
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 1ab3f497-95f7-491d-85f2-5dbfd474f01d
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: fbba37b2-703e-43d6-8a87-cbcb0cef5c75
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 13bbd942-f2a7-4d24-8a9a-554b85392966
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+    21675294-9dd6-42d4-beae-1e1be8faea24|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 5435add4-c1d0-473e-a553-559cd0da0598
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    2a9dc3d8-0284-45f2-a222-c7f0088d4824|eecf34b7-2dc0-4302-8e1e-426de96b063d:
+      slots:
+        $slotSectionItems:
+          - _id: d5f04646-bc9f-4cb3-a260-0da673014aae
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: d866e4ad-72ba-4dc0-aa8c-a9d429d0dd8d
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 21675294-9dd6-42d4-beae-1e1be8faea24
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 9279e2c5-ebb2-4b96-90bc-95c5539ff546
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: b3bf6fdc-b805-4680-9b97-f45f0343bdd4
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+    31e04a47-e9f3-45de-8808-f760b4a6ce2a|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 09b1471d-7aa8-419c-85e1-ba30947775ca
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    3f228861-6dc8-4bcc-b081-92999d2ef6b2|eecf34b7-2dc0-4302-8e1e-426de96b063d:
+      slots:
+        $slotSectionItems:
+          - _id: 4693774e-985e-4a7b-ba04-578dfeb7dbc6
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 4bb4e628-7c2d-4f26-ab9c-5dc5f5c69cec
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 986b8cc1-7929-43bc-9a3e-3cf9f5b13dfe
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 527341ee-ef35-4d25-9245-d877032bc251
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: df49e05f-7a0f-4c46-856f-0ff2dccab92f
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+    4693774e-985e-4a7b-ba04-578dfeb7dbc6|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: f9fa3edc-76cf-45c6-a9fa-a6ac5115a4b4
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    4bb4e628-7c2d-4f26-ab9c-5dc5f5c69cec|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 88eede44-eb31-4c61-abb7-f173a9fe9adc
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    527341ee-ef35-4d25-9245-d877032bc251|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 52145baf-fdf9-43a4-af5f-a2abbfe2fa24
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    552670e8-7ad0-4322-837a-3f2f6b34ce95|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 6733a07e-46b9-480c-ba05-eaa927274517
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    598548fc-837a-4410-ae07-60ead722fce0|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 4f78a100-82bd-4aa3-b68b-04543b0a434e
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    607e36a1-c12c-4fa4-9035-73b930915b23|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 55f776c3-0dc8-4f45-8099-cf25a7a60e77
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    8a5784c5-39b2-4d27-872d-5e2808679e23|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 550218af-2068-4854-8a57-c2780c60a3ec
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    9279e2c5-ebb2-4b96-90bc-95c5539ff546|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 23497c24-343a-4868-ab9d-18f854a91f48
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    986b8cc1-7929-43bc-9a3e-3cf9f5b13dfe|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: aedfeb5e-b00f-4b68-8fae-89abfff7ebf9
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    a7de5b3a-77fc-4227-aae3-b1f223a79250|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 09fa78d6-3e55-42d3-a89d-27eef53b0b33
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    b3bf6fdc-b805-4680-9b97-f45f0343bdd4|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: dc9e31af-342b-4e12-a364-bcf5e3a95ebc
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    b9d6f1d7-85f4-49db-a5de-bf1fa30022ca|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 43b0b7e3-d19c-4341-9009-70da811d6864
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    bd300202-f3ba-4a1f-a478-72219b021b8e|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: c1cf3855-4ca3-4017-9320-ec6e41fafd8e
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    be523a18-e00b-4bbf-a69a-9f391f52a1d7|eecf34b7-2dc0-4302-8e1e-426de96b063d:
+      slots:
+        $slotSectionItems:
+          - _id: edffe811-dd50-4ce4-8b3e-fa049920bfeb
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 607e36a1-c12c-4fa4-9035-73b930915b23
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: b9d6f1d7-85f4-49db-a5de-bf1fa30022ca
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: cccc12e5-033c-4bb9-8b0d-d5297402c340
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: a7de5b3a-77fc-4227-aae3-b1f223a79250
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+    c951d593-bab2-44a6-81e6-03ad5096f531|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: d65035fc-e479-438b-b01f-647d5ae9baad
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    cccc12e5-033c-4bb9-8b0d-d5297402c340|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: e566c773-9593-4df9-82ff-eec61b7d1d4e
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    d5f04646-bc9f-4cb3-a260-0da673014aae|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: e0020bd2-766f-409c-a413-bfeab77645a3
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    d866e4ad-72ba-4dc0-aa8c-a9d429d0dd8d|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 90fee64b-19ef-45a0-93e1-1155117e804b
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    df49e05f-7a0f-4c46-856f-0ff2dccab92f|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: cbaeaf1c-e8ea-4b9c-80f5-3f12d8536e05
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    e3456e46-eda5-44b6-8f38-12278cfe145e|eecf34b7-2dc0-4302-8e1e-426de96b063d:
+      slots:
+        $slotSectionItems:
+          - _id: 31e04a47-e9f3-45de-8808-f760b4a6ce2a
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 598548fc-837a-4410-ae07-60ead722fce0
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 552670e8-7ad0-4322-837a-3f2f6b34ce95
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: bd300202-f3ba-4a1f-a478-72219b021b8e
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+          - _id: 1677f965-3bd2-48b4-8d19-02844fe00115
+            type: container
+            _pattern: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+            _overridability:
+              hideLockedParameters: true
+    edffe811-dd50-4ce4-8b3e-fa049920bfeb|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: 0e9bec0b-5683-4f4b-80d3-fe2feae34e30
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
+    fbba37b2-703e-43d6-8a87-cbcb0cef5c75|d883b117-cd7c-4b9a-84cc-61baf2b34a0c:
+      slots:
+        $slotSectionItems:
+          - _id: d5b02daa-3e30-4609-b553-72f6d9674c31
+            type: navigationLink
+            _pattern: f0bb02cd-315f-40d1-8e74-948e09019995
+            _overridability:
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                color: 'yes'
+                activeState: 'yes'
   _overridability:
     hideLockedParameters: false
   _locales:
     - en
 created: '2025-11-19T10:55:39.577011+00:00'
-modified: '2025-11-20T08:50:54.082726+00:00'
+modified: '2025-11-20T12:09:57.916731+00:00'
 pattern: true
 previewImageUrl: >-
   https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/main-header.jpg

@@ -175,7 +175,7 @@ composition:
               rightColumnSpacing:
                 type: dex-space-control-parameter
                 value:
-                  paddingTop: page-layout-lg
+                  paddingTop: page-top-offset
                   paddingLeft: page-layout-lg
                   paddingRight: page-layout-lg
               leftColumnBackground:
@@ -188,5 +188,5 @@ composition:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
 created: '2025-11-19T12:33:51.968422+00:00'
-modified: '2025-11-20T09:59:20.989492+00:00'
+modified: '2025-11-20T10:11:24.484575+00:00'
 pattern: false

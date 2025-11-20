@@ -10,7 +10,8 @@
       "general-color-7": "#f6f6f8",
       "general-color-8": "#252525",
       "text-primary": "{general-color-2}",
-      "text-secondary": "{general-color-1}"
+      "text-secondary": "{general-color-1}",
+      "general-color-9": "#D6D6D6"
     }
   },
   "dimensions": {
@@ -24,13 +25,22 @@
     "general-dimension-4": "50px",
     "page-layout-md": "{general-dimension-2}",
     "page-layout-lg": "{general-dimension-4}",
-    "page-top-offset": "131px"
+    "page-top-offset": "131px",
+    "general-dimension-5": "10px",
+    "container-xs": "{general-dimension-5}"
   },
   "fonts": {
     "helvetica-neue": ""
   },
   "defaultFontKey": "helvetica-neue",
-  "borders": {},
+  "borders": {
+    "border-dropdown": {
+      "radius": "0px",
+      "width": "0 0 1px 0",
+      "color": "{general-color-9}",
+      "style": "solid"
+    }
+  },
   "allowedGroups": {
     "dimension": [
       "badge",

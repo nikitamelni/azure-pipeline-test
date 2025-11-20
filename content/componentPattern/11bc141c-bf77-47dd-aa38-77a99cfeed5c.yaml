@@ -1,0 +1,43 @@
+composition:
+  _name: Navigation Dropdown Container
+  _id: 11bc141c-bf77-47dd-aa38-77a99cfeed5c
+  type: container
+  parameters:
+    border:
+      type: dex-token-selector-parameter
+      value: border-dropdown
+    spacing:
+      type: dex-space-control-parameter
+      value:
+        mobile:
+          paddingBottom: container-xs
+    displayName:
+      type: text
+      locales:
+        en: Dropdown Link
+  slots:
+    containerContent:
+      - _id: d883b117-cd7c-4b9a-84cc-61baf2b34a0c
+        type: $slotSection
+        parameters:
+          name:
+            type: text
+            value: Links
+          specific:
+            type: array
+            value:
+              - navigationLink
+              - $p:f0bb02cd-315f-40d1-8e74-948e09019995
+              - $p:2f1ff1e9-e7c7-43a6-8576-da21a1e199e5
+          groupType:
+            type: text
+            value: specific
+        _overridability:
+          hideLockedParameters: true
+  _overridability:
+    hideLockedParameters: true
+  _locales:
+    - en
+created: '2025-11-20T12:04:03.98598+00:00'
+modified: '2025-11-20T12:05:19.184224+00:00'
+pattern: true

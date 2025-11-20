@@ -1,0 +1,40 @@
+composition:
+  _name: Main Navigation Group
+  _id: 3e4fb7c2-da1b-4008-b735-f77642b895d5
+  type: navigationGroup
+  parameters:
+    font:
+      type: dex-token-selector-parameter
+      value: helvetica-neue
+    text:
+      type: text
+      locales:
+        en: About Performance
+    color:
+      type: dex-color-palette-parameter
+      value: text-primary
+    weight:
+      type: dex-segmented-control-parameter
+      value: bold
+    backgroundColor:
+      type: dex-color-palette-parameter
+      value: general-color-1
+  slots:
+    links:
+      - _id: eecf34b7-2dc0-4302-8e1e-426de96b063d
+        type: $slotSection
+        parameters:
+          name:
+            type: text
+            value: Links
+        _overridability:
+          hideLockedParameters: true
+  _overridability:
+    parameters:
+      text: 'yes'
+    hideLockedParameters: true
+  _locales:
+    - en
+created: '2025-11-20T11:48:40.114287+00:00'
+modified: '2025-11-20T12:06:44.407064+00:00'
+pattern: true

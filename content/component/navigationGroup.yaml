@@ -188,11 +188,12 @@ slots:
     name: Links
     allowedComponents:
       - navigationLink
+      - container
     allowAllComponents: false
     inheritAllowedComponents: false
     patternsInAllowedComponents: false
 titleParameter: text
 thumbnailParameter: icon
 canBeComposition: false
-created: '2025-01-29T10:47:02.54608+00:00'
-updated: '2025-10-06T21:18:49.831011+00:00'
+created: '2025-11-19T10:55:36.6852+00:00'
+updated: '2025-11-20T11:53:27.158026+00:00'

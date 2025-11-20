@@ -17,7 +17,8 @@ parameters:
       collapsed: true
       childrenParams:
         - favicon
-        - backgroundColor
+        - leftSectionBackgroundColor
+        - rightSectionBackgroundColor
         - color
         - spacing
         - border
@@ -30,10 +31,13 @@ parameters:
       allowedTypes:
         - image
     localizable: true
-  - id: backgroundColor
-    name: Background Color
+  - id: leftSectionBackgroundColor
+    name: 'Left Section Background Color '
     type: dex-color-palette-parameter
-    guidance: Use the Background Color parameter to control component background color.
+    typeConfig: null
+  - id: rightSectionBackgroundColor
+    name: 'Right Section Background Color '
+    type: dex-color-palette-parameter
     typeConfig: null
   - id: color
     name: Color
@@ -80,19 +84,11 @@ slots:
     allowAllComponents: false
     inheritAllowedComponents: false
     patternsInAllowedComponents: false
-  - id: headerRightContent
-    name: Header Right Content
-    allowedComponents:
-      - button
-      - themeSwitcher
-    allowAllComponents: false
-    inheritAllowedComponents: false
-    patternsInAllowedComponents: false
 titleParameter: displayName
 thumbnailParameter: favicon
 canBeComposition: false
 created: '2025-11-19T10:55:37.726253+00:00'
-updated: '2025-11-19T14:59:39.906131+00:00'
+updated: '2025-11-20T12:07:45.974491+00:00'
 variants:
   - id: sticky
     name: Sticky

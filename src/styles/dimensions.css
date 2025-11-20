@@ -10,4 +10,6 @@
 	--page-layout-md: var(--general-dimension-2);
 	--page-layout-lg: var(--general-dimension-4);
 	--page-top-offset: 131px;
+	--general-dimension-5: 10px;
+	--container-xs: var(--general-dimension-5);
 	}
