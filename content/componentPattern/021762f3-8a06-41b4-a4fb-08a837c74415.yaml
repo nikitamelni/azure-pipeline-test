@@ -19,7 +19,7 @@ composition:
                 value: 9f964074-61ec-4afb-8d5b-8cb499257744
               url:
                 value: >-
-                  https://img.uniform.global/p/bKE8PekcQ3Gk9j6C81jcrQ/Af96erKLQr-0rnqY4msIkQ-favicon.png
+                  https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/BkVgxgEoTO2sPxjhuGOapw-favicon.png
                 type: text
               file:
                 type: file
@@ -44,14 +44,9 @@ composition:
       type: dex-space-control-parameter
       value:
         mobile:
-          paddingTop: container-small
-          paddingBottom: container-small
-        tablet:
-          paddingTop: container-small
-          paddingBottom: container-small
-        desktop:
-          paddingTop: container-small
-          paddingBottom: container-small
+          paddingTop: container-md
+          paddingLeft: container-lg
+          paddingBottom: container-md
     displayName:
       type: text
       value: Header
@@ -60,65 +55,185 @@ composition:
       value: general-color-1
   slots:
     headerLeftContent:
-      - _id: 4fb2a9bd-3af3-4951-9ece-9e98588f3bf5
-        type: link
+      - _id: 896d7fd9-641a-4065-9360-a3f55eca3c75
+        type: flex
         slots:
-          linkContent:
-            - _id: 1d80a3d5-a57a-44e5-9ac8-0b665124f55c
-              type: image
+          flexItem:
+            - _id: 4fb2a9bd-3af3-4951-9ece-9e98588f3bf5
+              type: link
+              slots:
+                linkContent:
+                  - _id: 1d80a3d5-a57a-44e5-9ac8-0b665124f55c
+                    type: image
+                    parameters:
+                      image:
+                        type: asset
+                        value:
+                          - _id: 7501a413-04fb-47a3-8be4-dbf4c865097d
+                            type: image
+                            fields:
+                              id:
+                                type: text
+                                value: 66ecbb4f-fe0c-4dad-b9fe-f850ca83fd70
+                              url:
+                                value: >-
+                                  https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/g4xujLjZS2aQjzMrBN8E2g-Header-Logo-new.png
+                                type: text
+                              file:
+                                type: file
+                                value: ef81a83a-40e4-454a-909a-5059109791b9
+                              size:
+                                value: 11717
+                                type: number
+                              title:
+                                type: text
+                                value: Header-Logo-new.png
+                              width:
+                                value: 390
+                                type: number
+                              height:
+                                value: 52
+                                type: number
+                              mediaType:
+                                value: image/png
+                                type: text
+                            _source: uniform-assets
+                      width:
+                        type: number
+                        value: '250'
+                      height:
+                        type: number
+                        value: '34'
+                      objectFit:
+                        type: dex-segmented-control-parameter
+                        value: contain
               parameters:
-                image:
-                  type: asset
+                link:
+                  type: link
                   value:
-                    - _id: bf66f619-6751-47ba-8249-28a233e15360
-                      type: image
-                      fields:
-                        id:
-                          type: text
-                          value: 0f0670b4-a425-40d3-842b-c7c895d500a5
-                        url:
-                          value: >-
-                            https://img.uniform.global/p/bKE8PekcQ3Gk9j6C81jcrQ/m2Q91871TPyv9wBSeEh0nA-uniformlogo.svg
-                          type: text
-                        file:
-                          type: file
-                          value: d7405da9-bafe-4158-836d-f9994daa1ed1
-                        size:
-                          value: 454
-                          type: number
-                        title:
-                          type: text
-                          value: uniformlogo.svg
-                        width:
-                          value: 45
-                          type: number
-                        height:
-                          value: 52
-                          type: number
-                        mediaType:
-                          value: image/svg+xml
-                          type: text
-                      _source: uniform-assets
-                width:
-                  type: number
-                  value: '50'
-                height:
-                  type: number
-                  value: '40'
-                objectFit:
+                    path: /
+                    type: projectMapNode
+                    nodeId: b90aa0bf-891d-4e40-9899-0d79eb1b26af
+                    projectMapId: 537d11ff-9ebe-4420-9682-36694477e2f9
+                displayName:
+                  type: text
+                  value: Logo
+              _overridability:
+                hideLockedParameters: true
+            - _id: 92a7e544-86a2-4b99-a03a-461e7b193baf
+              type: flex
+              slots:
+                flexItem:
+                  - _id: ec352632-320d-4c65-b5d1-434f80b8347f
+                    type: image
+                    parameters:
+                      image:
+                        type: asset
+                        value:
+                          - _id: 1d3381b6-c91d-4f0b-babc-e6ab69edb027
+                            type: image
+                            fields:
+                              id:
+                                type: text
+                                value: bb97a762-cee4-4924-bd10-fd1158ccff57
+                              url:
+                                value: >-
+                                  https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/_gYZVO77RSCyvxa0SgI6-w-cart-svgrepo-com.svg
+                                type: text
+                              file:
+                                type: file
+                                value: 9131f119-73b7-4dda-912f-f63afb9421d2
+                              size:
+                                value: 655
+                                type: number
+                              title:
+                                type: text
+                                value: cart-svgrepo-com.svg
+                              width:
+                                value: 800
+                                type: number
+                              height:
+                                value: 800
+                                type: number
+                              mediaType:
+                                value: image/svg+xml
+                                type: text
+                            _source: uniform-assets
+                      width:
+                        type: number
+                        value: '25'
+                      height:
+                        type: number
+                        value: '25'
+                      objectFit:
+                        type: dex-segmented-control-parameter
+                        value: cover
+                    _overridability:
+                      hideLockedParameters: true
+                  - _id: 4f5c2b0c-113d-47d4-b7b9-d82054a9552c
+                    type: navigationLink
+                    parameters:
+                      font:
+                        type: dex-token-selector-parameter
+                        value: helvetica-neue
+                      size:
+                        type: dex-segmented-control-parameter
+                        value: base
+                      text:
+                        type: text
+                        locales:
+                          en: Order Now
+                      color:
+                        type: dex-color-palette-parameter
+                        value: text-primary
+                      weight:
+                        type: dex-segmented-control-parameter
+                        value: bold
+                    _overridability:
+                      hideLockedParameters: true
+              parameters:
+                direction:
                   type: dex-segmented-control-parameter
-                  value: contain
+                  value:
+                    mobile: row
+                    tablet: row
+                    desktop: row
+                alignItems:
+                  type: dex-segmented-control-parameter
+                  value:
+                    mobile: center
+                displayName:
+                  type: text
+                  locales:
+                    en: Order Now
+                fluidContent:
+                  type: checkbox
+                  value: true
+                justifyContent:
+                  type: dex-segmented-control-parameter
+                  value:
+                    mobile: center
+              _overridability:
+                hideLockedParameters: true
         parameters:
-          link:
-            type: link
+          gap:
+            type: dex-slider-control-parameter
             value:
-              path: /
-              type: projectMapNode
-              nodeId: b90aa0bf-891d-4e40-9899-0d79eb1b26af
-              projectMapId: 537d11ff-9ebe-4420-9682-36694477e2f9
+              mobile: '16'
+          direction:
+            type: dex-segmented-control-parameter
+            value:
+              mobile: row
+              tablet: row
+              desktop: row
+          alignItems:
+            type: dex-segmented-control-parameter
+            value:
+              mobile: center
           displayName:
             type: text
-            value: Logo
+            locales:
+              en: Logo Section
         _overridability:
           hideLockedParameters: true
     headerCenterContent:
@@ -154,8 +269,8 @@ composition:
     hideLockedParameters: false
   _locales:
     - en
-created: '2025-01-29T10:47:07.470956+00:00'
-modified: '2025-10-09T11:27:52.976274+00:00'
+created: '2025-11-19T10:55:39.577011+00:00'
+modified: '2025-11-20T08:50:54.082726+00:00'
 pattern: true
 previewImageUrl: >-
   https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/main-header.jpg

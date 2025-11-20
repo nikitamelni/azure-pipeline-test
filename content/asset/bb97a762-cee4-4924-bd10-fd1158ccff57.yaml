@@ -1,0 +1,30 @@
+asset:
+  type: image
+  _id: bb97a762-cee4-4924-bd10-fd1158ccff57
+  _name: ''
+  fields:
+    title:
+      type: text
+      value: cart-svgrepo-com.svg
+    file:
+      type: file
+      value: 9131f119-73b7-4dda-912f-f63afb9421d2
+    mediaType:
+      value: image/svg+xml
+      type: text
+    url:
+      value: >-
+        https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/_gYZVO77RSCyvxa0SgI6-w-cart-svgrepo-com.svg
+      type: text
+    size:
+      value: 655
+      type: number
+    width:
+      value: 800
+      type: number
+    height:
+      value: 800
+      type: number
+    custom: {}
+created: '2025-11-19T14:06:46.004362+00:00'
+modified: '2025-11-19T14:06:46.004362+00:00'

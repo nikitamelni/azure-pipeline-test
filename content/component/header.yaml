@@ -66,6 +66,8 @@ slots:
       - iconLabel
       - image
       - link
+      - navigationLink
+      - flex
     allowAllComponents: false
     inheritAllowedComponents: false
     patternsInAllowedComponents: false
@@ -89,8 +91,8 @@ slots:
 titleParameter: displayName
 thumbnailParameter: favicon
 canBeComposition: false
-created: '2025-01-29T10:47:01.517369+00:00'
-updated: '2025-10-13T10:17:25.532911+00:00'
+created: '2025-11-19T10:55:37.726253+00:00'
+updated: '2025-11-19T14:59:39.906131+00:00'
 variants:
   - id: sticky
     name: Sticky

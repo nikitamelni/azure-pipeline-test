@@ -15,9 +15,9 @@ composition:
         type: simpleFooter
         _pattern: 99ecf042-cb50-4ec7-b890-582c33b8dcd6
     pageHeader:
-      - _id: 9e04906c-2f07-4359-b487-fd7e7f31e3f1
-        type: simpleHeader
-        _pattern: a7ff8876-b73f-41ed-bb93-170e2d7f7b5a
+      - _id: 9d891285-1405-4e7c-b757-8e20de0f46c3
+        type: header
+        _pattern: 021762f3-8a06-41b4-a4fb-08a837c74415
     pageContent:
       - _id: dc2e95be-21b5-4476-a309-f8a34922f528
         type: $slotSection
@@ -32,6 +32,7 @@ composition:
               - $p:7befe27a-102c-439b-8295-19d060112631
               - $p:b83eebba-34e9-4c62-a5b4-454022f44957
               - $p:d39ed051-35dc-447d-8be0-fc0afb98e694
+              - columnsSection
           groupType:
             type: text
             value: specific
@@ -54,8 +55,8 @@ composition:
     hideLockedParameters: true
   _locales:
     - en
-created: '2025-01-29T10:47:09.615425+00:00'
-modified: '2025-10-09T11:11:29.726274+00:00'
+created: '2025-11-19T10:55:42.31049+00:00'
+modified: '2025-11-20T08:55:05.819371+00:00'
 pattern: true
 previewImageUrl: >-
   https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/global-composition.png

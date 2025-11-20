@@ -1,5 +1,15 @@
-@source inline("{[&_td]:,[&_th]:,lg:,md:,}{mt,mb,mr,ml,pt,pb,pr,pl,w,h,p}-");
+@source inline("{[&_td]:,[&_th]:,lg:,md:,}{mt,mb,mr,ml,pt,pb,pr,pl,w,h,p}-{container-md,container-width,container-lg,button-medium,container-xl,general-dimension-1,general-dimension-2,general-dimension-4,page-layout-md,page-layout-lg,page-top-offset}");
 
 @theme {
-
+	--spacing-container-md: var(--container-md);
+	--spacing-container-width: var(--container-width);
+	--spacing-container-lg: var(--container-lg);
+	--spacing-button-medium: var(--button-medium);
+	--spacing-container-xl: var(--container-xl);
+	--spacing-general-dimension-1: var(--general-dimension-1);
+	--spacing-general-dimension-2: var(--general-dimension-2);
+	--spacing-general-dimension-4: var(--general-dimension-4);
+	--spacing-page-layout-md: var(--page-layout-md);
+	--spacing-page-layout-lg: var(--page-layout-lg);
+	--spacing-page-top-offset: var(--page-top-offset);
 }

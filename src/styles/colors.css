@@ -7,4 +7,6 @@
 	--general-color-6: #E5E6EA;
 	--general-color-7: #f6f6f8;
 	--general-color-8: #252525;
+	--text-primary: var(--general-color-2);
+	--text-secondary: var(--general-color-1);
 	}

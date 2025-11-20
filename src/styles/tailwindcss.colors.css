@@ -1,4 +1,4 @@
-@source inline("{hover:,group-hover:,lg:,md:,}{bg,text,decoration,border,ring,fill,from,to}-{general-color-1,general-color-2,general-color-3,button-primary,general-color-5,general-color-6,general-color-7,general-color-8}");
+@source inline("{hover:,group-hover:,lg:,md:,}{bg,text,decoration,border,ring,fill,from,to}-{general-color-1,general-color-2,general-color-3,button-primary,general-color-5,general-color-6,general-color-7,general-color-8,text-primary,text-secondary}");
 
 @theme {
 	--color-general-color-1: var(--general-color-1);
@@ -9,4 +9,6 @@
 	--color-general-color-6: var(--general-color-6);
 	--color-general-color-7: var(--general-color-7);
 	--color-general-color-8: var(--general-color-8);
+	--color-text-primary: var(--text-primary);
+	--color-text-secondary: var(--text-secondary);
 }

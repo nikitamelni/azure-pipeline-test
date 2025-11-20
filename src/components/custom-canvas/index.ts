@@ -1,4 +1,5 @@
 import { ComponentMapping } from '@uniformdev/csk-components/utils/createComponentResolver';
+import ColumnsSection from './ColumnsSection';
 import Container from './Container';
 import CustomComponent from './CustomComponent';
 
@@ -8,4 +9,5 @@ export const customComponentsMapping: ComponentMapping = {
   customComponent: CustomComponent,
   // This is an overridden CSK Container component.
   container: Container,
+  columnsSection: ColumnsSection,
 };

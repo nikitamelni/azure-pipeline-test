@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://uniform.app/schemas/json-schema/component-definition/v1.json
+$schema: https://uniform.app/schemas/json-schema/component-definition/v1.json
+id: columnsSection
+name: Columns Section
+icon: screen
+parameters:
+  - id: c6fec3a8-fa6f-4a08-9009-61f5a5964092
+    name: Left Column
+    type: group
+    typeConfig:
+      collapsed: true
+      childrenParams:
+        - leftColumnBackground
+        - leftColumnSpacing
+  - id: leftColumnBackground
+    name: Left Column Background
+    type: dex-color-palette-parameter
+    typeConfig: null
+  - id: leftColumnSpacing
+    name: Left Column Spacing
+    type: dex-space-control-parameter
+    typeConfig:
+      type: dimensions
+      selectedGroup: page
+  - id: 082196b9-7e7c-41fb-a440-96929563721f
+    name: Right Column
+    type: group
+    typeConfig:
+      collapsed: true
+      childrenParams:
+        - rightColumnBackground
+        - rightColumnSpacing
+  - id: rightColumnBackground
+    name: Right Column Background
+    type: dex-color-palette-parameter
+    typeConfig: null
+  - id: rightColumnSpacing
+    name: Right Column Spacing
+    type: dex-space-control-parameter
+    typeConfig:
+      selectedGroup: page
+useTeamPermissions: true
+slots:
+  - id: leftColumn
+    name: Left Column
+    allowedComponents: []
+    allowAllComponents: true
+    inheritAllowedComponents: false
+    patternsInAllowedComponents: false
+  - id: rightColumn
+    name: Right Column
+    allowedComponents: []
+    allowAllComponents: true
+    inheritAllowedComponents: false
+    patternsInAllowedComponents: false
+canBeComposition: false
+created: '2025-11-20T08:51:54.477761+00:00'
+updated: '2025-11-20T09:52:05.328889+00:00'

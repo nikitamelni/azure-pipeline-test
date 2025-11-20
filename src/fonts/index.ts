@@ -13,7 +13,7 @@ export const helveticaNeue = localFont({
       style: 'normal',
     },
   ],
-  variable: '--helvetica-neue',
+  variable: '--font-helvetica-neue',
   display: 'swap',
   preload: true,
 });

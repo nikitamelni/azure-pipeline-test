@@ -3,9 +3,190 @@ composition:
   _id: 799cbfb3-af0c-412c-a562-a6c41cffc260
   _slug: our-locations
   type: page
+  _overrides:
+    071d7612-d4de-4231-86f9-08fc63b497f7:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Become a Customer
+    799cbfb3-af0c-412c-a562-a6c41cffc260|dc2e95be-21b5-4476-a309-f8a34922f528:
+      slots:
+        $slotSectionItems:
+          - _id: 15fe720e-2de1-428f-b5c0-8448378bba07
+            type: columnsSection
+            slots:
+              leftColumn:
+                - _id: b9c2f064-d861-4ab5-80ad-1d1a575374c8
+                  type: flex
+                  slots:
+                    flexItem:
+                      - _id: 2499ad3d-b86d-41cf-bc95-e7aa1f45d7b7
+                        type: text
+                        parameters:
+                          tag:
+                            type: dex-segmented-control-parameter
+                            value: span
+                          size:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: 5xl
+                          text:
+                            type: text
+                            locales:
+                              en: Our Locations
+                          color:
+                            type: dex-color-palette-parameter
+                            value: text-primary
+                          weight:
+                            type: dex-segmented-control-parameter
+                            value: bold
+                          alignment:
+                            type: dex-segmented-control-parameter
+                            value: center
+                      - _id: 3efdba3c-199d-49eb-9b5c-eb36685baca9
+                        type: text
+                        parameters:
+                          tag:
+                            type: dex-segmented-control-parameter
+                            value: span
+                          text:
+                            type: text
+                            locales:
+                              en: >-
+                                We deliver to over 80,000 customer locations
+                                across America. Find the location that serves
+                                your area by Becoming a Customer.
+                          weight:
+                            type: dex-segmented-control-parameter
+                            value: normal
+                          alignment:
+                            type: dex-segmented-control-parameter
+                            value: left
+                      - _id: 071d7612-d4de-4231-86f9-08fc63b497f7
+                        type: button
+                        _pattern: 646faee6-b476-43c6-a1a8-eebe85699889
+                        _overridability:
+                          variants: true
+                          parameters:
+                            link: 'yes'
+                            text: 'yes'
+                          hideLockedParameters: true
+                  parameters:
+                    gap:
+                      type: dex-slider-control-parameter
+                      value:
+                        mobile: '4'
+                    direction:
+                      type: dex-segmented-control-parameter
+                      value:
+                        mobile: col
+                        tablet: col
+                        desktop: col
+                    alignItems:
+                      type: dex-segmented-control-parameter
+                      value:
+                        mobile: center
+                        tablet: center
+                        desktop: center
+                    displayName:
+                      type: text
+                      locales:
+                        en: Left Content
+                    justifyContent:
+                      type: dex-segmented-control-parameter
+                      value:
+                        mobile: center
+                        tablet: center
+                        desktop: center
+              rightColumn:
+                - _id: 53781f87-61f3-4e72-848e-3f80d13f8cb1
+                  type: flex
+                  slots:
+                    flexItem:
+                      - _id: a9a2c97b-0c92-4ae8-ac35-e3ff6c53fba5
+                        type: text
+                        parameters:
+                          tag:
+                            type: dex-segmented-control-parameter
+                            value: span
+                          text:
+                            type: text
+                            locales:
+                              en: Locations
+                          weight:
+                            type: dex-segmented-control-parameter
+                            value: bold
+                      - _id: 3227430c-08ae-4398-8016-583d01fe3052
+                        type: text
+                        parameters:
+                          tag:
+                            type: dex-segmented-control-parameter
+                            value: span
+                          size:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: 5xl
+                          text:
+                            type: text
+                            locales:
+                              en: Delivering Across the Country
+                          weight:
+                            type: dex-segmented-control-parameter
+                            value: bold
+                      - _id: 96c7c415-fcc0-498f-9799-eeaf5eadb694
+                        type: text
+                        parameters:
+                          tag:
+                            type: dex-segmented-control-parameter
+                            value: span
+                          size:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: xl
+                          text:
+                            type: text
+                            locales:
+                              en: Find a distribution center near you.
+                          weight:
+                            type: dex-segmented-control-parameter
+                            value: normal
+                  parameters:
+                    gap:
+                      type: dex-slider-control-parameter
+                      value:
+                        tablet: '4'
+                    direction:
+                      type: dex-segmented-control-parameter
+                      value:
+                        mobile: col
+                        tablet: col
+                        desktop: col
+                    displayName:
+                      type: text
+                      locales:
+                        en: Right Content
+            parameters:
+              leftColumnSpacing:
+                type: dex-space-control-parameter
+                value:
+                  paddingLeft: page-layout-md
+                  paddingRight: page-layout-md
+              rightColumnSpacing:
+                type: dex-space-control-parameter
+                value:
+                  paddingTop: page-layout-lg
+                  paddingLeft: page-layout-lg
+                  paddingRight: page-layout-lg
+              leftColumnBackground:
+                type: dex-color-palette-parameter
+                value: general-color-1
+              rightColumnBackground:
+                type: dex-color-palette-parameter
+                value: general-color-6
   _locales:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
 created: '2025-11-19T12:33:51.968422+00:00'
-modified: '2025-11-19T12:33:51.968422+00:00'
+modified: '2025-11-20T09:59:20.989492+00:00'
 pattern: false
