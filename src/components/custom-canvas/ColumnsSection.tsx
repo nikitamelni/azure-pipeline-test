@@ -1,15 +1,16 @@
 import { FC } from 'react';
-import { UniformSlot } from '@uniformdev/canvas-react';
-import { ComponentProps } from '@uniformdev/canvas-react';
+import { UniformSlot, ComponentProps } from '@uniformdev/canvas-react';
 import { ViewPort, SpaceType } from '@uniformdev/csk-components/types/cskTypes';
 import BaseColumnsSection from '../custom-ui/ColumnsSection';
 
-type ColumnsSectionProps = ComponentProps<{
+type ColumnsSectionParameters = {
   leftColumnBackground: string;
   rightColumnBackground: string;
   leftColumnSpacing: SpaceType | ViewPort<SpaceType>;
   rightColumnSpacing: SpaceType | ViewPort<SpaceType>;
-}>;
+};
+
+type ColumnsSectionProps = ComponentProps<ColumnsSectionParameters>;
 
 enum ColumnsSectionSlots {
   LeftColumn = 'leftColumn',

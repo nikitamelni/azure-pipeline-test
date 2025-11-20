@@ -1,0 +1,30 @@
+asset:
+  type: image
+  _id: 6ce45ded-aeca-412c-b67d-917b25ba9fda
+  _name: ''
+  fields:
+    title:
+      type: text
+      value: facebook-svgrepo-com.svg
+    file:
+      type: file
+      value: 420e7b65-e7b7-4bab-a4db-9f4a6161c447
+    mediaType:
+      value: image/svg+xml
+      type: text
+    url:
+      value: >-
+        https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/UbJrFt3tRT-YDHZ6X9N92w-facebook-svgrepo-com.svg
+      type: text
+    size:
+      value: 1157
+      type: number
+    width:
+      value: 800
+      type: number
+    height:
+      value: 800
+      type: number
+    custom: {}
+created: '2025-11-20T12:54:50.014947+00:00'
+modified: '2025-11-20T12:54:50.014947+00:00'

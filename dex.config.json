@@ -11,7 +11,8 @@
       "general-color-8": "#252525",
       "text-primary": "{general-color-2}",
       "text-secondary": "{general-color-1}",
-      "general-color-9": "#D6D6D6"
+      "general-color-9": "#D6D6D6",
+      "button-secondary": "{general-color-1}"
     }
   },
   "dimensions": {

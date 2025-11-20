@@ -1,0 +1,30 @@
+asset:
+  type: image
+  _id: 8904d66a-8903-474d-ae04-12e464b54ae4
+  _name: ''
+  fields:
+    title:
+      type: text
+      value: linkedin-svgrepo-com.svg
+    file:
+      type: file
+      value: cc51efcf-c966-41dd-9aae-2f0aedb035f6
+    mediaType:
+      value: image/svg+xml
+      type: text
+    url:
+      value: >-
+        https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/OyIcYYBkS2qPm7biWhZNtg-linkedin-svgrepo-com.svg
+      type: text
+    size:
+      value: 1320
+      type: number
+    width:
+      value: 150
+      type: number
+    height:
+      value: 150
+      type: number
+    custom: {}
+created: '2025-11-20T12:59:49.097328+00:00'
+modified: '2025-11-20T12:59:49.097328+00:00'

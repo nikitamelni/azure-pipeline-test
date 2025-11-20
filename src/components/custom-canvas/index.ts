@@ -3,6 +3,7 @@ import ColumnsSection from './ColumnsSection';
 import Container from './Container';
 import CustomComponent from './CustomComponent';
 import Header from './Header/header';
+import SectionAligner from './SectionAligner';
 
 // Here, you can add your own component or customize an existing CSK component with your logic or styles.
 export const customComponentsMapping: ComponentMapping = {
@@ -10,6 +11,8 @@ export const customComponentsMapping: ComponentMapping = {
   customComponent: CustomComponent,
   // This is an overridden CSK Container component.
   container: Container,
+  // @ts-expect-error - ColumnsSection is a custom component
   columnsSection: ColumnsSection,
   header: Header,
+  sectionAligner: SectionAligner,
 };

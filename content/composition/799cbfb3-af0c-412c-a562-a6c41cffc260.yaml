@@ -10,6 +10,12 @@ composition:
           type: text
           locales:
             en: Become a Customer
+    c9e6da41-6a2c-472f-b95f-dcdb5d5c3a3d:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Become A Customer
     799cbfb3-af0c-412c-a562-a6c41cffc260|dc2e95be-21b5-4476-a309-f8a34922f528:
       slots:
         $slotSectionItems:
@@ -86,9 +92,9 @@ composition:
                     alignItems:
                       type: dex-segmented-control-parameter
                       value:
-                        mobile: center
+                        mobile: start
                         tablet: center
-                        desktop: center
+                        desktop: start
                     displayName:
                       type: text
                       locales:
@@ -96,27 +102,243 @@ composition:
                     justifyContent:
                       type: dex-segmented-control-parameter
                       value:
-                        mobile: center
+                        mobile: start
                         tablet: center
-                        desktop: center
+                        desktop: start
+                - _id: c9e6da41-6a2c-472f-b95f-dcdb5d5c3a3d
+                  type: button
+                  _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+                  _overridability:
+                    variants: true
+                    parameters:
+                      link: 'yes'
+                      text: 'yes'
+                    hideLockedParameters: true
               rightColumn:
                 - _id: 53781f87-61f3-4e72-848e-3f80d13f8cb1
                   type: flex
                   slots:
                     flexItem:
-                      - _id: a9a2c97b-0c92-4ae8-ac35-e3ff6c53fba5
-                        type: text
+                      - _id: 5e80b3fa-aff9-452f-8394-93c73c9dc451
+                        type: flex
+                        slots:
+                          flexItem:
+                            - _id: a9a2c97b-0c92-4ae8-ac35-e3ff6c53fba5
+                              type: text
+                              parameters:
+                                tag:
+                                  type: dex-segmented-control-parameter
+                                  value: span
+                                size:
+                                  type: dex-segmented-control-parameter
+                                  value:
+                                    mobile: xs
+                                text:
+                                  type: text
+                                  locales:
+                                    en: Locations
+                                weight:
+                                  type: dex-segmented-control-parameter
+                                  value: bold
+                            - _id: 112ccbed-9cd3-4bc5-a61a-6472d0ec2977
+                              type: flex
+                              slots:
+                                flexItem:
+                                  - _id: 22ba87ea-bde9-45ab-9073-9092f7b0da42
+                                    type: link
+                                    slots:
+                                      linkContent:
+                                        - _id: 40380d9f-95f0-49c3-8cff-5bb465aaf348
+                                          type: iconLabel
+                                          parameters:
+                                            tag:
+                                              type: dex-segmented-control-parameter
+                                              value: span
+                                            icon:
+                                              type: asset
+                                              locales:
+                                                en:
+                                                  - _id: 176ca6fb-e6db-4b3f-9917-3d56165fc253
+                                                    type: image
+                                                    fields:
+                                                      id:
+                                                        type: text
+                                                        value: 6ce45ded-aeca-412c-b67d-917b25ba9fda
+                                                      url:
+                                                        value: >-
+                                                          https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/UbJrFt3tRT-YDHZ6X9N92w-facebook-svgrepo-com.svg
+                                                        type: text
+                                                      file:
+                                                        type: file
+                                                        value: 420e7b65-e7b7-4bab-a4db-9f4a6161c447
+                                                      size:
+                                                        value: 1157
+                                                        type: number
+                                                      title:
+                                                        type: text
+                                                        value: facebook-svgrepo-com.svg
+                                                      width:
+                                                        value: 800
+                                                        type: number
+                                                      height:
+                                                        value: 800
+                                                        type: number
+                                                      mediaType:
+                                                        value: image/svg+xml
+                                                        type: text
+                                                    _source: uniform-assets
+                                    parameters:
+                                      link:
+                                        type: link
+                                        value:
+                                          path: >-
+                                            https://www.facebook.com/performancefoodservice
+                                          type: url
+                                      displayName:
+                                        type: text
+                                        locales:
+                                          en: Facebook
+                                  - _id: 7328574d-fdd6-431c-bfb0-f212eedd2d9b
+                                    type: link
+                                    slots:
+                                      linkContent:
+                                        - _id: 1488100e-4050-4fa2-b085-23e3f6a93f6d
+                                          type: iconLabel
+                                          parameters:
+                                            tag:
+                                              type: dex-segmented-control-parameter
+                                              value: span
+                                            icon:
+                                              type: asset
+                                              locales:
+                                                en:
+                                                  - _id: 433c0cad-5095-4cf0-9828-dd67d15b3acb
+                                                    type: image
+                                                    fields:
+                                                      id:
+                                                        type: text
+                                                        value: 8904d66a-8903-474d-ae04-12e464b54ae4
+                                                      url:
+                                                        value: >-
+                                                          https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/OyIcYYBkS2qPm7biWhZNtg-linkedin-svgrepo-com.svg
+                                                        type: text
+                                                      file:
+                                                        type: file
+                                                        value: cc51efcf-c966-41dd-9aae-2f0aedb035f6
+                                                      size:
+                                                        value: 1320
+                                                        type: number
+                                                      title:
+                                                        type: text
+                                                        value: linkedin-svgrepo-com.svg
+                                                      width:
+                                                        value: 150
+                                                        type: number
+                                                      height:
+                                                        value: 150
+                                                        type: number
+                                                      mediaType:
+                                                        value: image/svg+xml
+                                                        type: text
+                                                    _source: uniform-assets
+                                    parameters:
+                                      link:
+                                        type: link
+                                        value:
+                                          path: >-
+                                            https://www.facebook.com/performancefoodservice
+                                          type: url
+                                      displayName:
+                                        type: text
+                                        locales:
+                                          en: LinkedIn
+                                  - _id: 046c4b99-cd46-41bc-b582-7655eb701f62
+                                    type: link
+                                    slots:
+                                      linkContent:
+                                        - _id: db9e184c-74ac-4908-883f-86188cfb9de1
+                                          type: iconLabel
+                                          parameters:
+                                            tag:
+                                              type: dex-segmented-control-parameter
+                                              value: span
+                                            icon:
+                                              type: asset
+                                              locales:
+                                                en:
+                                                  - _id: 4f265dc7-1880-401f-afc6-d67b389545c5
+                                                    type: image
+                                                    fields:
+                                                      id:
+                                                        type: text
+                                                        value: 04257296-0f90-4e19-bbb8-db261ee62e35
+                                                      url:
+                                                        value: >-
+                                                          https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/-auVhI9ZQlOuEdix-CqcfQ-mail-svgrepo-com.svg
+                                                        type: text
+                                                      file:
+                                                        type: file
+                                                        value: 7067efc4-c378-4cf1-b782-2180e34c7321
+                                                      size:
+                                                        value: 935
+                                                        type: number
+                                                      title:
+                                                        type: text
+                                                        value: mail-svgrepo-com.svg
+                                                      width:
+                                                        value: 800
+                                                        type: number
+                                                      height:
+                                                        value: 800
+                                                        type: number
+                                                      mediaType:
+                                                        value: image/svg+xml
+                                                        type: text
+                                                    _source: uniform-assets
+                                    parameters:
+                                      link:
+                                        type: link
+                                        value:
+                                          path: >-
+                                            https://www.facebook.com/performancefoodservice
+                                          type: url
+                                      displayName:
+                                        type: text
+                                        locales:
+                                          en: Mail
+                              parameters:
+                                gap:
+                                  type: dex-slider-control-parameter
+                                  value:
+                                    mobile: '2'
+                                direction:
+                                  type: dex-segmented-control-parameter
+                                  value:
+                                    mobile: row
+                                    tablet: row
+                                    desktop: row
+                                displayName:
+                                  type: text
+                                  locales:
+                                    en: Social
+                                fluidContent:
+                                  type: checkbox
+                                  value: true
                         parameters:
-                          tag:
+                          direction:
                             type: dex-segmented-control-parameter
-                            value: span
-                          text:
+                            value:
+                              mobile: row
+                              tablet: row
+                              desktop: row
+                          displayName:
                             type: text
                             locales:
-                              en: Locations
-                          weight:
+                              en: Meta Row
+                          justifyContent:
                             type: dex-segmented-control-parameter
-                            value: bold
+                            value:
+                              mobile: between
                       - _id: 3227430c-08ae-4398-8016-583d01fe3052
                         type: text
                         parameters:
@@ -126,11 +348,11 @@ composition:
                           size:
                             type: dex-segmented-control-parameter
                             value:
-                              mobile: 5xl
+                              mobile: 7xl
                           text:
                             type: text
                             locales:
-                              en: Delivering Across the Country
+                              en: Delivering Across The Country
                           weight:
                             type: dex-segmented-control-parameter
                             value: bold
@@ -143,7 +365,7 @@ composition:
                           size:
                             type: dex-segmented-control-parameter
                             value:
-                              mobile: xl
+                              mobile: 3xl
                           text:
                             type: text
                             locales:
@@ -155,7 +377,9 @@ composition:
                     gap:
                       type: dex-slider-control-parameter
                       value:
+                        mobile: '4'
                         tablet: '4'
+                        desktop: '8'
                     direction:
                       type: dex-segmented-control-parameter
                       value:
@@ -188,5 +412,5 @@ composition:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
 created: '2025-11-19T12:33:51.968422+00:00'
-modified: '2025-11-20T10:11:24.484575+00:00'
+modified: '2025-11-20T13:41:35.024254+00:00'
 pattern: false
