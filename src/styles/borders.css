@@ -3,4 +3,12 @@
 	--border-dropdown-width: 0 0 1px 0;
 	--border-dropdown-color: var(--general-color-9);
 	--border-dropdown-style: solid;
+	--border-right-radius: 0px;
+	--border-right-width: 0 1px 0 0;
+	--border-right-color: var(--general-color-9);
+	--border-right-style: solid;
+	--border-top-radius: 0px;
+	--border-top-width: 1px 0 0 0 ;
+	--border-top-color: var(--general-color-9);
+	--border-top-style: solid;
 	}

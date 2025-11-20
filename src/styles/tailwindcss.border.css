@@ -1,8 +1,22 @@
-@source inline("{lg:,md:,}border-border-dropdown");
+@source inline("{lg:,md:,}border-{border-dropdown,border-right,border-top}");
 
 .border-dropdown {
 	border-style: var(--border-dropdown-style);
 	border-radius: var(--border-dropdown-radius);
 	border-width: var(--border-dropdown-width);
 	border-color: var(--border-dropdown-color);
+}
+
+.border-right {
+	border-style: var(--border-right-style);
+	border-radius: var(--border-right-radius);
+	border-width: var(--border-right-width);
+	border-color: var(--border-right-color);
+}
+
+.border-top {
+	border-style: var(--border-top-style);
+	border-radius: var(--border-top-radius);
+	border-width: var(--border-top-width);
+	border-color: var(--border-top-color);
 }

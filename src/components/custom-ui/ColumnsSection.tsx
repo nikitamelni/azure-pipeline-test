@@ -31,7 +31,7 @@ const ColumnsSection: FC<ColumnsSectionProps> = ({
           'fixed w-[30%] min-w-[360px] max-w-[568px] lg:min-w-[568px] h-screen flex justify-center items-center'
         )}
       >
-        <div className="w-full basis-full relative flex flex-col justify-end">{leftColumnContent}</div>
+        <div className="w-full basis-full relative flex flex-col justify-end h-full">{leftColumnContent}</div>
       </Container>
       <Container
         fluidContent

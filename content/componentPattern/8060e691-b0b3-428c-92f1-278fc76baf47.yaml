@@ -17,7 +17,7 @@ composition:
       value: text-primary
     textWeight:
       type: dex-segmented-control-parameter
-      value: normal
+      value: bold
     buttonColor:
       type: dex-color-palette-parameter
       value: button-tertiary
@@ -35,11 +35,13 @@ composition:
     parameters:
       link: 'yes'
       text: 'yes'
+      border: 'yes'
+      fullWidth: 'yes'
     hideLockedParameters: true
   _locales:
     - en
-created: '2025-02-17T15:34:18.960294+00:00'
-modified: '2025-02-17T15:34:18.960294+00:00'
+created: '2025-11-19T10:55:40.290124+00:00'
+modified: '2025-11-20T14:26:17.930382+00:00'
 pattern: true
 previewImageUrl: >-
   https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/button-tertiary.jpg

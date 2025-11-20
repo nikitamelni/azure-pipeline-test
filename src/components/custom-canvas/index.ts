@@ -1,4 +1,5 @@
 import { ComponentMapping } from '@uniformdev/csk-components/utils/createComponentResolver';
+import Button from './Button';
 import ColumnsSection from './ColumnsSection';
 import Container from './Container';
 import CustomComponent from './CustomComponent';
@@ -15,4 +16,5 @@ export const customComponentsMapping: ComponentMapping = {
   columnsSection: ColumnsSection,
   header: Header,
   sectionAligner: SectionAligner,
+  button: Button,
 };

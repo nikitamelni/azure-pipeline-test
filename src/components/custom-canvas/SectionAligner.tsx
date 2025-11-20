@@ -13,7 +13,7 @@ enum SectionAlignerSlots {
 type SectionAlignerProps = ComponentProps<SectionAlignerParameters>;
 
 const SectionAligner: FC<SectionAlignerProps & SectionAlignerParameters> = () => (
-  <div className="absolute bottom-[123px] top-[60px]">
+  <div className="absolute bottom-[123px] top-[60px] flex flex-col justify-center">
     <UniformSlot name={SectionAlignerSlots.Content} />
   </div>
 );

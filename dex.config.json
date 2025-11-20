@@ -40,6 +40,18 @@
       "width": "0 0 1px 0",
       "color": "{general-color-9}",
       "style": "solid"
+    },
+    "border-right": {
+      "radius": "0px",
+      "width": "0 1px 0 0",
+      "color": "{general-color-9}",
+      "style": "solid"
+    },
+    "border-top": {
+      "radius": "0px",
+      "width": "1px 0 0 0 ",
+      "color": "{general-color-9}",
+      "style": "solid"
     }
   },
   "allowedGroups": {
