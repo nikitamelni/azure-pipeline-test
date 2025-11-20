@@ -11,33 +11,33 @@ composition:
       type: asset
       locales:
         en:
-          - _id: 77df7155-503a-4e37-9a25-8f9246e775c0
+          - _id: 5790ece7-eb16-4329-9be3-ddad116be160
             type: image
             fields:
               id:
                 type: text
-                value: 9f964074-61ec-4afb-8d5b-8cb499257744
+                value: 9b344add-08e2-4f24-8eba-b422c33c10b7
               url:
                 value: >-
-                  https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/BkVgxgEoTO2sPxjhuGOapw-favicon.png
+                  https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/AMVLnJ4pTSKw8kq2dGTL3A-favicon-1.jpg
                 type: text
               file:
                 type: file
-                value: f5f4db6b-da24-45ef-a53e-425af95ec08e
+                value: 8a505b92-a553-4520-be8a-8e44e0dbc057
               size:
-                value: 1139
+                value: 1970
                 type: number
               title:
                 type: text
-                value: favicon.png
+                value: favicon-1.jpg
               width:
-                value: 69
+                value: 64
                 type: number
               height:
-                value: 79
+                value: 64
                 type: number
               mediaType:
-                value: image/png
+                value: image/jpeg
                 type: text
             _source: uniform-assets
     spacing:
@@ -1036,7 +1036,7 @@ composition:
   _locales:
     - en
 created: '2025-11-19T10:55:39.577011+00:00'
-modified: '2025-11-20T12:09:57.916731+00:00'
+modified: '2025-11-20T14:41:04.10382+00:00'
 pattern: true
 previewImageUrl: >-
   https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/main-header.jpg

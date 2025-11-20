@@ -19,6 +19,50 @@ composition:
         fullWidth:
           type: checkbox
           value: true
+    799cbfb3-af0c-412c-a562-a6c41cffc260:
+      parameters:
+        pageTitle:
+          type: text
+          value: Our Locations | Performance Foodservice
+        openGraphImage:
+          type: asset
+          value:
+            - _id: 0327e6a3-2558-4aec-b32c-5db29cfc76d0
+              type: image
+              fields:
+                id:
+                  type: text
+                  value: 66ecbb4f-fe0c-4dad-b9fe-f850ca83fd70
+                url:
+                  value: >-
+                    https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/g4xujLjZS2aQjzMrBN8E2g-Header-Logo-new.png
+                  type: text
+                file:
+                  type: file
+                  value: ef81a83a-40e4-454a-909a-5059109791b9
+                size:
+                  value: 11717
+                  type: number
+                title:
+                  type: text
+                  value: Header-Logo-new.png
+                width:
+                  value: 390
+                  type: number
+                height:
+                  value: 52
+                  type: number
+                mediaType:
+                  value: image/png
+                  type: text
+              _source: uniform-assets
+        pageDescription:
+          type: text
+          locales:
+            en: >-
+              Performance Foodservice, a leading food distributor and supplier,
+              provides quality products, innovative technology, and custom
+              solutions to culinary partners.
     c9e6da41-6a2c-472f-b95f-dcdb5d5c3a3d:
       parameters:
         text:
@@ -502,5 +546,5 @@ composition:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
 created: '2025-11-19T12:33:51.968422+00:00'
-modified: '2025-11-20T14:31:18.192117+00:00'
+modified: '2025-11-20T14:39:19.036177+00:00'
 pattern: false
