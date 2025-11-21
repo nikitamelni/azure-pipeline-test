@@ -18,19 +18,19 @@
     }
   },
   "dimensions": {
+    "container-xs": "{general-dimension-5}",
     "container-md": "{general-dimension-1}",
-    "container-width": "3840px",
     "container-lg": "{general-dimension-2}",
-    "button-medium": "12px 32px",
     "container-xl": "{general-dimension-4}",
+    "container-width": "3840px",
+    "button-medium": "12px 32px",
     "general-dimension-1": "25px",
     "general-dimension-2": "35px",
     "general-dimension-4": "50px",
+    "general-dimension-5": "10px",
     "page-layout-md": "{general-dimension-2}",
     "page-layout-lg": "{general-dimension-4}",
     "page-top-offset": "131px",
-    "general-dimension-5": "10px",
-    "container-xs": "{general-dimension-5}",
     "spacer-small": "10px",
     "spacer-medium": "20px",
     "spacer-large": "30px"
