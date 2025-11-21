@@ -1,0 +1,32 @@
+id: queryLocation
+displayName: Query Location
+ttl: 30
+path: /query
+custom:
+  proposedName: Query Location
+  allowedContentTypes:
+    - location
+method: GET
+purgeKey: fa2b076b-b976-47f8-988e-af98c83a4dea
+archetype: queryEntries
+variables:
+  limit:
+    type: text
+    default: '20'
+  offset:
+    type: text
+    default: '0'
+  search:
+    type: text
+    default: ''
+  filters:
+    type: text
+    default: '{}'
+  orderBy:
+    type: text
+    default: ''
+  contentTypes:
+    type: text
+    default: ''
+dataSourceId: uniformContent
+allowedOnComponents: []

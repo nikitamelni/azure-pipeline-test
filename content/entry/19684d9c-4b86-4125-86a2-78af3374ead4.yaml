@@ -1,0 +1,34 @@
+created: '2025-11-21T09:07:48.534696+00:00'
+modified: '2025-11-21T09:09:55.70154+00:00'
+pattern: false
+entry:
+  _id: 19684d9c-4b86-4125-86a2-78af3374ead4
+  _name: Alabama
+  _slug: alabama
+  type: location
+  fields:
+    title:
+      type: text
+      locales:
+        en: Alabama
+    addressLine1:
+      type: text
+      locales:
+        en: 2450 Big M Boulevard
+    addressLine2:
+      type: text
+      locales:
+        en: Clanton, Alabama 35045
+    addressLine3:
+      type: text
+      locales:
+        en: Phone (800) 844-0633
+    directionLink:
+      type: link
+      locales:
+        en:
+          path: >-
+            https://www.google.com/maps/place/2450+Big+M+Blvd,+Clanton,+AL+35046/@32.8156882,-86.6670614,11z/data=!4m5!3m4!1s0x888ec78702ae5dc9:0x311226932c4c2aef!8m2!3d32.8145341!4d-86.5832853
+          type: url
+  _locales:
+    - en

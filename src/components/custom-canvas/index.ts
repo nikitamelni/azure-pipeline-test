@@ -4,6 +4,7 @@ import ColumnsSection from './ColumnsSection';
 import Container from './Container';
 import CustomComponent from './CustomComponent';
 import Header from './Header/header';
+import Map from './Map';
 import SectionAligner from './SectionAligner';
 
 // Here, you can add your own component or customize an existing CSK component with your logic or styles.
@@ -17,4 +18,5 @@ export const customComponentsMapping: ComponentMapping = {
   header: Header,
   sectionAligner: SectionAligner,
   button: Button,
+  map: Map,
 };

@@ -1,0 +1,204 @@
+composition:
+  _name: Location Card
+  _id: 89015968-54dd-443a-af45-a1f8b70ee982
+  type: card
+  parameters:
+    displayName:
+      type: text
+      locales:
+        en: Location Card
+    backgroundColor:
+      type: dex-color-palette-parameter
+      value: general-color-1
+  slots:
+    cardContent:
+      - _id: cdafaac6-ddba-4a51-b297-27a64eae8b3e
+        type: flex
+        slots:
+          flexItem:
+            - _id: 6374ef6e-60be-407c-9d8c-ecdd5852796d
+              type: flex
+              slots:
+                flexItem:
+                  - _id: 5fed6a90-7c09-4c1e-99be-2e10f2a1959f
+                    type: text
+                    parameters:
+                      tag:
+                        type: dex-segmented-control-parameter
+                        value: span
+                      text:
+                        type: text
+                        locales:
+                          en: Alabama
+                      color:
+                        type: dex-color-palette-parameter
+                        value: text-primary
+                      weight:
+                        type: dex-segmented-control-parameter
+                        value: bold
+                    _overridability:
+                      parameters:
+                        text: 'yes'
+                      hideLockedParameters: true
+                  - _id: 8b51c5cf-c78a-4899-bd11-f16248fbae77
+                    type: text
+                    parameters:
+                      tag:
+                        type: dex-segmented-control-parameter
+                        value: span
+                      text:
+                        type: text
+                        locales:
+                          en: 2450 Big M Boulevard
+                    _overridability:
+                      parameters:
+                        text: 'yes'
+                      hideLockedParameters: true
+                  - _id: 88e8a86b-ca4f-4b6e-b784-9abcac2efe6d
+                    type: text
+                    parameters:
+                      tag:
+                        type: dex-segmented-control-parameter
+                        value: span
+                      text:
+                        type: text
+                        locales:
+                          en: Clanton, Alabama 35045
+                    _overridability:
+                      parameters:
+                        text: 'yes'
+                      hideLockedParameters: true
+                  - _id: b44e29ad-3fa5-436a-85f1-23d67f590448
+                    type: text
+                    parameters:
+                      tag:
+                        type: dex-segmented-control-parameter
+                        value: span
+                      text:
+                        type: text
+                        locales:
+                          en: Phone  (800) 844-0633
+                    _overridability:
+                      parameters:
+                        text: 'yes'
+                      hideLockedParameters: true
+                  - _id: 0541b681-6650-4ee8-9e84-6eed2a8363a7
+                    type: spacer
+                    parameters:
+                      size:
+                        type: dex-token-selector-parameter
+                        value: spacer-small
+                  - _id: 5a8d10c6-e32b-4687-866a-abf9316de6a5
+                    type: link
+                    slots:
+                      linkContent:
+                        - _id: 3adc5a60-66a6-4941-a060-0f2ce23fbab5
+                          type: text
+                          parameters:
+                            tag:
+                              type: dex-segmented-control-parameter
+                              value: span
+                            text:
+                              type: text
+                              locales:
+                                en: Get Directions
+                            color:
+                              type: dex-color-palette-parameter
+                              value: text-link
+                            weight:
+                              type: dex-segmented-control-parameter
+                              value: bold
+                            decoration:
+                              type: dex-segmented-control-parameter
+                              value: underline
+                          _overridability:
+                            hideLockedParameters: true
+                    parameters:
+                      link:
+                        type: link
+                        value:
+                          path: >-
+                            https://www.google.com/maps/place/2450+Big+M+Blvd,+Clanton,+AL+35046/@32.8156882,-86.6670614,11z/data=!4m5!3m4!1s0x888ec78702ae5dc9:0x311226932c4c2aef!8m2!3d32.8145341!4d-86.5832853
+                          type: url
+                      displayName:
+                        type: text
+                        locales:
+                          en: Link
+              parameters:
+                gap:
+                  type: dex-slider-control-parameter
+                  value:
+                    desktop: '2'
+                spacing:
+                  type: dex-space-control-parameter
+                  value:
+                    mobile:
+                      paddingTop: container-md
+                      paddingLeft: container-md
+                      paddingRight: container-md
+                      paddingBottom: container-xl
+                direction:
+                  type: dex-segmented-control-parameter
+                  value:
+                    mobile: col
+                    tablet: col
+                    desktop: col
+                displayName:
+                  type: text
+                  locales:
+                    en: Address
+            - _id: ac1d5c35-256e-4b73-9734-fa0570ae85d0
+              type: container
+              slots:
+                containerContent:
+                  - _id: b9a199fb-b17a-4896-99df-66059ba0ccfa
+                    type: $slotSection
+                    parameters:
+                      name:
+                        type: text
+                        value: Location Button
+                      specific:
+                        type: array
+                        value:
+                          - $p:8060e691-b0b3-428c-92f1-278fc76baf47
+                      groupType:
+                        type: text
+                        value: specific
+                    _overridability:
+                      hideLockedParameters: true
+              parameters:
+                border:
+                  type: dex-token-selector-parameter
+                  value: border-top
+                displayName:
+                  type: text
+                  locales:
+                    en: Button
+                fluidContent:
+                  type: checkbox
+                  value: true
+                backgroundColor:
+                  type: dex-color-palette-parameter
+                  value: general-color-1
+        parameters:
+          direction:
+            type: dex-segmented-control-parameter
+            value:
+              mobile: col
+              tablet: col
+              desktop: col
+          displayName:
+            type: text
+            locales:
+              en: Content
+          justifyContent:
+            type: dex-segmented-control-parameter
+            value:
+              mobile: between
+              tablet: between
+              desktop: between
+  _locales:
+    - en
+created: '2025-11-21T08:57:25.439745+00:00'
+modified: '2025-11-21T09:00:08.554972+00:00'
+pattern: true

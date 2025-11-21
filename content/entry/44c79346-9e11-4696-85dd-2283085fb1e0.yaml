@@ -1,0 +1,38 @@
+created: '2025-11-21T09:10:03.000685+00:00'
+modified: '2025-11-21T09:10:42.809304+00:00'
+pattern: false
+entry:
+  _id: 44c79346-9e11-4696-85dd-2283085fb1e0
+  _name: Arizona
+  _slug: arizona
+  type: location
+  fields:
+    title:
+      type: text
+      locales:
+        en: Arizona
+    addressLine1:
+      type: text
+      locales:
+        en: 455 S. 75th Avenue
+    addressLine2:
+      type: text
+      locales:
+        en: Phoenix, AZ 85043
+    addressLine3:
+      type: text
+      locales:
+        en: Phone  (480) 705-3000
+    addressLine4:
+      type: text
+      locales:
+        en: ' Fax (480) 940-8993 '
+    directionLink:
+      type: link
+      locales:
+        en:
+          path: >-
+            https://www.google.com/maps/place/2450+Big+M+Blvd,+Clanton,+AL+35046/@32.8156882,-86.6670614,11z/data=!4m5!3m4!1s0x888ec78702ae5dc9:0x311226932c4c2aef!8m2!3d32.8145341!4d-86.5832853
+          type: url
+  _locales:
+    - en

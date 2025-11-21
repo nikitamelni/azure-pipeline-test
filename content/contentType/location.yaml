@@ -1,0 +1,42 @@
+id: location
+name: Location
+created: '2025-11-21T09:07:39.319447+00:00'
+updated: '2025-11-21T09:07:39.319447+00:00'
+slugSettings: {}
+useTeamPermissions: true
+fields:
+  - id: title
+    name: Title
+    type: text
+    typeConfig: null
+    localizable: true
+  - id: addressLine1
+    name: Address Line 1
+    type: text
+    typeConfig: null
+    localizable: true
+  - id: addressLine2
+    name: Address Line 2
+    type: text
+    typeConfig: null
+    localizable: true
+  - id: addressLine3
+    name: Address Line 3
+    type: text
+    typeConfig: null
+    localizable: true
+  - id: addressLine4
+    name: Address Line 4
+    type: text
+    typeConfig: null
+    localizable: true
+  - id: directionLink
+    name: Direction Link
+    type: link
+    typeConfig: null
+    localizable: true
+entryName: title
+icon: file-document
+type: contentType
+permissions: []
+previewConfigurations: []

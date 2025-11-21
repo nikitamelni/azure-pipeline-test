@@ -88,13 +88,15 @@ slots:
       - text
       - richText
       - spacer
+      - link
+      - flex
     allowAllComponents: false
     inheritAllowedComponents: false
     patternsInAllowedComponents: false
 titleParameter: displayName
 canBeComposition: false
-created: '2025-07-08T12:42:09.777395+00:00'
-updated: '2025-10-08T12:49:10.215402+00:00'
+created: '2025-11-19T10:55:37.093483+00:00'
+updated: '2025-11-21T08:35:15.19382+00:00'
 variants:
   - id: backgroundImage
     name: Background Image

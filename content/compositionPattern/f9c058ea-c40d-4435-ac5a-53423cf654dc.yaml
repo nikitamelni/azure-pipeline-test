@@ -10,10 +10,6 @@ composition:
       type: dex-color-palette-parameter
       value: page-background-primary
   slots:
-    pageFooter:
-      - _id: eea9191c-9a4a-4178-9910-8112068f1e89
-        type: simpleFooter
-        _pattern: 99ecf042-cb50-4ec7-b890-582c33b8dcd6
     pageHeader:
       - _id: 9d891285-1405-4e7c-b757-8e20de0f46c3
         type: header
@@ -56,7 +52,7 @@ composition:
   _locales:
     - en
 created: '2025-11-19T10:55:42.31049+00:00'
-modified: '2025-11-20T08:55:05.819371+00:00'
+modified: '2025-11-21T09:30:59.27471+00:00'
 pattern: true
 previewImageUrl: >-
   https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/global-composition.png

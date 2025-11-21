@@ -12,4 +12,7 @@
 	--page-top-offset: 131px;
 	--general-dimension-5: 10px;
 	--container-xs: var(--general-dimension-5);
+	--spacer-small: 10px;
+	--spacer-medium: 20px;
+	--spacer-large: 30px;
 	}

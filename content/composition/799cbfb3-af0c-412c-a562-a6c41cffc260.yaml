@@ -3,6 +3,14 @@ composition:
   _id: 799cbfb3-af0c-412c-a562-a6c41cffc260
   _slug: our-locations
   type: page
+  _dataResources:
+    Location List Content:
+      type: locationList
+      variables:
+        locale: ${locale}
+        search: ''
+        filters: '{"type[eq]":"location"}'
+        contentTypes: location
   _overrides:
     071d7612-d4de-4231-86f9-08fc63b497f7:
       parameters:
@@ -10,12 +18,51 @@ composition:
           type: text
           locales:
             en: Become a Customer
+    502e6559-eaf7-4ef6-a464-4da7294bd98e:
+      parameters:
+        icon:
+          type: asset
+          locales:
+            en: null
+        text:
+          type: text
+          locales:
+            en: See Location
+        fullWidth:
+          type: checkbox
+          value: true
+    6ca586df-6bbe-45d8-b48e-5a726d5bac3a:
+      parameters:
+        icon:
+          type: asset
+          locales:
+            en: null
+        text:
+          type: text
+          locales:
+            en: See Location
+        fullWidth:
+          type: checkbox
+          value: true
     6cc92ef5-a56e-4a3d-97cc-d4e37c4deb49:
       parameters:
         text:
           type: text
           locales:
             en: View Our Locations
+        fullWidth:
+          type: checkbox
+          value: true
+    727b66fa-6b67-44cd-a12a-b71a4cea7037:
+      parameters:
+        icon:
+          type: asset
+          locales:
+            en: null
+        text:
+          type: text
+          locales:
+            en: See Location
         fullWidth:
           type: checkbox
           value: true
@@ -63,6 +110,19 @@ composition:
               Performance Foodservice, a leading food distributor and supplier,
               provides quality products, innovative technology, and custom
               solutions to culinary partners.
+    8b4fbf0f-1625-457a-95f8-d8e99af2a108:
+      parameters:
+        icon:
+          type: asset
+          locales:
+            en: null
+        text:
+          type: text
+          locales:
+            en: See Location
+        fullWidth:
+          type: checkbox
+          value: true
     c9e6da41-6a2c-472f-b95f-dcdb5d5c3a3d:
       parameters:
         text:
@@ -75,6 +135,109 @@ composition:
         fullWidth:
           type: checkbox
           value: true
+    fb8658dc-f4e8-4fb6-9f5c-6def9393f1e9:
+      parameters:
+        icon:
+          type: asset
+          locales:
+            en: null
+        link:
+          type: link
+          locales:
+            en:
+              path: >-
+                /${locale}/our-locations/${#jptr:/Location List Content entries
+                Loop Item/entry/fields/title/value}
+              type: projectMapNode
+              nodeId: c8bb8351-9e26-43e2-8c82-3d100131bf3a
+              projectMapId: 537d11ff-9ebe-4420-9682-36694477e2f9
+              dynamicInputValues:
+                locale: ${locale}
+                location: >-
+                  ${#jptr:/Location List Content entries Loop
+                  Item/entry/fields/title/value}
+        text:
+          type: text
+          locales:
+            en: See Location
+        fullWidth:
+          type: checkbox
+          value: true
+    fd6467b1-6d65-4722-a55e-7395aa36a35b:
+      parameters:
+        icon:
+          type: asset
+          locales:
+            en: null
+        text:
+          type: text
+          locales:
+            en: See Location
+        fullWidth:
+          type: checkbox
+          value: true
+    57f1bbab-0c6e-41b0-a5b9-532de9984c0b|5fed6a90-7c09-4c1e-99be-2e10f2a1959f:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: >-
+              ${#jptr:/Location List Content entries Loop
+              Item/entry/fields/title/value}
+    57f1bbab-0c6e-41b0-a5b9-532de9984c0b|88e8a86b-ca4f-4b6e-b784-9abcac2efe6d:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: >-
+              ${#jptr:/Location List Content entries Loop
+              Item/entry/fields/addressLine2/value}
+    57f1bbab-0c6e-41b0-a5b9-532de9984c0b|8b51c5cf-c78a-4899-bd11-f16248fbae77:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: >-
+              ${#jptr:/Location List Content entries Loop
+              Item/entry/fields/addressLine1/value}
+    57f1bbab-0c6e-41b0-a5b9-532de9984c0b|b44e29ad-3fa5-436a-85f1-23d67f590448:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: >-
+              ${#jptr:/Location List Content entries Loop
+              Item/entry/fields/addressLine3/value}
+    57f1bbab-0c6e-41b0-a5b9-532de9984c0b|b9a199fb-b17a-4896-99df-66059ba0ccfa:
+      slots:
+        $slotSectionItems:
+          - _id: fb8658dc-f4e8-4fb6-9f5c-6def9393f1e9
+            type: button
+            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+            _overridability:
+              variants: true
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                border: 'yes'
+                fullWidth: 'yes'
+              hideLockedParameters: true
+    65aa1229-f74c-4991-aad0-b462da0836a3|b9a199fb-b17a-4896-99df-66059ba0ccfa:
+      slots:
+        $slotSectionItems:
+          - _id: 727b66fa-6b67-44cd-a12a-b71a4cea7037
+            type: button
+            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+            _overridability:
+              variants: true
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                border: 'yes'
+                fullWidth: 'yes'
+              hideLockedParameters: true
     799cbfb3-af0c-412c-a562-a6c41cffc260|dc2e95be-21b5-4476-a309-f8a34922f528:
       slots:
         $slotSectionItems:
@@ -189,6 +352,7 @@ composition:
                               _overridability:
                                 variants: true
                                 parameters:
+                                  icon: 'yes'
                                   link: 'yes'
                                   text: 'yes'
                                   border: 'yes'
@@ -200,6 +364,7 @@ composition:
                               _overridability:
                                 variants: true
                                 parameters:
+                                  icon: 'yes'
                                   link: 'yes'
                                   text: 'yes'
                                   border: 'yes'
@@ -512,6 +677,41 @@ composition:
                           weight:
                             type: dex-segmented-control-parameter
                             value: normal
+                      - _id: 32abbcaf-f8ec-45c3-9e5b-dbc622f8997f
+                        type: grid
+                        slots:
+                          gridInner:
+                            - _id: eb5fd3c9-0a29-460f-979e-6cf99c30b0bc
+                              type: $loop
+                              slots:
+                                body:
+                                  - _id: 57f1bbab-0c6e-41b0-a5b9-532de9984c0b
+                                    type: card
+                                    _pattern: 89015968-54dd-443a-af45-a1f8b70ee982
+                              _dataResources:
+                                Location List Content entries Loop Item:
+                                  type: sys-reserved-loop
+                                  variables:
+                                    connectedData: '#jptr:/Location List Content/entries:fa=c'
+                        parameters:
+                          gapX:
+                            type: dex-slider-control-parameter
+                            value:
+                              mobile: '4'
+                          gapY:
+                            type: dex-slider-control-parameter
+                            value:
+                              mobile: '4'
+                          displayName:
+                            type: text
+                            locales:
+                              en: Cards Wrapper
+                          columnsCount:
+                            type: dex-slider-control-parameter
+                            value:
+                              mobile: '3'
+                              tablet: '1'
+                              desktop: '3'
                   parameters:
                     gap:
                       type: dex-slider-control-parameter
@@ -542,9 +742,75 @@ composition:
               rightColumnBackground:
                 type: dex-color-palette-parameter
                 value: general-color-6
+    860cc2db-3b2f-4c62-8bd0-ab011859d86a|b9a199fb-b17a-4896-99df-66059ba0ccfa:
+      slots:
+        $slotSectionItems:
+          - _id: 502e6559-eaf7-4ef6-a464-4da7294bd98e
+            type: button
+            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+            _overridability:
+              variants: true
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                border: 'yes'
+                fullWidth: 'yes'
+              hideLockedParameters: true
+    864bd532-f945-4933-b9f1-d606e85f7144|b9a199fb-b17a-4896-99df-66059ba0ccfa:
+      slots:
+        $slotSectionItems:
+          - _id: 6ca586df-6bbe-45d8-b48e-5a726d5bac3a
+            type: button
+            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+            _overridability:
+              variants: true
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                border: 'yes'
+                fullWidth: 'yes'
+              hideLockedParameters: true
+    b04f029e-d0d5-44b2-b74a-12dc8ef26d69|b9a199fb-b17a-4896-99df-66059ba0ccfa:
+      slots:
+        $slotSectionItems:
+          - _id: 8b4fbf0f-1625-457a-95f8-d8e99af2a108
+            type: button
+            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+            _overridability:
+              variants: true
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                border: 'yes'
+                fullWidth: 'yes'
+              hideLockedParameters: true
+    d79ba96e-73a6-4db5-b27f-f43bdd8275ac|5fed6a90-7c09-4c1e-99be-2e10f2a1959f:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Arizona
+    d79ba96e-73a6-4db5-b27f-f43bdd8275ac|b9a199fb-b17a-4896-99df-66059ba0ccfa:
+      slots:
+        $slotSectionItems:
+          - _id: fd6467b1-6d65-4722-a55e-7395aa36a35b
+            type: button
+            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+            _overridability:
+              variants: true
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                border: 'yes'
+                fullWidth: 'yes'
+              hideLockedParameters: true
   _locales:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
 created: '2025-11-19T12:33:51.968422+00:00'
-modified: '2025-11-20T14:39:19.036177+00:00'
+modified: '2025-11-21T09:17:20.475274+00:00'
 pattern: false

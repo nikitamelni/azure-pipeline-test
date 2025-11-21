@@ -3,9 +3,490 @@ composition:
   _id: 823fdf87-58fc-4d31-b949-29de74243e3d
   _slug: ':location'
   type: page
+  _dataResources:
+    Query Location Content:
+      type: queryLocation
+      variables:
+        locale: ${locale}
+        search: ''
+        filters: '{"type[eq]":"location","fields.title[eq]":"${location}"}'
+        uiFilters: >-
+          [{"field":"type","operator":"eq","value":"location"},{"field":"fields.title","operator":"eq","value":"${location}"}]
+        contentTypes: location
+  _overrides:
+    487c101f-be5e-42fd-8ce2-2f21a694cbaf:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Become A Customer
+        border:
+          type: dex-token-selector-parameter
+          value: border-right
+        fullWidth:
+          type: checkbox
+          value: true
+    732f8ba9-7433-407c-916f-11e4ca5900c9:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: View Our Locations
+        fullWidth:
+          type: checkbox
+          value: true
+    823fdf87-58fc-4d31-b949-29de74243e3d|dc2e95be-21b5-4476-a309-f8a34922f528:
+      slots:
+        $slotSectionItems:
+          - _id: 0b80843e-14df-478e-82ff-4afa9383110b
+            type: columnsSection
+            slots:
+              leftColumn:
+                - _id: 465e9fc9-7b43-45fa-ad1d-c73e33291aa1
+                  type: sectionAligner
+                  slots:
+                    content:
+                      - _id: d0d1cf31-8a25-48b4-bb39-7816d1164e9a
+                        type: flex
+                        slots:
+                          flexItem:
+                            - _id: f4520f9d-d29a-47c5-a481-d9597991e6ca
+                              type: text
+                              parameters:
+                                tag:
+                                  type: dex-segmented-control-parameter
+                                  value: span
+                                size:
+                                  type: dex-segmented-control-parameter
+                                  value:
+                                    mobile: 5xl
+                                text:
+                                  type: text
+                                  locales:
+                                    en: >-
+                                      ${#jptr:/Query Location
+                                      Content/entries/0/entry/_name}
+                                color:
+                                  type: dex-color-palette-parameter
+                                  value: text-primary
+                                weight:
+                                  type: dex-segmented-control-parameter
+                                  value: bold
+                                alignment:
+                                  type: dex-segmented-control-parameter
+                                  value: center
+                        parameters:
+                          gap:
+                            type: dex-slider-control-parameter
+                            value:
+                              mobile: '4'
+                          spacing:
+                            type: dex-space-control-parameter
+                            value:
+                              mobile:
+                                paddingLeft: container-xl
+                                paddingRight: container-xl
+                          direction:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: col
+                              tablet: col
+                              desktop: col
+                          alignItems:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: start
+                              tablet: center
+                              desktop: start
+                          displayName:
+                            type: text
+                            locales:
+                              en: Left Content
+                          justifyContent:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: start
+                              tablet: center
+                              desktop: start
+                - _id: 167a1275-7d79-4fff-a66a-27a4f847bb9b
+                  type: flex
+                  slots:
+                    flexItem:
+                      - _id: cf3563f2-0ac4-4d94-b2cd-4646d6c8cc42
+                        type: grid
+                        slots:
+                          gridInner:
+                            - _id: 487c101f-be5e-42fd-8ce2-2f21a694cbaf
+                              type: button
+                              _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+                              _overridability:
+                                variants: true
+                                parameters:
+                                  icon: 'yes'
+                                  link: 'yes'
+                                  text: 'yes'
+                                  border: 'yes'
+                                  fullWidth: 'yes'
+                                hideLockedParameters: true
+                            - _id: 732f8ba9-7433-407c-916f-11e4ca5900c9
+                              type: button
+                              _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+                              _overridability:
+                                variants: true
+                                parameters:
+                                  icon: 'yes'
+                                  link: 'yes'
+                                  text: 'yes'
+                                  border: 'yes'
+                                  fullWidth: 'yes'
+                                hideLockedParameters: true
+                        parameters:
+                          border:
+                            type: dex-token-selector-parameter
+                            value: border-top
+                          displayName:
+                            type: text
+                            locales:
+                              en: Top Buttons
+                          columnsCount:
+                            type: dex-slider-control-parameter
+                            value:
+                              mobile: '2'
+                              tablet: '2'
+                              desktop: '2'
+                      - _id: ff739acf-b87e-4716-802d-9b92a6ce501d
+                        type: flex
+                        parameters:
+                          spacing:
+                            type: dex-space-control-parameter
+                            value:
+                              mobile:
+                                paddingTop: container-md
+                                paddingLeft: container-md
+                                paddingRight: container-md
+                                paddingBottom: container-md
+                          direction:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: row
+                              tablet: row
+                              desktop: row
+                          fluidContent:
+                            type: checkbox
+                            value: true
+                          backgroundColor:
+                            type: dex-color-palette-parameter
+                            value: general-color-2
+                  parameters:
+                    direction:
+                      type: dex-segmented-control-parameter
+                      value:
+                        mobile: col
+                        tablet: row
+                        desktop: col
+                    displayName:
+                      type: text
+                      locales:
+                        en: Botom Section
+              rightColumn:
+                - _id: 380ad90e-3d10-4a12-aaca-374858155848
+                  type: flex
+                  slots:
+                    flexItem:
+                      - _id: 0a621b1b-699c-4514-ba12-c4cbbccd8f58
+                        type: grid
+                        slots:
+                          gridInner:
+                            - _id: 64da3d93-57a4-4e16-ab94-d653fc9ecc96
+                              type: gridItem
+                              slots:
+                                inner:
+                                  - _id: 966d415e-b47a-4cef-b4f3-7fa5aa9875c4
+                                    type: flex
+                                    slots:
+                                      flexItem:
+                                        - _id: 6b323b10-ad6c-41d5-b33d-a081726b22b2
+                                          type: text
+                                          parameters:
+                                            tag:
+                                              type: dex-segmented-control-parameter
+                                              value: span
+                                            size:
+                                              type: dex-segmented-control-parameter
+                                              value:
+                                                mobile: 2xl
+                                            text:
+                                              type: text
+                                              locales:
+                                                en: >-
+                                                  Performance Foodservice - ${#jptr:/Query
+                                                  Location
+                                                  Content/entries/0/entry/fields/title/value}
+                                            weight:
+                                              type: dex-segmented-control-parameter
+                                              value: bold
+                                        - _id: 41e6554b-f3d1-4502-a083-b32ebcd62c3e
+                                          type: text
+                                          parameters:
+                                            tag:
+                                              type: dex-segmented-control-parameter
+                                              value: span
+                                            size:
+                                              type: dex-segmented-control-parameter
+                                              value:
+                                                mobile: lg
+                                            text:
+                                              type: text
+                                              locales:
+                                                en: >-
+                                                  Proudly serving Alabama, Florida,
+                                                  Tennessee, and Georgia.
+                                            weight:
+                                              type: dex-segmented-control-parameter
+                                              value: normal
+                                        - _id: c83a0ac5-4f74-43c9-8e05-f1c744ef97cd
+                                          type: text
+                                          parameters:
+                                            tag:
+                                              type: dex-segmented-control-parameter
+                                              value: span
+                                            size:
+                                              type: dex-segmented-control-parameter
+                                              value:
+                                                mobile: xl
+                                            text:
+                                              type: text
+                                              locales:
+                                                en: >-
+                                                  ${#jptr:/Query Location
+                                                  Content/entries/0/entry/fields/addressLine1/value}
+                                                  ${#jptr:/Query Location
+                                                  Content/entries/0/entry/fields/addressLine2/value}
+                                            weight:
+                                              type: dex-segmented-control-parameter
+                                              value: bold
+                                        - _id: 9356e004-f298-4c09-b110-aa40e8be89d7
+                                          type: spacer
+                                          parameters:
+                                            size:
+                                              type: dex-token-selector-parameter
+                                              value: spacer-medium
+                                        - _id: 7522b693-1f93-43c2-b09e-0b9c1530d024
+                                          type: flex
+                                          slots:
+                                            flexItem:
+                                              - _id: 9d98f165-d779-4fdb-9718-9f8644a3f2da
+                                                type: text
+                                                parameters:
+                                                  tag:
+                                                    type: dex-segmented-control-parameter
+                                                    value: span
+                                                  size:
+                                                    type: dex-segmented-control-parameter
+                                                    value:
+                                                      mobile: 2xl
+                                                  text:
+                                                    type: text
+                                                    locales:
+                                                      en: Additional Resourses
+                                                  weight:
+                                                    type: dex-segmented-control-parameter
+                                                    value: bold
+                                              - _id: 26fc188f-7701-4b3c-8fd3-75c6e609c6ac
+                                                type: text
+                                                parameters:
+                                                  tag:
+                                                    type: dex-segmented-control-parameter
+                                                    value: span
+                                                  size:
+                                                    type: dex-segmented-control-parameter
+                                                    value:
+                                                      mobile: xl
+                                                  text:
+                                                    type: text
+                                                    locales:
+                                                      en: Chat With Us
+                                                  color:
+                                                    type: dex-color-palette-parameter
+                                                    value: text-link
+                                                  weight:
+                                                    type: dex-segmented-control-parameter
+                                                    value: bold
+                                                  decoration:
+                                                    type: dex-segmented-control-parameter
+                                                    value: underline
+                                          parameters:
+                                            gap:
+                                              type: dex-slider-control-parameter
+                                              value:
+                                                mobile: '8'
+                                                tablet: '8'
+                                                desktop: '8'
+                                            direction:
+                                              type: dex-segmented-control-parameter
+                                              value:
+                                                mobile: col
+                                                tablet: col
+                                                desktop: col
+                                    parameters:
+                                      gap:
+                                        type: dex-slider-control-parameter
+                                        value:
+                                          mobile: '4'
+                                          tablet: '4'
+                                          desktop: '4'
+                                      spacing:
+                                        type: dex-space-control-parameter
+                                        value:
+                                          mobile:
+                                            paddingTop: container-md
+                                            paddingLeft: container-md
+                                            paddingRight: container-md
+                                            paddingBottom: container-md
+                                      direction:
+                                        type: dex-segmented-control-parameter
+                                        value:
+                                          mobile: col
+                                          tablet: row
+                                          desktop: col
+                                      displayName:
+                                        type: text
+                                        locales:
+                                          en: Main Content
+                                      backgroundColor:
+                                        type: dex-color-palette-parameter
+                                        value: general-color-1
+                              parameters:
+                                rowStart:
+                                  type: dex-slider-control-parameter
+                                  value:
+                                    mobile: '1'
+                                    tablet: '1'
+                                    desktop: '1'
+                                columnSpan:
+                                  type: dex-slider-control-parameter
+                                  value:
+                                    mobile: span-2
+                                    tablet: span-2
+                                    desktop: span-2
+                                columnStart:
+                                  type: dex-slider-control-parameter
+                                  value:
+                                    mobile: '1'
+                                    tablet: '1'
+                                    desktop: '1'
+                                displayName:
+                                  type: text
+                                  locales:
+                                    en: First Column
+                            - _id: 13e24d7b-e754-4845-b08b-5ffa6c382636
+                              type: gridItem
+                              slots:
+                                inner:
+                                  - _id: 7237faa1-56e0-436f-a05b-ce847831a87d
+                                    type: map
+                              parameters:
+                                rowStart:
+                                  type: dex-slider-control-parameter
+                                  value:
+                                    mobile: '1'
+                                    tablet: '1'
+                                    desktop: '1'
+                                columnSpan:
+                                  type: dex-slider-control-parameter
+                                  value:
+                                    mobile: span-7
+                                    tablet: span-7
+                                    desktop: span-7
+                                columnStart:
+                                  type: dex-slider-control-parameter
+                                  value:
+                                    mobile: '3'
+                                    tablet: '3'
+                                    desktop: '3'
+                        parameters:
+                          displayName:
+                            type: text
+                            locales:
+                              en: Content
+                          columnsCount:
+                            type: dex-slider-control-parameter
+                            value:
+                              mobile: '6'
+                              tablet: '1'
+                              desktop: '6'
+                      - _id: e3429af8-8d07-4e7a-bab8-924f226222f6
+                        type: container
+                        slots:
+                          containerContent:
+                            - _id: 362b298b-dcb6-420d-b4c5-b3ab641e92ec
+                              type: divider
+                              parameters:
+                                color:
+                                  type: dex-color-palette-parameter
+                                  value: general-color-9
+                                width:
+                                  type: dex-slider-control-parameter
+                                  value: 100%
+                                alignment:
+                                  type: dex-segmented-control-parameter
+                                  value: center
+                                thickness:
+                                  type: dex-slider-control-parameter
+                                  value: 1px
+                      - _id: 71d0e697-4db5-4762-a61a-82f0fd776aad
+                        type: text
+                        parameters:
+                          tag:
+                            type: dex-segmented-control-parameter
+                            value: span
+                          size:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: 4xl
+                          text:
+                            type: text
+                            locales:
+                              en: Featured Brands
+                          color:
+                            type: dex-color-palette-parameter
+                            value: text-primary
+                          weight:
+                            type: dex-segmented-control-parameter
+                            value: bold
+                  parameters:
+                    gap:
+                      type: dex-slider-control-parameter
+                      value:
+                        mobile: '4'
+                        tablet: '4'
+                        desktop: '8'
+                    direction:
+                      type: dex-segmented-control-parameter
+                      value:
+                        mobile: col
+                        tablet: col
+                        desktop: col
+                    displayName:
+                      type: text
+                      locales:
+                        en: Right Content
+            parameters:
+              rightColumnSpacing:
+                type: dex-space-control-parameter
+                value:
+                  paddingTop: page-top-offset
+                  paddingLeft: page-layout-lg
+                  paddingRight: page-layout-lg
+              leftColumnBackground:
+                type: dex-color-palette-parameter
+                value: general-color-1
+              rightColumnBackground:
+                type: dex-color-palette-parameter
+                value: general-color-6
   _locales:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
 created: '2025-11-19T12:34:39.431103+00:00'
-modified: '2025-11-19T12:34:39.431103+00:00'
+modified: '2025-11-21T09:53:35.841369+00:00'
 pattern: false

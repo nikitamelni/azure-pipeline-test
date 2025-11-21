@@ -23,7 +23,7 @@ composition:
       value: button-tertiary
     iconPosition:
       type: dex-segmented-control-parameter
-      value: right
+      value: left
     hoverTextColor:
       type: dex-color-palette-parameter
       value: text-primary
@@ -33,6 +33,7 @@ composition:
   _overridability:
     variants: true
     parameters:
+      icon: 'yes'
       link: 'yes'
       text: 'yes'
       border: 'yes'
@@ -41,7 +42,7 @@ composition:
   _locales:
     - en
 created: '2025-11-19T10:55:40.290124+00:00'
-modified: '2025-11-20T14:26:17.930382+00:00'
+modified: '2025-11-21T09:04:16.276123+00:00'
 pattern: true
 previewImageUrl: >-
   https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/button-tertiary.jpg

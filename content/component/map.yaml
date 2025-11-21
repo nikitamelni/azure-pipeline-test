@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://uniform.app/schemas/json-schema/component-definition/v1.json
+$schema: https://uniform.app/schemas/json-schema/component-definition/v1.json
+id: map
+name: Map
+icon: screen
+parameters: []
+useTeamPermissions: true
+slots: []
+canBeComposition: false
+created: '2025-11-21T09:44:33.553674+00:00'
+updated: '2025-11-21T09:44:33.553674+00:00'

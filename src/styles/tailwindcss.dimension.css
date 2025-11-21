@@ -1,4 +1,4 @@
-@source inline("{[&_td]:,[&_th]:,lg:,md:,}{mt,mb,mr,ml,pt,pb,pr,pl,w,h,p}-{container-md,container-width,container-lg,button-medium,container-xl,general-dimension-1,general-dimension-2,general-dimension-4,page-layout-md,page-layout-lg,page-top-offset,general-dimension-5,container-xs}");
+@source inline("{[&_td]:,[&_th]:,lg:,md:,}{mt,mb,mr,ml,pt,pb,pr,pl,w,h,p}-{container-md,container-width,container-lg,button-medium,container-xl,general-dimension-1,general-dimension-2,general-dimension-4,page-layout-md,page-layout-lg,page-top-offset,general-dimension-5,container-xs,spacer-small,spacer-medium,spacer-large}");
 
 @theme {
 	--spacing-container-md: var(--container-md);
@@ -14,4 +14,7 @@
 	--spacing-page-top-offset: var(--page-top-offset);
 	--spacing-general-dimension-5: var(--general-dimension-5);
 	--spacing-container-xs: var(--container-xs);
+	--spacing-spacer-small: var(--spacer-small);
+	--spacing-spacer-medium: var(--spacer-medium);
+	--spacing-spacer-large: var(--spacer-large);
 }
