@@ -16,7 +16,7 @@ const defaultProps = {
   zoom: 11,
 };
 
-const mapOptions = (maps: typeof google.maps) => ({
+const mapOptions = (maps: GoogleMapReact.Maps) => ({
   mapTypeId: maps.MapTypeId.ROADMAP,
   fullscreenControl: false,
   streetViewControl: false,

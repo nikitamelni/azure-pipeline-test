@@ -1,19 +1,19 @@
-@source inline("{[&_td]:,[&_th]:,lg:,md:,}{mt,mb,mr,ml,pt,pb,pr,pl,w,h,p}-{container-md,container-width,container-lg,button-medium,container-xl,general-dimension-1,general-dimension-2,general-dimension-4,page-layout-md,page-layout-lg,page-top-offset,general-dimension-5,container-xs,spacer-small,spacer-medium,spacer-large}");
+@source inline("{[&_td]:,[&_th]:,lg:,md:,}{mt,mb,mr,ml,pt,pb,pr,pl,w,h,p}-{container-xs,container-md,container-lg,container-xl,container-width,button-medium,general-dimension-1,general-dimension-2,general-dimension-4,general-dimension-5,page-layout-md,page-layout-lg,page-top-offset,spacer-small,spacer-medium,spacer-large}");
 
 @theme {
+	--spacing-container-xs: var(--container-xs);
 	--spacing-container-md: var(--container-md);
-	--spacing-container-width: var(--container-width);
 	--spacing-container-lg: var(--container-lg);
-	--spacing-button-medium: var(--button-medium);
 	--spacing-container-xl: var(--container-xl);
+	--spacing-container-width: var(--container-width);
+	--spacing-button-medium: var(--button-medium);
 	--spacing-general-dimension-1: var(--general-dimension-1);
 	--spacing-general-dimension-2: var(--general-dimension-2);
 	--spacing-general-dimension-4: var(--general-dimension-4);
+	--spacing-general-dimension-5: var(--general-dimension-5);
 	--spacing-page-layout-md: var(--page-layout-md);
 	--spacing-page-layout-lg: var(--page-layout-lg);
 	--spacing-page-top-offset: var(--page-top-offset);
-	--spacing-general-dimension-5: var(--general-dimension-5);
-	--spacing-container-xs: var(--container-xs);
 	--spacing-spacer-small: var(--spacer-small);
 	--spacing-spacer-medium: var(--spacer-medium);
 	--spacing-spacer-large: var(--spacer-large);

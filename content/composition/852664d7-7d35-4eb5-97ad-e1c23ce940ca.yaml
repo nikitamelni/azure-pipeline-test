@@ -4,6 +4,56 @@ composition:
   _slug: /
   type: page
   _overrides:
+    125b92db-6c9f-4538-a957-d2ef4104aa41:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: View Our Locations
+        fullWidth:
+          type: checkbox
+          value: true
+    5267776d-2c40-43be-ba8c-bb5a3332da56:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Become A Customer
+        border:
+          type: dex-token-selector-parameter
+          value: border-right
+        fullWidth:
+          type: checkbox
+          value: true
+    582b23da-944f-47d2-8b00-682be59bdf81:
+      parameters:
+        image:
+          type: asset
+          value: []
+        titleText:
+          type: text
+          locales:
+            en: Component Starter Kit
+        descriptionText:
+          type: text
+          locales:
+            en: >-
+              A rich set of components to supercharge building fast, modern,
+              personalized experiences with Uniform DXP.
+        eyebrowTitleText:
+          type: text
+          locales:
+            en: Get your next project started on the right foot
+        primaryButtonLink:
+          type: link
+          locales:
+            en:
+              path: https://unfrm.to/csk-docs
+              type: url
+        primaryButtonText:
+          type: text
+          locales:
+            en: Docs
     5e8bdc5f-838d-4915-99b5-fc0f2a2dfa16:
       parameters:
         image:
@@ -55,7 +105,7 @@ composition:
                   value: 0ff678c5-794e-4ad2-af0b-861222dd178d
                 url:
                   value: >-
-                    https://img.uniform.global/p/bKE8PekcQ3Gk9j6C81jcrQ/bryk07-lQ9G4CrHW1zOfaA-meta-image.png
+                    https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/ZnzxYLUxSiSIdkm44dBBPg-meta-image.png
                   type: text
                 file:
                   type: file
@@ -93,7 +143,7 @@ composition:
                   value: 0ff678c5-794e-4ad2-af0b-861222dd178d
                 url:
                   value: >-
-                    https://img.uniform.global/p/bKE8PekcQ3Gk9j6C81jcrQ/bryk07-lQ9G4CrHW1zOfaA-meta-image.png
+                    https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/ZnzxYLUxSiSIdkm44dBBPg-meta-image.png
                   type: text
                 file:
                   type: file
@@ -122,32 +172,325 @@ composition:
           value: >-
             Essential set of components you need to start building
             personalizable web experiences with Uniform.
+    db7637f8-1149-4f27-9ef7-606d26180316:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: Become a Customer
+    e22303e6-daf8-4cf1-b744-846f5ab971c1:
+      parameters:
+        icon:
+          type: asset
+          locales:
+            en: null
+        link:
+          type: link
+          locales:
+            en:
+              path: >-
+                /${locale}/our-locations/${#jptr:/Location List Content entries
+                Loop Item/entry/fields/title/value}
+              type: projectMapNode
+              nodeId: c8bb8351-9e26-43e2-8c82-3d100131bf3a
+              projectMapId: 537d11ff-9ebe-4420-9682-36694477e2f9
+              dynamicInputValues:
+                locale: ${locale}
+                location: >-
+                  ${#jptr:/Location List Content entries Loop
+                  Item/entry/fields/title/value}
+        text:
+          type: text
+          locales:
+            en: See Location
+        fullWidth:
+          type: checkbox
+          value: true
+    3176778a-d2e8-4a15-8528-07bb40e45cea|5fed6a90-7c09-4c1e-99be-2e10f2a1959f:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: >-
+              ${#jptr:/Location List Content entries Loop
+              Item/entry/fields/title/value}
+    3176778a-d2e8-4a15-8528-07bb40e45cea|88e8a86b-ca4f-4b6e-b784-9abcac2efe6d:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: >-
+              ${#jptr:/Location List Content entries Loop
+              Item/entry/fields/addressLine2/value}
+    3176778a-d2e8-4a15-8528-07bb40e45cea|8b51c5cf-c78a-4899-bd11-f16248fbae77:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: >-
+              ${#jptr:/Location List Content entries Loop
+              Item/entry/fields/addressLine1/value}
+    3176778a-d2e8-4a15-8528-07bb40e45cea|b44e29ad-3fa5-436a-85f1-23d67f590448:
+      parameters:
+        text:
+          type: text
+          locales:
+            en: >-
+              ${#jptr:/Location List Content entries Loop
+              Item/entry/fields/addressLine3/value}
+    3176778a-d2e8-4a15-8528-07bb40e45cea|b9a199fb-b17a-4896-99df-66059ba0ccfa:
+      slots:
+        $slotSectionItems:
+          - _id: e22303e6-daf8-4cf1-b744-846f5ab971c1
+            type: button
+            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+            _overridability:
+              variants: true
+              parameters:
+                icon: 'yes'
+                link: 'yes'
+                text: 'yes'
+                border: 'yes'
+                fullWidth: 'yes'
+              hideLockedParameters: true
     852664d7-7d35-4eb5-97ad-e1c23ce940ca|dc2e95be-21b5-4476-a309-f8a34922f528:
       slots:
         $slotSectionItems:
-          - _id: 5e8bdc5f-838d-4915-99b5-fc0f2a2dfa16
-            type: fixedHero
-            _pattern: db25526c-e9e6-45f1-acb6-230bf6c0efb4
-            _overridability:
-              parameters:
-                $viz: 'yes'
-                image: 'yes'
-                height: 'no'
-                titleTag: 'yes'
-                textColor: 'no'
-                titleText: 'yes'
-                displayName: 'yes'
-                descriptionText: 'yes'
-                overlayAutoTint: 'no'
-                contentAlignment: 'no'
-                eyebrowTitleText: 'yes'
-                primaryButtonLink: 'yes'
-                primaryButtonText: 'yes'
-                primaryButtonTextColor: 'no'
-              hideLockedParameters: true
+          - _id: ff1b5f24-abc2-4fe9-bec0-f7a5abb03735
+            type: columnsSection
+            slots:
+              leftColumn:
+                - _id: c1055462-d4fe-4c05-b2e1-6db8098a6f9a
+                  type: sectionAligner
+                  slots:
+                    content:
+                      - _id: 0a79a4fb-c799-4418-8b67-819028df4451
+                        type: flex
+                        slots:
+                          flexItem:
+                            - _id: d3ba26e9-d395-47ce-b761-59f6f8ba799d
+                              type: text
+                              parameters:
+                                tag:
+                                  type: dex-segmented-control-parameter
+                                  value: span
+                                size:
+                                  type: dex-segmented-control-parameter
+                                  value:
+                                    mobile: 5xl
+                                text:
+                                  type: text
+                                  locales:
+                                    en: Home
+                                color:
+                                  type: dex-color-palette-parameter
+                                  value: text-primary
+                                weight:
+                                  type: dex-segmented-control-parameter
+                                  value: bold
+                                alignment:
+                                  type: dex-segmented-control-parameter
+                                  value: center
+                            - _id: d326e373-9025-4d34-a388-92df2125d934
+                              type: text
+                              parameters:
+                                tag:
+                                  type: dex-segmented-control-parameter
+                                  value: span
+                                text:
+                                  type: text
+                                  locales:
+                                    en: >-
+                                      We deliver to over 80,000 customer
+                                      locations across America. Find the
+                                      location that serves your area by Becoming
+                                      a Customer.
+                                weight:
+                                  type: dex-segmented-control-parameter
+                                  value: normal
+                                alignment:
+                                  type: dex-segmented-control-parameter
+                                  value: left
+                            - _id: db7637f8-1149-4f27-9ef7-606d26180316
+                              type: button
+                              _pattern: 646faee6-b476-43c6-a1a8-eebe85699889
+                              _overridability:
+                                variants: true
+                                parameters:
+                                  link: 'yes'
+                                  text: 'yes'
+                                hideLockedParameters: true
+                        parameters:
+                          gap:
+                            type: dex-slider-control-parameter
+                            value:
+                              mobile: '4'
+                          spacing:
+                            type: dex-space-control-parameter
+                            value:
+                              mobile:
+                                paddingLeft: container-xl
+                                paddingRight: container-xl
+                          direction:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: col
+                              tablet: col
+                              desktop: col
+                          alignItems:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: start
+                              tablet: center
+                              desktop: start
+                          displayName:
+                            type: text
+                            locales:
+                              en: Left Content
+                          justifyContent:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: start
+                              tablet: center
+                              desktop: start
+                - _id: b7197467-0a75-4052-86cf-a0cfec168ff0
+                  type: flex
+                  slots:
+                    flexItem:
+                      - _id: 124e8356-dde2-4fd8-9458-7d1e9844ddff
+                        type: grid
+                        slots:
+                          gridInner:
+                            - _id: 5267776d-2c40-43be-ba8c-bb5a3332da56
+                              type: button
+                              _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+                              _overridability:
+                                variants: true
+                                parameters:
+                                  icon: 'yes'
+                                  link: 'yes'
+                                  text: 'yes'
+                                  border: 'yes'
+                                  fullWidth: 'yes'
+                                hideLockedParameters: true
+                            - _id: 125b92db-6c9f-4538-a957-d2ef4104aa41
+                              type: button
+                              _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
+                              _overridability:
+                                variants: true
+                                parameters:
+                                  icon: 'yes'
+                                  link: 'yes'
+                                  text: 'yes'
+                                  border: 'yes'
+                                  fullWidth: 'yes'
+                                hideLockedParameters: true
+                        parameters:
+                          border:
+                            type: dex-token-selector-parameter
+                            value: border-top
+                          displayName:
+                            type: text
+                            locales:
+                              en: Top Buttons
+                          columnsCount:
+                            type: dex-slider-control-parameter
+                            value:
+                              mobile: '2'
+                              tablet: '2'
+                              desktop: '2'
+                      - _id: f1113eaa-5dbc-4642-b59f-3de83c260ef9
+                        type: flex
+                        parameters:
+                          spacing:
+                            type: dex-space-control-parameter
+                            value:
+                              mobile:
+                                paddingTop: container-md
+                                paddingLeft: container-md
+                                paddingRight: container-md
+                                paddingBottom: container-md
+                          direction:
+                            type: dex-segmented-control-parameter
+                            value:
+                              mobile: row
+                              tablet: row
+                              desktop: row
+                          fluidContent:
+                            type: checkbox
+                            value: true
+                          backgroundColor:
+                            type: dex-color-palette-parameter
+                            value: general-color-2
+                  parameters:
+                    direction:
+                      type: dex-segmented-control-parameter
+                      value:
+                        mobile: col
+                        tablet: row
+                        desktop: col
+                    displayName:
+                      type: text
+                      locales:
+                        en: Botom Section
+              rightColumn:
+                - _id: 70abefb2-985c-4308-bdb8-d963d85bca46
+                  type: flex
+                  slots:
+                    flexItem:
+                      - _id: 582b23da-944f-47d2-8b00-682be59bdf81
+                        type: fixedHero
+                        _pattern: db25526c-e9e6-45f1-acb6-230bf6c0efb4
+                        _overridability:
+                          parameters:
+                            $viz: 'yes'
+                            image: 'yes'
+                            height: 'no'
+                            titleTag: 'yes'
+                            textColor: 'no'
+                            titleText: 'yes'
+                            displayName: 'yes'
+                            descriptionText: 'yes'
+                            overlayAutoTint: 'no'
+                            contentAlignment: 'no'
+                            eyebrowTitleText: 'yes'
+                            primaryButtonLink: 'yes'
+                            primaryButtonText: 'yes'
+                            primaryButtonTextColor: 'no'
+                          hideLockedParameters: true
+                  parameters:
+                    gap:
+                      type: dex-slider-control-parameter
+                      value:
+                        mobile: '4'
+                        tablet: '4'
+                        desktop: '8'
+                    direction:
+                      type: dex-segmented-control-parameter
+                      value:
+                        mobile: col
+                        tablet: col
+                        desktop: col
+                    displayName:
+                      type: text
+                      locales:
+                        en: Right Content
+            parameters:
+              rightColumnSpacing:
+                type: dex-space-control-parameter
+                value:
+                  paddingTop: page-top-offset
+                  paddingLeft: page-layout-lg
+                  paddingRight: page-layout-lg
+              leftColumnBackground:
+                type: dex-color-palette-parameter
+                value: general-color-1
+              rightColumnBackground:
+                type: dex-color-palette-parameter
+                value: general-color-6
   _locales:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
-created: '2025-10-09T13:58:23.777769+00:00'
-modified: '2025-10-09T14:01:08.002261+00:00'
+created: '2025-11-19T10:55:43.060951+00:00'
+modified: '2025-11-21T11:10:06.422832+00:00'
 pattern: false
