@@ -4,12 +4,13 @@ import { AssetParamValue } from '@uniformdev/assets';
 import { flattenValues, type RootComponentInstance } from '@uniformdev/canvas';
 import { UniformAppProps } from '@uniformdev/context-next';
 import { UniformContext } from '@uniformdev/context-react';
+import '@/styles/fonts.css';
 import '@/styles/globals.css';
 import '@/styles/colors.css';
 import '@/styles/dimensions.css';
 import '@/styles/borders.css';
 import { resolveAsset } from '@uniformdev/csk-components/utils/assets';
-import { customFontVariables } from '@/fonts';
+import { customFontVariables, helveticaNeue } from '@/fonts';
 import createUniformContext from '@/utils/canvas/createUniformContext';
 
 type UniformMetadataParameters = {
@@ -109,6 +110,11 @@ const App = ({ Component, pageProps, serverUniformContext }: UniformAppProps<{ d
       <NextThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <UniformContext context={serverUniformContext ?? clientContext} outputType="standard">
           <div className={customFontVariables}>
+            <style>{`
+              :root {
+                --helvetica-neue: ${helveticaNeue.style.fontFamily};
+              }
+            `}</style>
             <Component {...pageProps} />
           </div>
         </UniformContext>
