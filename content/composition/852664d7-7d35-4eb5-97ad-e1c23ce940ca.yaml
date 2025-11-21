@@ -174,10 +174,20 @@ composition:
             personalizable web experiences with Uniform.
     db7637f8-1149-4f27-9ef7-606d26180316:
       parameters:
+        link:
+          type: link
+          locales:
+            en:
+              path: /${locale}/our-locations
+              type: projectMapNode
+              nodeId: c7f90287-ade6-4d38-af0a-cb828640b4e0
+              projectMapId: 537d11ff-9ebe-4420-9682-36694477e2f9
+              dynamicInputValues:
+                locale: ${locale}
         text:
           type: text
           locales:
-            en: Become a Customer
+            en: See Locations
     e22303e6-daf8-4cf1-b744-846f5ab971c1:
       parameters:
         icon:
@@ -492,5 +502,5 @@ composition:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
 created: '2025-11-19T10:55:43.060951+00:00'
-modified: '2025-11-21T11:10:06.422832+00:00'
+modified: '2025-11-21T11:31:37.44957+00:00'
 pattern: false
