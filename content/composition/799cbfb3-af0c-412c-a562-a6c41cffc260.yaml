@@ -18,51 +18,12 @@ composition:
           type: text
           locales:
             en: Become a Customer
-    502e6559-eaf7-4ef6-a464-4da7294bd98e:
-      parameters:
-        icon:
-          type: asset
-          locales:
-            en: null
-        text:
-          type: text
-          locales:
-            en: See Location
-        fullWidth:
-          type: checkbox
-          value: true
-    6ca586df-6bbe-45d8-b48e-5a726d5bac3a:
-      parameters:
-        icon:
-          type: asset
-          locales:
-            en: null
-        text:
-          type: text
-          locales:
-            en: See Location
-        fullWidth:
-          type: checkbox
-          value: true
     6cc92ef5-a56e-4a3d-97cc-d4e37c4deb49:
       parameters:
         text:
           type: text
           locales:
             en: View Our Locations
-        fullWidth:
-          type: checkbox
-          value: true
-    727b66fa-6b67-44cd-a12a-b71a4cea7037:
-      parameters:
-        icon:
-          type: asset
-          locales:
-            en: null
-        text:
-          type: text
-          locales:
-            en: See Location
         fullWidth:
           type: checkbox
           value: true
@@ -82,7 +43,7 @@ composition:
                   value: 66ecbb4f-fe0c-4dad-b9fe-f850ca83fd70
                 url:
                   value: >-
-                    https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/g4xujLjZS2aQjzMrBN8E2g-Header-Logo-new.png
+                    https://img.uniform.global/p/aYJsGG8iQJmNJTI9hym3rA/xUF3FdkRSFm1SjbTfeLehg-Header-Logo-new.png
                   type: text
                 file:
                   type: file
@@ -110,19 +71,6 @@ composition:
               Performance Foodservice, a leading food distributor and supplier,
               provides quality products, innovative technology, and custom
               solutions to culinary partners.
-    8b4fbf0f-1625-457a-95f8-d8e99af2a108:
-      parameters:
-        icon:
-          type: asset
-          locales:
-            en: null
-        text:
-          type: text
-          locales:
-            en: See Location
-        fullWidth:
-          type: checkbox
-          value: true
     c9e6da41-6a2c-472f-b95f-dcdb5d5c3a3d:
       parameters:
         text:
@@ -147,28 +95,13 @@ composition:
             en:
               path: >-
                 /${locale}/our-locations/${#jptr:/Location List Content entries
-                Loop Item/entry/fields/title/value}
+                Loop Item/entry/_slug}
               type: projectMapNode
               nodeId: c8bb8351-9e26-43e2-8c82-3d100131bf3a
               projectMapId: 537d11ff-9ebe-4420-9682-36694477e2f9
               dynamicInputValues:
                 locale: ${locale}
-                location: >-
-                  ${#jptr:/Location List Content entries Loop
-                  Item/entry/fields/title/value}
-        text:
-          type: text
-          locales:
-            en: See Location
-        fullWidth:
-          type: checkbox
-          value: true
-    fd6467b1-6d65-4722-a55e-7395aa36a35b:
-      parameters:
-        icon:
-          type: asset
-          locales:
-            en: null
+                location: ${#jptr:/Location List Content entries Loop Item/entry/_slug}
         text:
           type: text
           locales:
@@ -212,21 +145,6 @@ composition:
       slots:
         $slotSectionItems:
           - _id: fb8658dc-f4e8-4fb6-9f5c-6def9393f1e9
-            type: button
-            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
-            _overridability:
-              variants: true
-              parameters:
-                icon: 'yes'
-                link: 'yes'
-                text: 'yes'
-                border: 'yes'
-                fullWidth: 'yes'
-              hideLockedParameters: true
-    65aa1229-f74c-4991-aad0-b462da0836a3|b9a199fb-b17a-4896-99df-66059ba0ccfa:
-      slots:
-        $slotSectionItems:
-          - _id: 727b66fa-6b67-44cd-a12a-b71a4cea7037
             type: button
             _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
             _overridability:
@@ -470,13 +388,13 @@ composition:
                                                         value: 6ce45ded-aeca-412c-b67d-917b25ba9fda
                                                       url:
                                                         value: >-
-                                                          https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/UbJrFt3tRT-YDHZ6X9N92w-facebook-svgrepo-com.svg
+                                                          https://img.uniform.global/p/aYJsGG8iQJmNJTI9hym3rA/j4LP7pvxSyyr310d-99lTw-facebook-svgrepo-com.svg
                                                         type: text
                                                       file:
                                                         type: file
                                                         value: 420e7b65-e7b7-4bab-a4db-9f4a6161c447
                                                       size:
-                                                        value: 1157
+                                                        value: 1142
                                                         type: number
                                                       title:
                                                         type: text
@@ -524,22 +442,22 @@ composition:
                                                         value: 8904d66a-8903-474d-ae04-12e464b54ae4
                                                       url:
                                                         value: >-
-                                                          https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/OyIcYYBkS2qPm7biWhZNtg-linkedin-svgrepo-com.svg
+                                                          https://img.uniform.global/p/aYJsGG8iQJmNJTI9hym3rA/TvfTPz56TiSN9EpcxhpXaA-linkedin-svgrepo-com.svg
                                                         type: text
                                                       file:
                                                         type: file
                                                         value: cc51efcf-c966-41dd-9aae-2f0aedb035f6
                                                       size:
-                                                        value: 1320
+                                                        value: 1303
                                                         type: number
                                                       title:
                                                         type: text
                                                         value: linkedin-svgrepo-com.svg
                                                       width:
-                                                        value: 150
+                                                        value: 512
                                                         type: number
                                                       height:
-                                                        value: 150
+                                                        value: 512
                                                         type: number
                                                       mediaType:
                                                         value: image/svg+xml
@@ -578,13 +496,13 @@ composition:
                                                         value: 04257296-0f90-4e19-bbb8-db261ee62e35
                                                       url:
                                                         value: >-
-                                                          https://img.uniform.global/p/PkmVuQ1RQmy7alSv_a_U5A/-auVhI9ZQlOuEdix-CqcfQ-mail-svgrepo-com.svg
+                                                          https://img.uniform.global/p/aYJsGG8iQJmNJTI9hym3rA/h2XFkH_RSuC71ByO5BQ2JQ-mail-svgrepo-com.svg
                                                         type: text
                                                       file:
                                                         type: file
                                                         value: 7067efc4-c378-4cf1-b782-2180e34c7321
                                                       size:
-                                                        value: 935
+                                                        value: 924
                                                         type: number
                                                       title:
                                                         type: text
@@ -742,75 +660,9 @@ composition:
               rightColumnBackground:
                 type: dex-color-palette-parameter
                 value: general-color-6
-    860cc2db-3b2f-4c62-8bd0-ab011859d86a|b9a199fb-b17a-4896-99df-66059ba0ccfa:
-      slots:
-        $slotSectionItems:
-          - _id: 502e6559-eaf7-4ef6-a464-4da7294bd98e
-            type: button
-            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
-            _overridability:
-              variants: true
-              parameters:
-                icon: 'yes'
-                link: 'yes'
-                text: 'yes'
-                border: 'yes'
-                fullWidth: 'yes'
-              hideLockedParameters: true
-    864bd532-f945-4933-b9f1-d606e85f7144|b9a199fb-b17a-4896-99df-66059ba0ccfa:
-      slots:
-        $slotSectionItems:
-          - _id: 6ca586df-6bbe-45d8-b48e-5a726d5bac3a
-            type: button
-            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
-            _overridability:
-              variants: true
-              parameters:
-                icon: 'yes'
-                link: 'yes'
-                text: 'yes'
-                border: 'yes'
-                fullWidth: 'yes'
-              hideLockedParameters: true
-    b04f029e-d0d5-44b2-b74a-12dc8ef26d69|b9a199fb-b17a-4896-99df-66059ba0ccfa:
-      slots:
-        $slotSectionItems:
-          - _id: 8b4fbf0f-1625-457a-95f8-d8e99af2a108
-            type: button
-            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
-            _overridability:
-              variants: true
-              parameters:
-                icon: 'yes'
-                link: 'yes'
-                text: 'yes'
-                border: 'yes'
-                fullWidth: 'yes'
-              hideLockedParameters: true
-    d79ba96e-73a6-4db5-b27f-f43bdd8275ac|5fed6a90-7c09-4c1e-99be-2e10f2a1959f:
-      parameters:
-        text:
-          type: text
-          locales:
-            en: Arizona
-    d79ba96e-73a6-4db5-b27f-f43bdd8275ac|b9a199fb-b17a-4896-99df-66059ba0ccfa:
-      slots:
-        $slotSectionItems:
-          - _id: fd6467b1-6d65-4722-a55e-7395aa36a35b
-            type: button
-            _pattern: 8060e691-b0b3-428c-92f1-278fc76baf47
-            _overridability:
-              variants: true
-              parameters:
-                icon: 'yes'
-                link: 'yes'
-                text: 'yes'
-                border: 'yes'
-                fullWidth: 'yes'
-              hideLockedParameters: true
   _locales:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
-created: '2025-11-19T12:33:51.968422+00:00'
-modified: '2025-11-21T09:17:20.475274+00:00'
+created: '2025-11-21T16:47:25.860131+00:00'
+modified: '2025-11-21T22:22:18.870234+00:00'
 pattern: false

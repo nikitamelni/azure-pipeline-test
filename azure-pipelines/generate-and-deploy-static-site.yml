@@ -1,0 +1,68 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+                
+trigger: none
+
+variables:
+  RESOURCE_GROUP: 'dev-nikitam-eastus-rg'
+  PROFILE_NAME: 'nikitam-fd'
+  ENDPOINT_DOMAIN: 'pfg-uniform-g8bxgge7aqhwb2by.z01.azurefd.net'
+  STORAGE_ACCOUNT_NAME: 'pfgpoc'
+  CONTENT_PATHS: '["/*"]'  
+  ENDPOINT_NAME: 'pfg-uniform'
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '22.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm ci
+    npm run build
+  displayName: 'npm install and build'
+  env:
+    UNIFORM_API_KEY: $(UNIFORM_API_KEY)
+    UNIFORM_PROJECT_ID: $(UNIFORM_PROJECT_ID)
+    RUNNING_MODE: 'build'
+
+- task: AzureCLI@2
+  displayName: 'Upload site to $web'
+  inputs:
+    azureSubscription: $(RESOURCE_GROUP)   
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az storage blob upload-batch \
+        --account-name $(STORAGE_ACCOUNT_NAME) \
+        --account-key "$STORAGE_KEY" \
+        -s ./out \
+        -d '$web' \
+        --overwrite \
+        --auth-mode key
+
+
+- task: AzureCLI@2
+  displayName: 'Purge Front Door CDN cache'
+  inputs:
+    azureSubscription: 'dev-nikitam-eastus-rg'     
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      set -euo pipefail
+      echo "Running purge..."
+      echo "RG=$RESOURCE_GROUP | PROFILE=$PROFILE_NAME | ENDPOINT=$ENDPOINT_NAME | DOMAINS=$ENDPOINT_DOMAIN | PATHS=$CONTENT_PATHS"
+      az afd endpoint purge \
+        --resource-group $RESOURCE_GROUP \
+        --profile-name $PROFILE_NAME \
+        --domains $ENDPOINT_DOMAIN \
+        --content-paths $CONTENT_PATHS \
+        --endpoint-name $ENDPOINT_NAME \
+        --no-wait \
+        --only-show-errors
+      echo "Purge request submitted."

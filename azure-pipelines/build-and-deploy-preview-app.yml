@@ -1,0 +1,57 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # These should be defined in the pipeline Library/Variables (as secrets) or directly in the pipeline UI.
+  # UNIFORM_API_KEY: <set in pipeline/variable group as secret>
+  # UNIFORM_PROJECT_ID: <set in pipeline/variable group as secret>
+  RESOURCE_GROUP: 'dev-nikitam-eastus-rg'
+  APP_NAME: 'pfg-preview-app'
+  RUNNING_MODE: 'preview'
+
+steps:
+  - task: NodeTool@0
+    displayName: 'Use Node.js 22.x'
+    inputs:
+      versionSpec: '22.x'
+
+  - script: |
+      node -v
+      npm -v
+    displayName: 'Verify Node & npm versions'
+
+  - script: |
+      npm ci
+    displayName: 'Install dependencies'
+
+  - script: |
+      echo "Building Next.js app in SSR (preview) mode..."
+      npm run build
+    displayName: 'Build Next.js app'
+    env:
+      UNIFORM_API_KEY: $(UNIFORM_API_KEY)
+      UNIFORM_PROJECT_ID: $(UNIFORM_PROJECT_ID)
+      RUNNING_MODE: $(RUNNING_MODE)
+
+  - task: ArchiveFiles@2
+    displayName: 'Archive build for deployment'
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/drop.zip'
+      replaceExistingArchive: true
+
+  - publish: '$(Build.ArtifactStagingDirectory)/drop.zip'
+    displayName: 'Publish build artifact'
+    artifact: 'drop'
+
+  - task: AzureWebApp@1
+    displayName: 'Deploy to Azure Web App'
+    inputs:
+      azureSubscription: $(RESOURCE_GROUP)
+      appName: $(APP_NAME)
+      package: '$(Build.ArtifactStagingDirectory)/drop.zip'
+      runtimeStack: 'NODE|22-lts'

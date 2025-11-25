@@ -1,100 +1,32 @@
-import { CanvasClient, createUniformApiEnhancer, flattenValues, RootComponentInstance } from '@uniformdev/canvas';
-import { prependLocale, withUniformGetServerSideProps } from '@uniformdev/canvas-next/route';
+import {
+  CANVAS_DRAFT_STATE,
+  CANVAS_PUBLISHED_STATE,
+  createUniformApiEnhancer,
+  RootComponentInstance,
+  RouteClient,
+} from '@uniformdev/canvas';
+import { withUniformGetStaticProps } from '@uniformdev/canvas-next/route';
 import { UniformComposition } from '@uniformdev/canvas-react';
 import { BreadcrumbsContextProvider } from '@uniformdev/csk-components/components/canvas';
-import { resolveRouteToPath } from '@uniformdev/csk-components/utils/routing';
 import {
   DesignExtensionsProvider,
   type DesignExtensionsProviderProps,
 } from '@uniformdev/design-extensions-tools/components/providers/server';
 import { getTokenConfiguration } from '@uniformdev/design-extensions-tools/getTokenConfiguration';
-import { ProjectMapClient } from '@uniformdev/project-map';
 import { componentResolver } from '@/components';
+import { getBreadcrumbs, buildPath, getProjectMapClient } from '@/utils/canvas/canvasClients';
+import { getContentClient } from '@/utils/contentClient';
 
-const buildPath = (matchedRoute: string, dynamicInputs: Record<string, string | number> | undefined): string => {
-  let path = matchedRoute;
-  for (const [key, value] of Object.entries(dynamicInputs ?? {})) {
-    path = path.replace(`:${key}`, String(value));
-  }
-  return path;
-};
-
-const hasAutoGenerateTrue = (data: RootComponentInstance, type: string, param: string) => {
-  const seen = new WeakSet();
-  let result = false;
-
-  (function walk(node) {
-    if (result || node == null || typeof node !== 'object' || seen.has(node)) return;
-    seen.add(node);
-    if (node.type === type) {
-      const value = node.parameters?.[param]?.value ?? node.parameters?.[param];
-      if (value === true) {
-        result = true;
-        return;
-      }
-    }
-    if (Array.isArray(node)) {
-      for (const item of node) {
-        if (result) break;
-        walk(item);
-      }
-    } else {
-      for (const val of Object.values(node)) {
-        if (result) break;
-        walk(val as RootComponentInstance);
-      }
-    }
-  })(data);
-
-  return result;
-};
-
-const getBreadcrumbs = async (composition: RootComponentInstance, path: string) => {
-  if (composition.type !== 'page' || !hasAutoGenerateTrue(composition, 'breadcrumbs', 'autoGenerate')) return [];
-  const client = new ProjectMapClient({
-    projectId: process.env.UNIFORM_PROJECT_ID,
+export const getStaticProps = withUniformGetStaticProps({
+  modifyPath: (path: string) => {
+    return '/en' + path;
+  },
+  client: new RouteClient({
     apiKey: process.env.UNIFORM_API_KEY,
-  });
-
-  const { projectMapNodes } = composition;
-  if (!projectMapNodes || !projectMapNodes[0]) return [];
-
-  const { nodes } = await client.getNodes({
-    path: projectMapNodes[0].path,
-    includeAncestors: true,
-    depth: 0,
-  });
-
-  if (!nodes?.length) return [];
-
-  return Promise.all(
-    nodes.map(async node => {
-      const isDynamic = node.pathSegment?.includes(':');
-
-      const title =
-        isDynamic && node.compositionId
-          ? await new CanvasClient({
-              projectId: process.env.UNIFORM_PROJECT_ID,
-              apiKey: process.env.UNIFORM_API_KEY,
-            })
-              .getCompositionById({ compositionId: node.compositionId })
-              .then(({ composition }) => {
-                if (!composition) return node.name;
-                const flattened = flattenValues(composition);
-                return (flattened?.pageTitle as string) || node.name;
-              })
-              .catch(() => node.name)
-          : node.name;
-
-      const link = node.type === 'placeholder' ? null : resolveRouteToPath(node.path, path);
-
-      return { title, link };
-    })
-  );
-};
-
-export const getServerSideProps = withUniformGetServerSideProps({
-  modifyPath: prependLocale,
+    projectId: process.env.UNIFORM_PROJECT_ID,
+    disableSWR: true,
+  }),
+  param: 'slug',
   handleComposition: async (routeResponse, _context) => {
     const { composition, errors } = routeResponse.compositionApiResponse || {};
 
@@ -114,6 +46,43 @@ export const getServerSideProps = withUniformGetServerSideProps({
     };
   },
 });
+
+export const getStaticPaths = async () => {
+  const { nodes } = await getProjectMapClient().getNodes({
+    state: process.env.NODE_ENV === 'development' ? CANVAS_DRAFT_STATE : CANVAS_PUBLISHED_STATE,
+  });
+
+  const paths =
+    nodes?.reduce((acc: string[], { path, type }) => (type === 'composition' ? [...acc, path] : acc), []) || [];
+  // removing locale from the path to match the original site structure
+  const pathsWithLocale = paths.map(path => path.replace('/:locale', ''));
+
+  // replacing the dynamic locaiton details with the actual location details
+  // getting all possible location to pre-render them. location are stored in Uniform as entries
+
+  const contentClient = getContentClient();
+
+  const locationsResponse = await contentClient.getEntries({
+    filters: {
+      type: { eq: 'location' },
+    },
+    limit: 20,
+  });
+
+  const locations = (locationsResponse?.entries?.map(entry => entry?.entry?._slug) || []) as string[];
+
+  const pathsWithLocationDetails = pathsWithLocale.flatMap(path => {
+    if (path.includes(':location')) {
+      return locations.map((location: string) => path.replace(':location', location));
+    }
+    return path;
+  });
+
+  return {
+    paths: pathsWithLocationDetails,
+    fallback: 'blocking',
+  };
+};
 
 type PageProps = {
   data: RootComponentInstance;

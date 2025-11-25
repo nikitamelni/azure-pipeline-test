@@ -1,0 +1,5 @@
+id: 5491faa4-1182-4e57-a453-413ef28d4efc
+name: Azure
+url: >-
+  https://pfg-preview-app-hvhcg0fccqbaazce.canadacentral-01.azurewebsites.net/api/preview?secret=hello-world
+order: 2

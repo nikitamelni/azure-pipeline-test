@@ -9,9 +9,9 @@ composition:
       variables:
         locale: ${locale}
         search: ''
-        filters: '{"type[eq]":"location","fields.title[eq]":"${location}"}'
+        filters: '{"type[eq]":"location","slug[eq]":"${location}"}'
         uiFilters: >-
-          [{"field":"type","operator":"eq","value":"location"},{"field":"fields.title","operator":"eq","value":"${location}"}]
+          [{"field":"type","operator":"eq","value":"location"},{"field":"slug","operator":"eq","value":"${location}"}]
         contentTypes: location
   _overrides:
     487c101f-be5e-42fd-8ce2-2f21a694cbaf:
@@ -487,6 +487,6 @@ composition:
   _locales:
     - en
   _pattern: f9c058ea-c40d-4435-ac5a-53423cf654dc
-created: '2025-11-19T12:34:39.431103+00:00'
-modified: '2025-11-21T09:53:35.841369+00:00'
+created: '2025-11-21T16:47:25.866538+00:00'
+modified: '2025-11-21T22:23:49.722128+00:00'
 pattern: false
