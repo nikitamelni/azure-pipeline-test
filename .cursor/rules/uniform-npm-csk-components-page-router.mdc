@@ -1,0 +1,708 @@
+---
+description: Guide for working with @uniformdev/csk-components package and creating CSK components
+globs: 
+alwaysApply: true
+---
+
+# Uniform CSK Components Guide
+
+This document describes how to work with the `@uniformdev/csk-components` package for creating reusable UI components and Uniform Canvas components in Next.js Page Router applications.
+
+[uniform-next-page-router.mdc](mdc:.cursor/rules/uniform-next-page-router.mdc) describes base Uniform SDK principles for Next.js Page Router.
+
+## Required CSK Packages
+
+The following npm packages are required for CSK components:
+
+- `@uniformdev/csk-components` - Core CSK components and utilities
+- `@uniformdev/csk-cli` - CLI tools for CSK (install as devDependency)
+- `@uniformdev/design-extensions-tools` - Design extensions tools (install as devDependency)
+
+## Package Structure
+
+The `@uniformdev/csk-components` package provides:
+
+1. **Base Canvas Components**: `@uniformdev/csk-components/components/canvas` - Pre-built canvas component mappings
+2. **UI Atoms**: `@uniformdev/csk-components/components/ui` - Reusable presentational React components
+3. **Utilities**:
+   - `@uniformdev/csk-components/utils/styling` - Styling utilities (cn, resolveViewPort, formatSpaceParameterValue)
+   - `@uniformdev/csk-components/utils/routing` - Routing utilities (formatUniformLink, checkIsCurrentRoute, isExternalLink)
+   - `@uniformdev/csk-components/utils/assets` - Asset utilities (resolveAsset)
+   - `@uniformdev/csk-components/utils/createComponentResolver` - Component resolver factory
+4. **Types**: `@uniformdev/csk-components/types/cskTypes` - TypeScript type definitions (ViewPort, SpaceType, etc.)
+
+## Project Structure
+
+CSK components follow a two-layer architecture:
+
+```
+src/components/
+├── ui/                     # Presentational components (React atoms)
+│   ├── Button/
+│   │   ├── button.tsx     # Component implementation
+│   │   └── index.ts       # Type definitions and exports
+│   └── Container/
+│       ├── container.tsx
+│       └── index.ts
+├── canvas/                 # Uniform Canvas components
+│   ├── Button/
+│   │   ├── button.tsx     # Canvas wrapper component
+│   │   └── index.tsx      # Type definitions, parameters, and exports
+│   └── Container/
+│       ├── container.tsx
+│       ├── parameters.ts  # Parameter type definitions
+│       └── index.tsx
+├── custom-canvas/          # Custom canvas components (overrides or new)
+│   └── index.ts           # Custom components mapping
+└── index.ts               # Component resolver export
+```
+
+## Creating UI Components (React Atoms)
+
+UI components are pure presentational React components without Uniform-specific logic. They are reusable building blocks for Canvas components.
+
+### UI Component Structure
+
+**File: `src/components/ui/Button/button.tsx`**
+
+```tsx
+import { FC } from 'react';
+import { cn, resolveViewPort } from '@uniformdev/csk-components/utils/styling';
+import BaseLink from '@/components/ui/Link';
+
+export const Button: FC<ButtonProps> = ({
+  variant,
+  children,
+  href,
+  className,
+  onClick,
+  textColor,
+  textSize,
+  buttonColor,
+  // ... other props
+}) => {
+  const baseStyles = cn(
+    'block w-max font-medium',
+    {
+      [`text-${textColor}`]: textColor,
+      [resolveViewPort(textSize, 'text-{value}')]: textSize,
+      [`bg-${buttonColor}`]: buttonColor,
+    },
+    className
+  );
+
+  return href ? (
+    <BaseLink className={baseStyles} link={href}>
+      {children}
+    </BaseLink>
+  ) : (
+    <button onClick={onClick} className={baseStyles}>
+      {children}
+    </button>
+  );
+};
+```
+
+**File: `src/components/ui/Button/index.ts`**
+
+```tsx
+export type ButtonProps = {
+  variant?: ButtonVariant;
+  children?: React.ReactNode;
+  href?: string;
+  className?: string;
+  onClick?: () => void;
+  textColor?: string;
+  textSize?: string;
+  buttonColor?: string;
+  // ... other props
+};
+
+export enum ButtonVariant {
+  Link = 'link',
+  Primary = 'primary',
+}
+
+export { Button as default } from './button';
+```
+
+### UI Component Best Practices
+
+1. **Pure Presentation**: No Uniform SDK dependencies (no ComponentProps, UniformText, etc.)
+2. **Flexible Props**: Accept standard React props, allow className override
+3. **Use CSK Utilities**: 
+   - Use `cn()` for conditional class names
+   - Use `resolveViewPort()` for responsive values
+   - Use `formatSpaceParameterValue()` for spacing parameters
+4. **Styling**: Use Tailwind CSS with CSK utility functions
+5. **Type Safety**: Export TypeScript types and enums from index file
+6. **No Uniform Logic**: Keep components framework-agnostic
+
+### Common CSK Utility Functions for UI Components
+
+```tsx
+// Conditional class names
+import { cn } from '@uniformdev/csk-components/utils/styling';
+const classes = cn('base-class', { 'conditional-class': condition }, className);
+
+// Responsive viewport values
+import { resolveViewPort } from '@uniformdev/csk-components/utils/styling';
+const responsiveClass = resolveViewPort(height, 'h-{value}'); // h-full, lg:h-screen, etc.
+
+// Format spacing parameters
+import { formatSpaceParameterValue } from '@uniformdev/csk-components/utils/styling';
+const [fixedSpacing, { marginTop, paddingLeft }] = formatSpaceParameterValue(spacing);
+
+// Check external links
+import { isExternalLink } from '@uniformdev/csk-components/utils/routing';
+const isExternal = isExternalLink(href);
+```
+
+## Creating Canvas Components
+
+Canvas components wrap UI components with Uniform-specific logic to integrate with the Uniform CMS.
+
+### Canvas Component Structure
+
+**File: `src/components/canvas/Button/parameters.ts` (optional, for complex parameters)**
+
+```tsx
+import { SpaceType, ViewPort } from '@uniformdev/csk-components/types/cskTypes';
+
+export type ButtonParameters = {
+  text?: string;
+  link?: LinkParamValue;
+  textColor?: string;
+  textSize?: string;
+  buttonColor?: string;
+  border?: string | ViewPort<string>;
+  // ... parameter definitions matching Uniform component definition
+};
+```
+
+**File: `src/components/canvas/Button/index.tsx`**
+
+```tsx
+import { AssetParamValue } from '@uniformdev/assets';
+import { LinkParamValue } from '@uniformdev/canvas';
+import { ComponentProps } from '@uniformdev/canvas-react';
+import { ViewPort } from '@uniformdev/csk-components/types/cskTypes';
+
+export type ButtonParameters = {
+  text?: string;
+  link?: LinkParamValue;
+  textColor?: string;
+  buttonColor?: string;
+  icon?: AssetParamValue;
+  // CRITICAL: All parameter properties must be optional
+};
+
+export type ButtonAdditionalProps = {
+  className?: string;
+  onClick?: () => void;
+};
+
+export type ButtonProps = ComponentProps<ButtonParameters> & ButtonAdditionalProps;
+
+export { default } from './button';
+```
+
+**File: `src/components/canvas/Button/button.tsx`**
+
+```tsx
+import { FC, useMemo } from 'react';
+import { useRouter } from 'next/router';
+import { UniformText, useUniformContextualEditingState } from '@uniformdev/canvas-react';
+import { resolveAsset } from '@uniformdev/csk-components/utils/assets';
+import { checkIsCurrentRoute, formatUniformLink } from '@uniformdev/csk-components/utils/routing';
+import BaseButton from '@/components/ui/Button';
+import { ButtonProps } from '.';
+
+const Button: FC<ButtonProps> = ({
+  component,
+  link,
+  textColor,
+  buttonColor,
+  icon,
+  text,
+  className,
+  onClick,
+}) => {
+  const router = useRouter();
+  const { previewMode } = useUniformContextualEditingState();
+  const isEditorPreviewMode = previewMode === 'editor';
+
+  // Format link for href
+  const href = formatUniformLink(link);
+
+  // Check if current route
+  const isCurrentRoute = useMemo(
+    () => checkIsCurrentRoute(router, link),
+    [router, link]
+  );
+
+  // Resolve asset (image, icon, etc.)
+  const [resolvedIcon] = resolveAsset(icon);
+
+  // Don't render empty component outside editor
+  const hasContent = !!text || !!resolvedIcon;
+  if (!hasContent && !isEditorPreviewMode) return null;
+
+  return (
+    <BaseButton
+      variant={component.variant}
+      href={href}
+      onClick={onClick}
+      className={className}
+      textColor={textColor}
+      buttonColor={buttonColor}
+      isActive={isCurrentRoute}
+    >
+      {/* Use UniformText for editable text parameters */}
+      <UniformText
+        parameterId="text"
+        placeholder="Button text goes here"
+      />
+    </BaseButton>
+  );
+};
+
+export default Button;
+```
+
+### Canvas Component with Slots
+
+**File: `src/components/canvas/Container/index.tsx`**
+
+```tsx
+import { ComponentProps } from '@uniformdev/canvas-react';
+import { ContainerParameters } from './parameters';
+
+export type ContainerAdditionalProps = {
+  className?: string;
+};
+
+export enum ContainerSlots {
+  ContainerContent = 'containerContent',
+}
+
+export type ContainerProps = ComponentProps<ContainerParameters> & ContainerAdditionalProps;
+
+export { type ContainerParameters } from './parameters';
+export { default } from './container';
+```
+
+**File: `src/components/canvas/Container/container.tsx`**
+
+```tsx
+import { FC } from 'react';
+import { UniformSlot } from '@uniformdev/canvas-react';
+import BaseContainer from '@/components/ui/Container';
+import { ContainerProps, ContainerSlots } from '.';
+
+const Container: FC<ContainerProps> = ({
+  displayName,
+  anchor: id,
+  backgroundColor,
+  spacing,
+  border,
+  fluidContent,
+  className,
+}) => (
+  <BaseContainer
+    {...{
+      title: displayName,
+      id,
+      backgroundColor,
+      spacing,
+      border,
+      fluidContent,
+      className,
+    }}
+  >
+    {/* Render slot content */}
+    <UniformSlot name={ContainerSlots.ContainerContent} />
+  </BaseContainer>
+);
+
+export default Container;
+```
+
+### Canvas Component Best Practices
+
+1. **Type Safety**: Use `ComponentProps<ParametersType>` for prop typing
+2. **Optional Parameters**: ALL parameter properties MUST be optional (even if required in Uniform definition)
+3. **Use Uniform Utilities**:
+   - `resolveAsset()` - Transform AssetParamValue to usable asset data
+   - `formatUniformLink()` - Transform LinkParamValue to href string
+   - `checkIsCurrentRoute()` - Check if link matches current route
+   - `flattenValues()` - Flatten parameter values (for arrays, references)
+4. **Contextual Editing**: Use `useUniformContextualEditingState()` to detect preview mode
+5. **Empty State Handling**: Show placeholders in editor mode, return null in production
+6. **Slots**: Use `UniformSlot` component with defined slot names
+7. **Text Parameters**: Use `UniformText` component for inline-editable text
+8. **Rich Text Parameters**: Use `UniformRichText` component for rich text rendering
+9. **Component Variant**: Access variant via `component.variant`
+
+### Common Uniform Utilities for Canvas Components
+
+```tsx
+// Resolve assets (images, videos, etc.)
+import { resolveAsset } from '@uniformdev/csk-components/utils/assets';
+const [resolvedImage] = resolveAsset(image);
+const { url, width, height, title, focalPoint } = resolvedImage || {};
+
+// Format Uniform links
+import { formatUniformLink } from '@uniformdev/csk-components/utils/routing';
+const href = formatUniformLink(link);
+
+// Check if current route
+import { checkIsCurrentRoute } from '@uniformdev/csk-components/utils/routing';
+const isActive = checkIsCurrentRoute(router, link);
+
+// Flatten parameter values
+import { flattenValues } from '@uniformdev/canvas';
+const items = flattenValues(multiValueParam); // Returns array
+const singleItem = flattenValues(singleValueParam, { toSingle: true }); // Returns single value
+
+// Detect preview mode
+import { useUniformContextualEditingState } from '@uniformdev/canvas-react';
+const { previewMode } = useUniformContextualEditingState();
+const isEditorMode = previewMode === 'editor';
+```
+
+### Rendering Uniform Parameter Types
+
+```tsx
+// Text parameter (inline editable)
+<UniformText parameterId="title" placeholder="Enter title" />
+<UniformText parameterId="subtitle" as="h2" className="text-xl" placeholder="Subtitle" />
+
+// Rich text parameter
+<UniformRichText parameterId="description" placeholder="Enter description" />
+
+// Asset parameter
+const [image] = resolveAsset(imageParam);
+<img src={image?.url} alt={image?.title} width={image?.width} height={image?.height} />
+
+// Link parameter
+const href = formatUniformLink(linkParam);
+<a href={href}>Link text</a>
+
+// Slot
+<UniformSlot name="slotName" emptyPlaceholder={<div>Placeholder</div>} />
+```
+
+## Component Registration
+
+Components must be registered with the component resolver to map Uniform component types to React components.
+
+### Component Resolver Structure
+
+**File: `src/components/canvas/index.ts`**
+
+```tsx
+import baseCskComponentsMapping from '@uniformdev/csk-components/components/canvas';
+import Accordion from './Accordion';
+import Button from './Button';
+import Card from './Card';
+// ... import all canvas components
+
+export const cskComponentsMapping = {
+  // Spread base CSK components (optional - use if you want default implementations)
+  ...baseCskComponentsMapping,
+  // Register your canvas components
+  accordion: Accordion,
+  button: Button,
+  card: Card,
+  // ... register all components
+};
+```
+
+**File: `src/components/custom-canvas/index.ts`**
+
+```tsx
+import { ComponentMapping } from '@uniformdev/csk-components/utils/createComponentResolver';
+import CustomButton from './Button';
+import CustomHeader from './Header';
+
+// Custom components or overrides of CSK components
+export const customComponentsMapping: ComponentMapping = {
+  button: CustomButton,        // Override CSK button
+  customHeader: CustomHeader,  // New custom component
+};
+```
+
+**File: `src/components/index.ts`**
+
+```tsx
+import createComponentResolver, {
+  ComponentMapping,
+} from '@uniformdev/csk-components/utils/createComponentResolver';
+import { cskComponentsMapping } from '@/components/canvas';
+import { customComponentsMapping } from '@/components/custom-canvas';
+
+const componentsMapping: ComponentMapping = {
+  ...cskComponentsMapping,
+  ...customComponentsMapping, // Custom components override CSK components
+};
+
+export const componentResolver = createComponentResolver(componentsMapping);
+```
+
+### Using Component Resolver in Application
+
+**File: `src/pages/_app.tsx`**
+
+```tsx
+import type { AppProps } from 'next/app';
+import { UniformContext } from '@uniformdev/context-react';
+import { componentResolver } from '@/components';
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <UniformContext resolve={componentResolver}>
+      <Component {...pageProps} />
+    </UniformContext>
+  );
+}
+
+export default MyApp;
+```
+
+**File: `src/pages/[[...slug]].tsx`**
+
+```tsx
+import { withUniformGetServerSideProps } from '@uniformdev/canvas-next/route';
+import { UniformComposition } from '@uniformdev/canvas-react';
+
+export const getServerSideProps = withUniformGetServerSideProps();
+
+export default function Page({ data }) {
+  return <UniformComposition data={data} />;
+}
+```
+
+### Component Registration Best Practices
+
+1. **Import Base Mapping**: Start with `baseCskComponentsMapping` for default CSK components
+2. **Override Strategy**: Custom components override base components when keys match
+3. **Naming Convention**: Component keys must match Uniform component definition public IDs
+4. **Single Resolver**: Create one component resolver and import it in `_app.tsx`
+5. **Barrel Exports**: Use index files to organize and export components
+6. **Type Safety**: Use `ComponentMapping` type from CSK utils
+
+## CSK Utilities Reference
+
+### Styling Utilities
+
+```tsx
+import { cn, resolveViewPort, formatSpaceParameterValue } from '@uniformdev/csk-components/utils/styling';
+
+// Combine class names conditionally
+cn('base', { 'conditional': condition }, className);
+
+// Resolve responsive viewport values
+resolveViewPort(height, 'h-{value}'); // 'h-full lg:h-screen xl:h-dvh'
+resolveViewPort(spacing, '{value}');  // 'p-4 lg:p-8'
+
+// Format spacing parameters
+const [fixedValues, spacingProps] = formatSpaceParameterValue(spacing);
+const { marginTop, paddingLeft, paddingRight } = spacingProps;
+```
+
+### Routing Utilities
+
+```tsx
+import {
+  formatUniformLink,
+  checkIsCurrentRoute,
+  isExternalLink,
+} from '@uniformdev/csk-components/utils/routing';
+
+// Format link parameter to href
+const href = formatUniformLink(linkParam); // Returns string
+
+// Check if link matches current route
+const isActive = checkIsCurrentRoute(router, linkParam); // Returns boolean
+
+// Check if link is external
+const isExternal = isExternalLink(href); // Returns boolean
+```
+
+### Asset Utilities
+
+```tsx
+import { resolveAsset } from '@uniformdev/csk-components/utils/assets';
+
+// Resolve single asset
+const [asset] = resolveAsset(assetParam);
+const { url, width, height, title, focalPoint } = asset || {};
+
+// Resolve multiple assets
+const assets = resolveAsset(multiAssetParam);
+```
+
+## Common Patterns
+
+### Pattern: Conditional Rendering in Preview Mode
+
+```tsx
+import { useUniformContextualEditingState } from '@uniformdev/canvas-react';
+
+const MyComponent: FC<Props> = ({ text, image }) => {
+  const { previewMode } = useUniformContextualEditingState();
+  const isEditorMode = previewMode === 'editor';
+  
+  const hasContent = !!text || !!image;
+  
+  // Don't render empty component in production
+  if (!hasContent && !isEditorMode) return null;
+  
+  return (
+    <div>
+      {/* Component content */}
+    </div>
+  );
+};
+```
+
+### Pattern: Responsive Styling
+
+```tsx
+import { resolveViewPort } from '@uniformdev/csk-components/utils/styling';
+import { ViewPort } from '@uniformdev/csk-components/types/cskTypes';
+
+type Props = {
+  spacing?: ViewPort<string>;
+  height?: string | ViewPort<string>;
+};
+
+const MyComponent: FC<Props> = ({ spacing, height }) => (
+  <div className={cn({
+    [resolveViewPort(spacing, 'p-{value}')]: spacing,
+    [resolveViewPort(height, 'h-{value}')]: height,
+  })}>
+    Content
+  </div>
+);
+```
+
+### Pattern: Handling Multiple Assets
+
+```tsx
+import { flattenValues } from '@uniformdev/canvas';
+import { resolveAsset } from '@uniformdev/csk-components/utils/assets';
+
+const Gallery: FC<Props> = ({ images }) => {
+  const imageList = flattenValues(images);
+  
+  return (
+    <div>
+      {imageList?.map((img, index) => {
+        const [resolved] = resolveAsset(img);
+        return <img key={index} src={resolved?.url} alt={resolved?.title} />;
+      })}
+    </div>
+  );
+};
+```
+
+### Pattern: Component Variants
+
+```tsx
+enum ComponentVariants {
+  Default = 'default',
+  Featured = 'featured',
+  Highlighted = 'highlighted',
+}
+
+const MyComponent: FC<Props> = ({ component, ...props }) => {
+  const variant = component.variant as ComponentVariants;
+  
+  switch (variant) {
+    case ComponentVariants.Featured:
+      return <FeaturedVariant {...props} />;
+    case ComponentVariants.Highlighted:
+      return <HighlightedVariant {...props} />;
+    default:
+      return <DefaultVariant {...props} />;
+  }
+};
+```
+
+## Common Types
+
+```tsx
+import { AssetParamValue } from '@uniformdev/assets';
+import { LinkParamValue, RichTextParamValue } from '@uniformdev/canvas';
+import { ComponentProps } from '@uniformdev/canvas-react';
+import { ViewPort, SpaceType } from '@uniformdev/csk-components/types/cskTypes';
+
+type MyComponentParameters = {
+  // Text
+  title?: string;
+  
+  // Rich text
+  description?: RichTextParamValue;
+  
+  // Link
+  link?: LinkParamValue;
+  
+  // Asset (image, video, etc.)
+  image?: AssetParamValue;
+  
+  // Responsive value
+  spacing?: ViewPort<string> | string;
+  height?: ViewPort<string>;
+  
+  // Spacing (margin/padding)
+  spacing?: SpaceType | ViewPort<SpaceType>;
+  
+  // Color
+  backgroundColor?: string;
+  textColor?: string;
+};
+
+type MyComponentProps = ComponentProps<MyComponentParameters>;
+```
+
+## Critical Rules
+
+1. **Always Use CSK Utilities**: Don't reinvent styling, routing, or asset utilities - use CSK provided functions
+2. **Component Separation**: Keep UI components pure (no Uniform logic) and Canvas components as thin wrappers
+3. **Optional Parameters**: ALL Canvas component parameters must be optional TypeScript properties
+4. **Type Safety**: Use proper types from `@uniformdev/canvas-react` and `@uniformdev/csk-components/types`
+5. **Preview Mode**: Always handle empty state for both editor mode (show placeholders) and production (return null)
+6. **Uniform Text Rendering**: Use `UniformText` for text parameters, `UniformRichText` for rich text
+7. **Asset Resolution**: Always use `resolveAsset()` before accessing asset properties
+8. **Link Formatting**: Always use `formatUniformLink()` to convert LinkParamValue to href
+9. **Component Registration**: Register components with exact match to Uniform component definition public ID
+10. **Base CSK Components**: You can use or override base CSK components from `@uniformdev/csk-components/components/canvas`
+
+## NPM Scripts for CSK
+
+Add these scripts to `package.json`:
+
+```json
+{
+  "scripts": {
+    "pull:dex": "design-extensions-tools pull",
+    "apply:dex": "design-extensions-tools apply",
+    "push:dex": "design-extensions-tools push",
+    "pull:locales": "csk-cli pull -l",
+    "component:extract": "csk-components extract"
+  }
+}
+```
+
+These scripts should be integrated into your main `dev` and `build` scripts:
+
+```json
+{
+  "scripts": {
+    "dev": "run-s pull:dex apply:dex pull:locales next:dev",
+    "build": "run-s pull:locales pull:dex apply:dex next:build"
+  }
+}
+```

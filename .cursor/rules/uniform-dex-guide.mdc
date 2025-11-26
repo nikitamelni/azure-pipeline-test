@@ -1,0 +1,390 @@
+---
+description: Guide for Uniform Design Extensions (DEX) - 5 DEX parameter types, token system, and workflows.
+globs: 
+alwaysApply: true
+---
+
+# Uniform Design Extensions (DEX) Guide
+
+This guide describes the Uniform Design Extensions (DEX) system - DEX parameters, token system, and workflows for the Uniform CMS project.
+
+For Canvas components reference, see [canvas-components-guide.mdc](mdc:.cursor/rules/canvas-components-guide.mdc).
+
+## Table of Contents
+
+1. [DEX Parameters](#dex-parameters)
+2. [Token System](#token-system)
+3. [Working with Tokens](#working-with-tokens)
+4. [Best Practices](#best-practices)
+5. [Troubleshooting](#troubleshooting)
+
+---
+
+## DEX Parameters
+
+DEX (Design Extensions) parameters are special parameter types for visual component customization through design tokens.
+
+### 1. dex-color-palette-parameter
+
+Set color tokens from predefined groups.
+
+```yaml
+- id: textColor
+  name: Text Color
+  type: dex-color-palette-parameter
+  typeConfig:
+    allowColors: []           # Empty = all colors in group
+    selectedGroup: text       # Group: text, button, general, page
+```
+
+### 2. dex-space-control-parameter
+
+Control spacing (margin/padding) with tokens, custom options or fixed values(Units)
+
+```yaml
+- id: spacing
+  name: Spacing
+  type: dex-space-control-parameter
+  typeConfig:
+    type: dimensions          # Dimensions, Custom options and Units type
+    withViewPort: true        # Enable responsive values only for Dimensions type
+    selectedGroup: container  # Groups: container, button, badge, table, spacer only for Dimensions type
+```
+
+**Usage in code**:
+```tsx
+import { formatSpaceParameterValue } from '@uniformdev/csk-components/utils/styling';
+const [fixedSpacing, { marginTop, paddingLeft }] = formatSpaceParameterValue(spacing);
+```
+
+### 3. dex-slider-control-parameter
+
+Numeric values via slider. Supports viewport functionality.
+
+**Steps mode** (fixed values):
+```yaml
+- id: columnsCount
+  name: Columns Count
+  type: dex-slider-control-parameter
+  typeConfig:
+    type: steps               # Custom options or Steps type
+    minValue: 1               # For Steps type
+    maxValue: 12              # For Steps type
+    withViewPort: true
+```
+
+**Custom options mode** (with presets):
+```yaml
+- id: gap
+  name: Gap
+  type: dex-slider-control-parameter
+  typeConfig:
+    type: custom
+    units: px
+    options:
+      - key: Small
+        value: '4'
+      - key: Medium
+        value: '8'
+    withViewPort: true
+```
+
+### 4. dex-segmented-control-parameter
+
+Select from fixed values. Supports viewport functionality.
+
+```yaml
+- id: textSize
+  name: Text Size
+  type: dex-segmented-control-parameter
+  typeConfig:
+    options:
+      - key: SM
+        value: sm
+      - key: Base
+        value: base
+      - key: LG
+        value: lg
+    defaultValue:
+      mobile: sm
+      desktop: base
+    withViewPort: true
+```
+
+**Usage in code**:
+```tsx
+import { resolveViewPort } from '@uniformdev/csk-components/utils/styling';
+const classes = resolveViewPort(textSize, 'text-{value}');
+
+// Result: 'text-sm lg:text-base'
+```
+
+### 5. dex-token-selector-parameter
+
+Universal selector for any token type.
+
+```yaml
+# Dimension tokens
+- id: size
+  type: dex-token-selector-parameter
+  typeConfig:
+    selectedTokenType: dimension
+    selectedGroup: button
+    allowDimensions: []
+
+# Border tokens
+- id: border
+  type: dex-token-selector-parameter
+  typeConfig:
+    selectedTokenType: border
+
+# Font tokens
+- id: textFont
+  type: dex-token-selector-parameter
+  typeConfig:
+    selectedTokenType: font
+```
+
+**Token Types**:
+- `dimension` - sizes (Groups: container, button, badge, table, spacer)
+- `border` - borders (no groups)
+- `font` - fonts (no groups)
+- `color` - colors (prefer `dex-color-palette-parameter`) (Groups: button, text)
+
+---
+
+## Token System
+
+### What are Tokens?
+
+Tokens are key-value pairs defined in `dex.config.json`:
+- **Key**: `button-primary` (used in parameters)
+- **Value**: `#0052ED` (defined in config)
+
+### Token Grouping
+
+Grouping is automatic based on prefix:
+
+| Prefix        | Group     | Examples                          |
+| ------------- | --------- | --------------------------------- |
+| `text-*`      | text      | text-primary, text-secondary      |
+| `button-*`    | button    | button-primary, button-small      |
+| `container-*` | container | container-small, container-medium |
+| `badge-*`     | badge     | badge-small, badge-large          |
+| `table-*`     | table     | table-small, table-medium         |
+| `spacer-*`    | spacer    | spacer-small, spacer-large        |
+| `general-*`   | general   | general-color-1, general-color-2  |
+| `page-*`      | page      | page-background-primary           |
+
+### dex.config.json Structure
+
+```json
+{
+  "colors": {
+    "light": {
+      "button-primary": "#0052ED",
+      "text-primary": "#001242"
+    }
+  },
+  "dimensions": {
+    "container-small": "24px",
+    "button-small": "8px 24px"
+  },
+  "fonts": {
+    "dm-sans": ""
+  },
+  "borders": {
+    "border-primary": {
+      "radius": "25px",
+      "width": "1px",
+      "color": "#E5E7EB",
+      "style": "solid"
+    }
+  }
+}
+```
+
+---
+
+## Working with Tokens
+
+### NPM Scripts
+
+```json
+{
+  "scripts": {
+    "apply:dex": "design-extensions-tools apply",       # Apply the Dex config for next application 
+    "push:dex": "design-extensions-tools push",         # Push the Dex config to the uniform project after making code-side changes
+    "pull:dex": "design-extensions-tools pull"          # Pull actual Dex config from uniform project 
+  }
+}
+```
+
+### Token Workflow
+
+**Adding/Modifying tokens:**
+
+1. Edit `dex.config.json`
+2. `npm run apply:dex` - apply locally
+3. Test: `npm run dev`
+4. `npm run push:dex` - push to CMS
+5. Use in Uniform MCP or visual editor
+
+**Syncing with team:**
+
+1. `npm run pull:dex` - get latest from CMS
+2. `npm run apply:dex` - apply locally
+3. Continue development
+
+### Adding New Tokens - Checklist
+
+- [ ] Open `dex.config.json`
+- [ ] Add token with correct prefix (e.g., `button-accent`)
+- [ ] Run `npm run apply:dex`
+- [ ] Test locally
+- [ ] Run `npm run push:dex`
+- [ ] Verify in Uniform editor
+- [ ] Commit changes
+
+**Example**:
+```json
+{
+  "colors": {
+    "light": {
+      "button-accent": "#FF6B00"  // Automatically goes to 'button' group
+    }
+  }
+}
+```
+
+---
+
+## Best Practices
+
+### ✅ DO
+
+- Use semantic names: `button-primary`, not `blue-button`
+- Use prefixes for automatic grouping
+- Always run `apply:dex` after editing `dex.config.json`
+- Always run `push:dex` before using Uniform MCP
+- Use viewport for responsive values
+
+### ❌ DON'T
+
+- Don't use technical names instead of descriptive ones
+- Don't create tokens without group prefix
+- Don't delete tokens used in components
+- Don't forget `push:dex` before working with MCP
+
+### Token Naming
+
+✅ **Correct**:
+```json
+{
+  "button-primary": "#0052ED",
+  "text-heading": "#001242",
+  "container-small": "24px"
+}
+```
+
+### Using Viewport
+
+✅ **Use viewport** when values differ by screen size:
+```yaml
+typeConfig:
+  withViewPort: true
+  defaultValue:
+    mobile: sm
+    tablet: base
+    desktop: lg
+```
+
+---
+
+## Troubleshooting
+
+### New tokens not visible in editor
+
+**Solution**:
+```bash
+npm run apply:dex  # Apply locally
+npm run push:dex   # Push to CMS
+```
+
+### Token not in correct group
+
+**Cause**: Wrong prefix.
+
+**Solution**:
+```json
+// Wrong:
+"primary-button": "#0052ED"
+
+// Correct:
+"button-primary": "#0052ED"
+```
+
+### Viewport values not working
+
+**Cause**: `withViewPort: true` not set.
+
+**Solution**:
+```yaml
+typeConfig:
+  withViewPort: true  # Add this
+  defaultValue:
+    mobile: sm
+    desktop: lg
+```
+
+---
+
+## Quick Reference
+
+### Token Groups Summary
+
+**Colors**: `text`, `button`, `general`
+**Dimensions**: `container`, `button`, `badge`, `table`, `spacer`  
+**Borders**: No groups  
+**Fonts**: No groups
+
+### DEX Parameter Types
+
+| Type                              | Viewport | Usage                    |
+| --------------------------------- | -------- | ------------------------ |
+| `dex-color-palette-parameter`     | No       | Colors                   |
+| `dex-space-control-parameter`     | Yes      | Spacing (margin/padding) |
+| `dex-slider-control-parameter`    | Yes      | Numeric values           |
+| `dex-segmented-control-parameter` | Yes      | Fixed selection          |
+| `dex-token-selector-parameter`    | No       | Universal token selector |
+
+### Essential Commands
+
+```bash
+npm run apply:dex    # Apply tokens locally
+npm run push:dex     # Push to Uniform CMS (before MCP!)
+npm run pull:dex     # Pull from CMS
+```
+
+### Current Token List
+
+**Colors**:
+- `button-*`: primary, secondary, tertiary (+ hover variants)
+- `text-*`: primary, secondary, tertiary
+- `general-color-*`: 1-5
+- `page-*`: background-primary
+
+**Dimensions**:
+- `container-*`: small (24px), medium (48px), large (96px), xlarge (120px)
+- `button-*`: small (8px 24px), medium (12px 32px), large (18px 40px)
+- `spacer-*`: extra-small (10px), small (20px), medium (40px), large (80px)
+- `badge-*`: small (2px 6px), large (4px 8px)
+- `table-*`: small (4px 8px), medium (12px 16px), large (16px 24px)
+
+**Borders**: primary, secondary, footer, image-radius-small
+
+**Fonts**: dm-sans (default), space-mono
+
+---
+
+*Uniform Design Extensions (DEX) Guide | Last updated: November 24, 2025*

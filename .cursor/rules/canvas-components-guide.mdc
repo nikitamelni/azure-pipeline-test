@@ -1,0 +1,499 @@
+---
+description: Reference guide for all 47 Canvas components for Uniform CMS. Includes component categories, structure, slots, parameters, and usage recommendations.
+globs: 
+alwaysApply: true
+---
+
+# Canvas Components Guide
+
+Reference guide for all Canvas components in the Uniform CMS project.
+
+**Related documentation:**
+- React implementation: [uniform-npm-csk-components-page-router.mdc](mdc:.cursor/rules/uniform-npm-csk-components-page-router.mdc)
+- DEX parameters & tokens: [uniform-dex-guide.mdc](mdc:.cursor/rules/uniform-dex-guide.mdc)
+
+## Overview
+
+- **Location**: `content/component/*.yaml` - YAML definitions for all components
+- **Reference**: `node_modules/@uniformdev/csk-components/dist/content/components/canvas/` - CSK component code examples
+- **Total**: 47 components across 5 categories
+
+---
+
+## Component Reference
+
+### Atomic Components (21)
+
+Base building blocks for complex components:
+
+| ID                | Name              | Description           | Slots                          | Main Parameters                                        | Variants             |
+| ----------------- | ----------------- | --------------------- | ------------------------------ | ------------------------------------------------------ | -------------------- |
+| `accordionItem`   | Accordion Item    | Accordion item        | `accordionItemContent`         | title, icon, backgroundColor                           | -                    |
+| `badge`           | Badge             | Badge/label           | -                              | text, textColor, badgeColor, size                      | -                    |
+| `breadcrumbs`     | Breadcrumbs       | Breadcrumb navigation | -                              | items, separator, textColor                            | -                    |
+| `button`          | Button            | Button                | -                              | text, link, textColor, buttonColor, size, border, icon | link                 |
+| `divider`         | Divider           | Divider               | -                              | color, thickness, style                                | horizontal, vertical |
+| `flexItem`        | Flex Item         | Flex container item   | `flexItemContent`              | grow, shrink, basis                                    | -                    |
+| `gridItem`        | Grid Item         | Grid container item   | `gridItemContent`              | columnSpan, rowSpan                                    | -                    |
+| `iconLabel`       | Icon Label        | Icon with text        | -                              | text, icon, iconPosition, textColor                    | -                    |
+| `image`           | Image             | Image                 | -                              | image, alt, width, height, objectFit, border           | -                    |
+| `link`            | Link              | Link                  | -                              | text, link, textColor, textSize, underline             | -                    |
+| `modal`           | Modal             | Modal dialog          | `modalContent`, `modalTrigger` | title, backgroundColor, size                           | -                    |
+| `richText`        | Rich Text         | Rich text             | -                              | content, textColor, textSize                           | -                    |
+| `spacer`          | Spacer            | Spacer                | -                              | size                                                   | horizontal           |
+| `tab`             | Tab               | Tab                   | `tabContent`                   | title, icon                                            | -                    |
+| `table`           | Table             | Table                 | `tableRows`                    | border, spacing                                        | -                    |
+| `tableCustomCell` | Table Custom Cell | Custom table cell     | `tableCellContent`             | backgroundColor, textColor                             | -                    |
+| `tableDataCell`   | Table Data Cell   | Data cell             | -                              | text, textColor, textAlign                             | -                    |
+| `tableHeaderCell` | Table Header Cell | Header cell           | -                              | text, textColor, textWeight                            | -                    |
+| `tableRow`        | Table Row         | Table row             | `tableRowCells`                | backgroundColor                                        | -                    |
+| `text`            | Text              | Text                  | -                              | text, textColor, textSize, textWeight, textFont        | -                    |
+| `video`           | Video             | Video                 | -                              | video, poster, controls, autoplay, loop                | -                    |
+
+### Layout Components (4)
+
+Container components for organizing page structure:
+
+| ID          | Name      | Description       | Slots               | Main Parameters                                           | Variants |
+| ----------- | --------- | ----------------- | ------------------- | --------------------------------------------------------- | -------- |
+| `container` | Container | Base container    | `containerContent`  | spacing, backgroundColor, border, fluidContent, height    | -        |
+| `flex`      | Flex      | Flexbox container | `flexItem`          | direction, justifyContent, alignItems, gap, wrap, spacing | -        |
+| `grid`      | Grid      | Grid container    | `gridInner`         | columnsCount, gapX, gapY, alignItems, spacing             | -        |
+| `tabs`      | Tabs      | Tabs              | `tabItems` (min: 1) | color, backgroundColor, spacing, border                   | bordered |
+
+### Composite Components (17)
+
+Complex components assembled from atoms:
+
+| ID             | Name          | Description     | Slots                                  | Main Parameters                                             | Variants          |
+| -------------- | ------------- | --------------- | -------------------------------------- | ----------------------------------------------------------- | ----------------- |
+| `accordion`    | Accordion     | Accordion       | `accordionItems` (min: 1)              | allowMultiple, defaultOpen, backgroundColor                 | -                 |
+| `banner`       | Banner        | Banner          | `bannerContent`                        | backgroundColor, height, textAlign, spacing                 | -                 |
+| `card`         | Card          | Card            | `cardHeader`, `cardBody`, `cardFooter` | backgroundColor, border, spacing, shadow                    | default, featured |
+| `carousel`     | Carousel      | Carousel        | `carouselItems` (min: 2)               | autoplay, interval, showIndicators, showArrows              | -                 |
+| `countdown`    | Countdown     | Countdown timer | -                                      | targetDate, showDays, showHours, textColor, backgroundColor | -                 |
+| `fixedHero`    | Fixed Hero    | Fixed hero      | `fixedHeroContent`                     | backgroundImage, height, textAlign, overlay, spacing        | -                 |
+| `flexibleHero` | Flexible Hero | Flexible hero   | `flexibleHeroContent`                  | layout, backgroundColor, spacing, alignment                 | split, stacked    |
+| `footer`       | Footer        | Footer          | `footerContent`                        | backgroundColor, border, spacing, columns                   | -                 |
+| `header`       | Header        | Header          | `headerContent`                        | backgroundColor, sticky, transparent, spacing               | -                 |
+| `imageGallery` | Image Gallery | Image gallery   | -                                      | images, columns, gap, border                                | grid, masonry     |
+| `review`       | Review        | Review          | -                                      | author, rating, text, image, date                           | -                 |
+| `section`      | Section       | Section         | `sectionContent`                       | backgroundColor, spacing, width, height                     | -                 |
+| `simpleFooter` | Simple Footer | Simple footer   | -                                      | text, links, backgroundColor, textColor                     | -                 |
+| `simpleHeader` | Simple Header | Simple header   | -                                      | logo, links, backgroundColor, sticky                        | -                 |
+| `testimonial`  | Testimonial   | Testimonial     | -                                      | quote, author, position, company, image, rating             | -                 |
+
+### Navigation Components (3)
+
+| ID                 | Name              | Description      | Slots             | Main Parameters                           | Variants             |
+| ------------------ | ----------------- | ---------------- | ----------------- | ----------------------------------------- | -------------------- |
+| `navigationFlyout` | Navigation Flyout | Flyout menu      | `flyoutContent`   | trigger, position, width, backgroundColor | -                    |
+| `navigationGroup`  | Navigation Group  | Navigation group | `navigationItems` | title, orientation, spacing               | horizontal, vertical |
+| `navigationLink`   | Navigation Link   | Navigation link  | -                 | text, link, icon, textColor, activeColor  | -                    |
+
+### Special Components (2)
+
+| ID              | Name           | Description         | Slots                                              | Main Parameters                                                               | Composition |
+| --------------- | -------------- | ------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------- | ----------- |
+| `page`          | Page           | Root page component | `pageHeader` (min: 1), `pageContent`, `pageFooter` | pageTitle, pageDescription, pageKeywords, openGraph, twitter, backgroundColor | ✅ Yes       |
+| `themeSwitcher` | Theme Switcher | Theme switcher      | -                                                  | defaultTheme, position, style                                                 | -           |
+
+---
+
+## Viewport & Variants
+
+### Viewport Support
+
+Components with responsive parameters (mobile/tablet/desktop):
+
+**Layout**: `container`, `flex`, `grid`, `tabs`
+**Composite**: `banner`, `card`, `fixedHero`, `flexibleHero`, `footer`, `header`, `imageGallery`, `section`
+**Atomic**: `button`, `text`, `richText`
+
+## Usage Patterns
+
+### Page Structure
+- **pageHeader**: Use `header` (with slots) or `simpleHeader` (without slots)
+- **pageContent**: Start with layout components (`container`, `flex`, `grid`, `tabs`), then add composite/atomic components
+- **pageFooter**: Use `footer` (with slots) or `simpleFooter` (without slots)
+
+### Common Component Hierarchies
+
+**Table structure**: `table` → `tableRow` → `tableHeaderCell` / `tableDataCell` / `tableCustomCell`
+
+**Accordion structure**: `accordion` → `accordionItem` → `accordionItemContent` (slot)
+
+**Tabs structure**: `tabs` → `tab` → `tabContent` (slot)
+
+---
+
+## Building Component Patterns & Pages: Workflow
+
+This section describes the best practices workflow for creating component patterns and compositions (pages) based on user requirements.
+
+### Best Practices Workflow
+
+Follow this prioritized approach when building components, patterns, or pages:
+
+#### 1. Reuse Existing Components (Highest Priority)
+
+**Always start by analyzing existing components** before creating new ones.
+
+- **Use Layout Components as Foundation**: Start with `container`, `flex`, or `grid` as the base structure
+- **Fill with Atomic Components**: Use atomic components (`button`, `text`, `image`, `richText`, etc.) to build content
+- **Leverage Composite Components**: Check if composite components (`card`, `banner`, `hero`, `accordion`) match requirements
+
+#### 2. Customize Canvas Components (Second Priority)
+
+If an existing canvas component is **close but not perfect**, customize it:
+
+- Adjust DEX parameters (colors, spacing, borders, fonts)
+- Use component variants if available
+- Override specific parameters using component patterns
+- Combine multiple components via slots
+
+#### 3. Build New Components (When Necessary)
+
+Only create new custom components when:
+
+- Requirements are **significantly different** from existing components
+- Complex business logic or unique interactions are needed
+- Existing components cannot be reasonably customized
+
+**When building new components**:
+
+- Use UI component from `@uniformdev/csk-components/components/ui` (pure React, no Uniform logic)
+- Create Canvas wrapper in `src/components/custom-canvas/` (integrate with Uniform)
+- Follow [uniform-npm-csk-components-page-router.mdc](mdc:.cursor/rules/uniform-npm-csk-components-page-router.mdc) guidelines
+- Use CSK utilities (`cn`, `resolveViewPort`, `formatSpaceParameterValue`, etc.)
+- Register component in `src/components/custom-canvas/index.ts`
+
+#### 4. Use DEX Parameters & Tokens
+
+**Always prioritize DEX parameters** for visual customization:
+
+- Use `dex-color-palette-parameter` for colors
+- Use `dex-space-control-parameter` for spacing/margins/padding
+- Use `dex-slider-control-parameter` for numeric values
+- Use `dex-segmented-control-parameter` for fixed selections
+- Use `dex-token-selector-parameter` for borders, fonts, dimensions
+
+**When adding new tokens**:
+
+1. Edit `dex.config.json` with proper prefix (e.g., `button-`, `text-`, `container-`)
+2. Run `npm run apply:dex` to apply locally
+3. Test changes with `npm run dev`
+4. **CRITICAL**: Run `npm run push:dex` **BEFORE** using Uniform MCP tools
+5. Use tokens in component parameters via Uniform MCP
+
+**See [uniform-dex-guide.mdc](mdc:.cursor/rules/uniform-dex-guide.mdc) for complete token documentation.**
+
+#### 5. Maximize Use of Uniform MCP Server
+
+**Always use Uniform MCP tools** for Uniform entity operations:
+
+✅ **DO** - Use MCP tools for:
+- Creating/updating component definitions
+- Creating/updating component patterns
+- Creating/updating composition patterns
+- Creating/updating compositions (pages)
+- Creating/updating content types & entries
+- Setting parameter values
+- Managing slots and child components
+
+❌ **DON'T** - Never manually edit:
+- YAML files in `content/` directory
+- Uniform entity files on disk
+
+---
+
+### 🚨 CRITICAL: Working from Screenshots or Visual References
+
+When building patterns or pages based on screenshots, mockups, Figma designs, or any visual reference:
+
+#### Mandatory Requirements
+
+1. **ALWAYS Launch Preview**
+   - This is NOT optional
+   - Preview must be checked before completing work
+   - Use the preview URL templates from this guide
+
+2. **Verify ALL Visual Elements**
+   
+   **Colors:**
+   - Background colors
+   - Text colors
+   - Button colors (primary, secondary, hover states)
+   - Border colors
+   - Use DEX tokens or exact hex values from reference
+   
+   **Sizes:**
+   - Component widths and heights
+   - Font sizes (text, headings, buttons)
+   - Icon sizes
+   - Image dimensions
+   - Container widths
+   
+   **Spacing:**
+   - Margins (top, bottom, left, right)
+   - Padding (internal spacing)
+   - Gaps between components
+   - Section spacing
+   - Use DEX spacing tokens when available
+   
+   **Text:**
+   - Exact wording and content
+   - Font families
+   - Font weights (regular, medium, bold)
+   - Text alignment (left, center, right)
+   - Line heights and letter spacing
+   
+   **Images:**
+   - Correct asset files
+   - Proper sizes and aspect ratios
+   - Correct positions and alignments
+   - Image fit (cover, contain, etc.)
+   - Border radius on images
+   
+   **Layout:**
+   - Component arrangement and order
+   - Flexbox/Grid alignment
+   - Responsive breakpoints (mobile, tablet, desktop)
+   - Component nesting and hierarchy
+
+3. **Side-by-Side Comparison**
+   - Open reference and preview side-by-side
+   - Check every detail methodically
+   - Use browser dev tools to measure if needed
+
+4. **Iterate Until Pixel-Perfect**
+   - Make adjustments via MCP tools
+   - Re-check preview after each change
+   - Don't stop until it matches exactly
+
+5. **Test Responsive Behavior**
+   - Check mobile viewport (320px-767px)
+   - Check tablet viewport (768px-1023px)
+   - Check desktop viewport (1024px+)
+   - Verify viewport-specific parameters work correctly
+
+#### Workflow Example
+
+```
+User provides screenshot → 
+Create pattern/composition via MCP → 
+Get preview URL → 
+LAUNCH PREVIEW → 
+Compare with reference → 
+Find differences → 
+Update via MCP → 
+LAUNCH PREVIEW AGAIN → 
+Repeat until perfect → 
+Only then mark as complete
+```
+
+#### ❌ NEVER Do This
+
+- Skip preview checking
+- Assume it looks correct without viewing
+- Finish without side-by-side comparison
+- Ignore small differences ("close enough")
+- Skip responsive testing
+
+#### ✅ ALWAYS Do This
+
+- Launch preview immediately after creation
+- Check every visual detail
+- Compare with reference side-by-side
+- Iterate until pixel-perfect match
+- Test all breakpoints
+- Verify again before finishing
+
+---
+
+### Component Pattern Building Strategy
+
+When creating component patterns from user requirements:
+
+#### Step 1: Analyze Requirements
+
+- Identify visual elements (headers, images, text, buttons, etc.)
+- Determine layout needs (columns, rows, spacing)
+- Note styling requirements (colors, fonts, borders)
+- Consider responsive behavior (mobile/tablet/desktop)
+
+#### Step 2: Map to Components
+
+- Choose base layout component (`container`, `flex`, `grid`)
+- Select content components (atomic or composite)
+- Plan slot hierarchy (what goes inside what)
+
+#### Step 3: Create Pattern via MCP
+
+- Use `mcp_Uniform_patternAction` with `action: create`
+- Set base component type
+- Add child components to slots using `createComponentInstances`
+- Set parameter values using `parameterUpdates`
+- Enable required locales using `localeUpdates`
+
+#### Step 4: Test Pattern
+
+Use the preview URL to verify the pattern:
+
+```
+http://localhost:3000/api/preview?secret={{UNIFORM_PREVIEW_SECRET}}&locale={{locale}}&id={{pattern_id}}&is_incontext_editing_mode=true&is_incontext_editing_playground=true&patternType=component
+```
+
+**Parameters**:
+- `secret`: Value from `.env` file (`UNIFORM_PREVIEW_SECRET`)
+- `locale`: Locale code (e.g., `en`, `en-US`)
+- `pattern_id`: UUID of the created component pattern
+- Fixed params: `is_incontext_editing_mode=true`, `is_incontext_editing_playground=true`, `patternType=component`
+
+#### Step 5: Iterate & Refine
+
+- Compare preview with user's reference/requirements
+- Adjust parameters, tokens, or component structure
+- Update pattern via MCP (`action: update`)
+- Re-test until requirements are met
+
+**🚨 CRITICAL: When Working from Screenshots/References**
+
+When the user provides a screenshot, mockup, or visual reference, you **MUST**:
+
+1. **Always launch preview** - Never skip this step
+2. **Verify ALL visual elements**:
+   - ✅ Colors (backgrounds, text, buttons, borders)
+   - ✅ Sizes (widths, heights, font sizes)
+   - ✅ Spacing (margins, padding, gaps)
+   - ✅ Text content (wording, formatting, alignment)
+   - ✅ Images (correct assets, sizes, positions)
+   - ✅ Layout (component placement, responsive behavior)
+3. **Compare side-by-side** - Reference vs Preview
+4. **Iterate until pixel-perfect** - Don't finish until it matches
+5. **Test responsive breakpoints** - Mobile, tablet, desktop
+
+❌ **NEVER** consider the task complete without checking the preview against the reference!
+
+### Composition (Page) Building Strategy
+
+When creating pages from user requirements:
+
+#### Step 1: Determine Composition Type
+
+- **New Page**: Create new composition instance
+- **From Pattern**: Use composition pattern if available
+- **Composition Definition**: Use existing (typically `page`) or create new if shell differs
+
+#### Step 2: Structure Page Slots
+
+Follow standard page structure:
+
+- **pageHeader**: Add `header` or `simpleHeader` component
+- **pageContent**: Add layout components with nested content
+- **pageFooter**: Add `footer` or `simpleFooter` component
+
+#### Step 3: Create Composition via MCP
+
+- Use `mcp_Uniform_compositionAction` with `action: create`
+- Set composition type (e.g., `page`)
+- Add components to slots using `createComponentInstances`
+- Set parameter values using `parameterUpdates`
+- Enable required locales using `localeUpdates`
+- Optionally attach to project map using `projectMapNode`
+
+#### Step 4: Test Composition
+
+Use the preview URL to verify the page:
+
+```
+http://localhost:3000/api/preview?secret={{UNIFORM_PREVIEW_SECRET}}&path={{path_from_project_map}}&locale={{locale}}&id={{composition_id}}&is_incontext_editing_mode=true
+```
+
+**Parameters**:
+- `secret`: Value from `.env` file (`UNIFORM_PREVIEW_SECRET`)
+- `path`: URL path from project map (e.g., `/about-us`, `/products/shoes`)
+- `locale`: Locale code (e.g., `en`, `en-US`)
+- `composition_id`: UUID of the created composition
+- Fixed param: `is_incontext_editing_mode=true`
+
+#### Step 5: Iterate & Refine
+
+- Compare preview with user's reference/requirements
+- Adjust components, parameters, or structure
+- Update composition via MCP (`action: update`)
+- Re-test until requirements are met
+
+**🚨 CRITICAL: When Working from Screenshots/References**
+
+When the user provides a screenshot, mockup, or visual reference, you **MUST**:
+
+1. **Always launch preview** - Never skip this step
+2. **Verify ALL visual elements**:
+   - ✅ Colors (backgrounds, text, buttons, borders)
+   - ✅ Sizes (widths, heights, font sizes)
+   - ✅ Spacing (margins, padding, gaps)
+   - ✅ Text content (wording, formatting, alignment)
+   - ✅ Images (correct assets, sizes, positions)
+   - ✅ Layout (component placement, responsive behavior)
+3. **Compare side-by-side** - Reference vs Preview
+4. **Iterate until pixel-perfect** - Don't finish until it matches
+5. **Test responsive breakpoints** - Mobile, tablet, desktop
+
+❌ **NEVER** consider the task complete without checking the preview against the reference!
+
+### Testing Workflow Summary
+
+| Entity Type        | Preview URL Template                                                                                                                                                                |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Component Pattern  | `http://localhost:3000/api/preview?secret={{secret}}&locale={{locale}}&id={{pattern_id}}&is_incontext_editing_mode=true&is_incontext_editing_playground=true&patternType=component` |
+| Composition (Page) | `http://localhost:3000/api/preview?secret={{secret}}&path={{path}}&locale={{locale}}&id={{composition_id}}&is_incontext_editing_mode=true`                                          |
+
+**Required Steps Before Testing**:
+
+1. Ensure dev server is running: `npm run dev`
+2. Get `UNIFORM_PREVIEW_SECRET` from `.env` file
+3. Get `pattern_id` or `composition_id` from MCP tool response
+4. Get `path` from project map (for compositions)
+5. Know your `locale` (typically `en` or `en-US`)
+
+### Quick Reference Checklist
+
+**Before Starting**:
+- [ ] Check existing components in this guide
+- [ ] Review [uniform-npm-csk-components-page-router.mdc](mdc:.cursor/rules/uniform-npm-csk-components-page-router.mdc) for implementation details
+- [ ] Review [uniform-dex-guide.mdc](mdc:.cursor/rules/uniform-dex-guide.mdc) for tokens
+
+**During Development**:
+- [ ] Start with layout components (`container`, `flex`, `grid`)
+- [ ] Use atomic/composite components for content
+- [ ] Use DEX parameters for styling
+- [ ] Add new tokens if needed (remember `push:dex` before MCP!)
+- [ ] Use Uniform MCP tools exclusively (never edit YAML files)
+
+**Testing**:
+- [ ] Start dev server (`npm run dev`)
+- [ ] Get preview URL with correct parameters
+- [ ] **Launch preview in browser** (mandatory for screenshots/references)
+- [ ] **Verify colors** match reference exactly
+- [ ] **Verify sizes** (widths, heights, font sizes)
+- [ ] **Verify spacing** (margins, padding, gaps)
+- [ ] **Verify text** content and formatting
+- [ ] **Verify images** (assets, positions, sizes)
+- [ ] **Verify layout** at all breakpoints (mobile, tablet, desktop)
+- [ ] Compare side-by-side with user's reference
+- [ ] Iterate and refine via MCP tools until pixel-perfect
+- [ ] **Never finish without preview check** when working from references
+
+---
+
+## Related Documentation
+
+- **React Implementation**: [uniform-npm-csk-components-page-router.mdc](mdc:.cursor/rules/uniform-npm-csk-components-page-router.mdc)
+- **DEX & Tokens**: [uniform-dex-guide.mdc](mdc:.cursor/rules/uniform-dex-guide.mdc)
+- **Uniform SDK**: [uniform-sdk.mdc](mdc:.cursor/rules/uniform-sdk.mdc)
+- **Next.js Integration**: [uniform-next-page-router.mdc](mdc:.cursor/rules/uniform-next-page-router.mdc)
+
+---
+
+*Last updated: November 24, 2025*
