@@ -22,42 +22,13 @@ steps:
     versionSpec: '22.x'
   displayName: 'Install Node.js'
 
-# ---------------------------------------------------------------------------
-# Pre-flight mirror sync (DRAFT — disabled until the mirror Function exists)
-#
-# Once the mirror Azure Function is deployed, enable this step. It tells the
-# mirror to fetch any routes it doesn't yet have from uniform.global before
-# the build starts. This handles:
-#   (a) Initial seed of an empty mirror after first deployment.
-#   (b) New dynamic-route entries (e.g. a newly added location whose
-#       /locations/<slug> URL was never invalidated because it didn't exist).
-#
-# The mirror Function exposes POST /api/sync with a JSON body of the form:
-#   { "paths": ["/our-locations", "/locations/phoenix", ...] }
-#
-# The path list comes from a small script in this repo (TODO: add
-# scripts/prefetch-routes.ts) that replicates the project-map + location-entry
-# expansion currently done in src/pages/[[...slug]].tsx getStaticPaths.
-#
-# - task: AzureCLI@2
-#   displayName: 'Pre-flight: sync mirror with discovered routes'
-#   inputs:
-#     azureSubscription: $(RESOURCE_GROUP)
-#     scriptType: bash
-#     scriptLocation: inlineScript
-#     inlineScript: |
-#       set -euo pipefail
-#       node ./scripts/prefetch-routes.ts > /tmp/paths.json
-#       curl -fsSL -X POST \
-#         -H "Content-Type: application/json" \
-#         --data-binary @/tmp/paths.json \
-#         "${MIRROR_FUNCTION_BASE_URL}/api/sync?code=${MIRROR_FUNCTION_KEY}"
-#   env:
-#     UNIFORM_API_KEY: $(UNIFORM_API_KEY)
-#     UNIFORM_PROJECT_ID: $(UNIFORM_PROJECT_ID)
-#     MIRROR_FUNCTION_BASE_URL: $(MIRROR_FUNCTION_BASE_URL)
-#     MIRROR_FUNCTION_KEY: $(MIRROR_FUNCTION_KEY)
-# ---------------------------------------------------------------------------
+# The mirror is intentionally NOT populated from the build agent. All JSON
+# refresh happens in the background via the mirror Function's invalidation
+# webhook (dependencyInvalidationHookUrl on the Uniform project) and its slow
+# rate-limited reconcile timer. Issuing a 400-page burst from CI would risk
+# 429s from Uniform; instead we trust that the mirror is current at trigger
+# time. Pipeline is triggered manually from Uniform UI, which gates against
+# parallel runs.
 
 - script: |
     npm ci
