@@ -1,0 +1,22 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "FUNCTIONS_NODE_BLOCK_ON_ENTRY_POINT_ERROR": "true",
+
+    "UNIFORM_PROJECT_ID": "",
+    "UNIFORM_API_KEY": "",
+    "UNIFORM_API_BASE": "https://uniform.global",
+    "UNIFORM_APP_BASE": "https://uniform.app",
+
+    "MIRROR_STORAGE_CONNECTION": "UseDevelopmentStorage=true",
+    "MIRROR_BLOB_CONTAINER": "edge-mirror",
+    "MIRROR_TABLE_BY_TAG": "byTag",
+
+    "MIRROR_RATE_LIMIT_RPS": "5",
+    "MIRROR_LOCALE_DEFAULT": "en",
+    "MIRROR_DYNAMIC_EXPANSIONS": "{\"location\":\"location\"}",
+    "MIRROR_SEED_TIMER_CRON": "0 0 */6 * * *"
+  }
+}

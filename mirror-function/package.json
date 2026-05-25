@@ -1,0 +1,29 @@
+{
+  "name": "uniform-edge-mirror",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Background mirror of Uniform /api/v1/route responses into Azure Blob Storage, driven by Uniform's dependencyInvalidationHookUrl.",
+  "main": "dist/src/functions/*.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run clean && npm run build",
+    "start": "func start",
+    "lint": "tsc --noEmit",
+    "test": "echo \"no tests yet\" && exit 0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@azure/data-tables": "^13.3.0",
+    "@azure/functions": "^4.6.0",
+    "@azure/storage-blob": "^12.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.6.0"
+  }
+}

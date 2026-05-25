@@ -22,6 +22,14 @@ steps:
     versionSpec: '22.x'
   displayName: 'Install Node.js'
 
+# The mirror is intentionally NOT populated from the build agent. All JSON
+# refresh happens in the background via the mirror Function's invalidation
+# webhook (dependencyInvalidationHookUrl on the Uniform project) and its slow
+# rate-limited reconcile timer. Issuing a 400-page burst from CI would risk
+# 429s from Uniform; instead we trust that the mirror is current at trigger
+# time. Pipeline is triggered manually from Uniform UI, which gates against
+# parallel runs.
+
 - script: |
     npm ci
     npm run build
@@ -30,6 +38,14 @@ steps:
     UNIFORM_API_KEY: $(UNIFORM_API_KEY)
     UNIFORM_PROJECT_ID: $(UNIFORM_PROJECT_ID)
     RUNNING_MODE: 'build'
+    # When the mirror Function is live, set UNIFORM_API_HOST in pipeline
+    # variables to its base URL (including ?code=<function-key>). RouteClient
+    # in src/pages/[[...slug]].tsx will route /api/v1/route calls there instead
+    # of https://uniform.global. Leave empty/unset to keep using uniform.global.
+    UNIFORM_API_HOST: $(UNIFORM_API_HOST)
+    # Pin Next.js BUILD_ID to the commit SHA so static assets and _next/data
+    # JSON paths are stable across rebuilds of the same content snapshot.
+    BUILD_DEPLOY_ID: $(Build.SourceVersion)
 
 - task: AzureCLI@2
   displayName: 'Upload site to $web'

@@ -17,6 +17,12 @@ import { componentResolver } from '@/components';
 import { getBreadcrumbs, buildPath, getProjectMapClient } from '@/utils/canvas/canvasClients';
 import { getContentClient } from '@/utils/contentClient';
 
+// UNIFORM_API_HOST is intended to be set by the static-export pipeline to point
+// at the Uniform edge mirror (an Azure Function fronting a blob-storage cache).
+// When unset (dev, preview/SSR), RouteClient falls back to its SDK default
+// (https://uniform.global), keeping draft/preview flows on the live edge.
+const ROUTE_CLIENT_API_HOST = process.env.UNIFORM_API_HOST;
+
 export const getStaticProps = withUniformGetStaticProps({
   modifyPath: (path: string) => {
     return '/en' + path;
@@ -25,6 +31,7 @@ export const getStaticProps = withUniformGetStaticProps({
     apiKey: process.env.UNIFORM_API_KEY,
     projectId: process.env.UNIFORM_PROJECT_ID,
     disableSWR: true,
+    ...(ROUTE_CLIENT_API_HOST ? { apiHost: ROUTE_CLIENT_API_HOST } : {}),
   }),
   param: 'slug',
   handleComposition: async (routeResponse, _context) => {

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.azure/
+local.settings.json
+*.log
+.env
+.env.local
