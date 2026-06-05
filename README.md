@@ -1,3 +1,10 @@
+# THIS SOLUTION WASN'T FULLY TESTED
+An Azure-powered Static Uniform API with NextJS pages router example app, based on this repo powered by AWS:
+https://github.com/uniform-collab/static-route-api
+Check mirror function readme for details, inside this repo.
+
+This solution wasn't fully tested, so it may required additional improvements. 
+
 # Uniform Component Starter Kit
 
 This is the latest version of the Uniform Component Starter Kit (CSK) - version 6, built specifically for Next.js 15 App Router leveraging React 19, TailwindCSS and TypeScript.
