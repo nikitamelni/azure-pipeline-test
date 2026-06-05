@@ -22,13 +22,12 @@ steps:
     versionSpec: '22.x'
   displayName: 'Install Node.js'
 
-# The mirror is intentionally NOT populated from the build agent. All JSON
-# refresh happens in the background via the mirror Function's invalidation
-# webhook (dependencyInvalidationHookUrl on the Uniform project) and its slow
-# rate-limited reconcile timer. Issuing a 400-page burst from CI would risk
-# 429s from Uniform; instead we trust that the mirror is current at trigger
-# time. Pipeline is triggered manually from Uniform UI, which gates against
-# parallel runs.
+# NOTE: SSG with the static API is NOT a recommended combination. The mirror
+# refreshes asynchronously via dependencyInvalidationHookUrl, so a build kicked
+# off immediately after a publish may read stale JSON. The static API is
+# recommended for SSR / CSR / SPA where reads happen at request time. This
+# pipeline still works for SSG, but expect occasional staleness right after
+# editorial activity. See mirror-function/README.md for details.
 
 - script: |
     npm ci
@@ -38,11 +37,10 @@ steps:
     UNIFORM_API_KEY: $(UNIFORM_API_KEY)
     UNIFORM_PROJECT_ID: $(UNIFORM_PROJECT_ID)
     RUNNING_MODE: 'build'
-    # When the mirror Function is live, set UNIFORM_API_HOST in pipeline
-    # variables to its base URL (including ?code=<function-key>). RouteClient
-    # in src/pages/[[...slug]].tsx will route /api/v1/route calls there instead
-    # of https://uniform.global. Leave empty/unset to keep using uniform.global.
-    UNIFORM_API_HOST: $(UNIFORM_API_HOST)
+    # When set, RouteClient calls are redirected to the static API via fetch
+    # override (no apiHost change; see src/utils/staticApi). Leave empty to
+    # use uniform.global directly.
+    UNIFORM_STATIC_API_BASE_URL: $(UNIFORM_STATIC_API_BASE_URL)
     # Pin Next.js BUILD_ID to the commit SHA so static assets and _next/data
     # JSON paths are stable across rebuilds of the same content snapshot.
     BUILD_DEPLOY_ID: $(Build.SourceVersion)

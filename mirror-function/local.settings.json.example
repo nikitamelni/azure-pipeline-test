@@ -15,8 +15,13 @@
     "MIRROR_TABLE_BY_TAG": "byTag",
 
     "MIRROR_RATE_LIMIT_RPS": "5",
-    "MIRROR_LOCALE_DEFAULT": "en",
     "MIRROR_DYNAMIC_EXPANSIONS": "{\"location\":\"location\"}",
-    "MIRROR_SEED_TIMER_CRON": "0 0 */6 * * *"
+    "MIRROR_LOCALE_PREFIXES": "[\"en\"]",
+    "MIRROR_SEED_TIMER_CRON": "0 0 */6 * * *",
+
+    "AFD_SUBSCRIPTION_ID": "",
+    "AFD_RESOURCE_GROUP": "",
+    "AFD_PROFILE_NAME": "",
+    "AFD_ENDPOINT_NAME": ""
   }
 }

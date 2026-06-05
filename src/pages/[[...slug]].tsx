@@ -16,12 +16,16 @@ import { getTokenConfiguration } from '@uniformdev/design-extensions-tools/getTo
 import { componentResolver } from '@/components';
 import { getBreadcrumbs, buildPath, getProjectMapClient } from '@/utils/canvas/canvasClients';
 import { getContentClient } from '@/utils/contentClient';
+import { createStaticApiFetch, resolveStaticApiConfig } from '@/utils/staticApi';
 
-// UNIFORM_API_HOST is intended to be set by the static-export pipeline to point
-// at the Uniform edge mirror (an Azure Function fronting a blob-storage cache).
-// When unset (dev, preview/SSR), RouteClient falls back to its SDK default
-// (https://uniform.global), keeping draft/preview flows on the live edge.
-const ROUTE_CLIENT_API_HOST = process.env.UNIFORM_API_HOST;
+// When UNIFORM_STATIC_API_BASE_URL is set, RouteClient calls are redirected to
+// the Azure mirror via a fetch override (base64url(path)-keyed blob in
+// Storage/Front Door). When unset (dev, preview/SSR without the mirror) the
+// SDK falls back to https://uniform.global, keeping draft/preview on the live
+// edge. The override is /api/v1/route-only — entries, project-map, and
+// canvas-by-id continue to hit uniform.global directly.
+const staticApi = resolveStaticApiConfig();
+const routeFetch = staticApi ? createStaticApiFetch(staticApi) : undefined;
 
 export const getStaticProps = withUniformGetStaticProps({
   modifyPath: (path: string) => {
@@ -31,7 +35,7 @@ export const getStaticProps = withUniformGetStaticProps({
     apiKey: process.env.UNIFORM_API_KEY,
     projectId: process.env.UNIFORM_PROJECT_ID,
     disableSWR: true,
-    ...(ROUTE_CLIENT_API_HOST ? { apiHost: ROUTE_CLIENT_API_HOST } : {}),
+    ...(routeFetch ? { fetch: routeFetch } : {}),
   }),
   param: 'slug',
   handleComposition: async (routeResponse, _context) => {

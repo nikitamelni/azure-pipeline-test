@@ -1,10 +1,12 @@
 // Core mirror operations shared by the HTTP handlers (invalidate, seed) and
-// the timer trigger.
+// the timer trigger. Drop-in semantically equivalent to bell/static-route-api's
+// renderAffected + renderAndSyncAll, with Azure Storage in place of S3/DynamoDB.
 
 import { odata, type TableEntity } from '@azure/data-tables';
 import { config } from './config';
 import { fetchRoute } from './uniform';
 import {
+  deleteRouteBlob,
   ensureStorage,
   getTagTable,
   readRouteBlob,
@@ -15,61 +17,91 @@ import {
   parseRouteRowKey,
   routeBlobKey,
   routeRowKey,
+  STATE_PUBLISHED,
   tagPartitionKey,
 } from './keys';
 import type { InvocationContext } from '@azure/functions';
 
-export interface MirrorRoute {
-  path: string;
-  locale: string;
+export interface RefreshResult {
+  /** Blob key that was written or deleted, e.g. `{projectId}/<b64>/64.json`. */
+  blobKey: string;
+  /** `written` when the route resolved to a published composition; `deleted` otherwise. */
+  action: 'written' | 'deleted';
+  /** True if the stored blob is byte-identical to what was already there — caller may skip CDN purge. */
+  unchanged?: boolean;
 }
 
 /**
- * Fetch a single route from Uniform, write it to blob storage, and update the
- * byTag table with the new dependency set. Stripping `dependencies` from the
- * stored body matches the bell/static-route-api convention and keeps blob size
- * down.
+ * Fetch a single route from Uniform and reconcile blob storage:
+ *   • published composition   → write the blob + upsert byTag rows
+ *   • anything else (notFound,
+ *     redirect, unknown)      → delete the blob (so the app falls through to a 404)
+ *
+ * Returns the blob key so callers can collect them for a single batched CDN
+ * purge instead of one purge per route.
  */
 export const refreshRoute = async (
-  route: MirrorRoute,
+  path: string,
   ctx?: Pick<InvocationContext, 'log'>
-): Promise<void> => {
-  const { body, dependencies } = await fetchRoute(route.path);
-  const blobKey = routeBlobKey(config.uniform.projectId, route.locale, route.path);
-  await writeRouteBlob(blobKey, body);
+): Promise<RefreshResult> => {
+  const { body, dependencies } = await fetchRoute(path);
+  const blobKey = routeBlobKey(config.uniform.projectId, path);
+
+  const routeType = (body as { type?: string }).type;
+  if (routeType !== 'composition') {
+    await deleteRouteBlob(blobKey);
+    ctx?.log?.(`refreshRoute: ${path} resolved to '${routeType ?? 'unknown'}'; blob deleted.`);
+    return { blobKey, action: 'deleted' };
+  }
+
+  // Compare with what's currently stored — when the dep hook fires for an
+  // unrelated draft save, the published JSON is unchanged. Skipping the
+  // write here keeps blob churn and downstream CDN purges off the hot path.
+  const newBytes = Buffer.from(JSON.stringify(body), 'utf8');
+  const existing = await readRouteBlob(blobKey);
+  const unchanged = existing !== null && existing.equals(newBytes);
+
+  if (!unchanged) {
+    await writeRouteBlob(blobKey, body);
+  }
 
   const tags = dependenciesToTags(dependencies);
-  const rowKey = routeRowKey(route.locale, route.path);
+  const rowKey = routeRowKey(path);
+
+  if (tags.length === 0) {
+    ctx?.log?.(`refreshRoute: ${path} fetched with no dependencies; byTag not updated.`);
+    return { blobKey, action: 'written', unchanged };
+  }
 
   // Upsert one row per tag pointing at this route. We never delete obsolete
   // tag rows here (the tag set can shrink between fetches); a periodic
   // reconciliation pass should clean those up. For now they're harmless —
-  // worst case they cause a no-op refresh.
-  if (tags.length === 0) {
-    ctx?.log?.(`refreshRoute: ${route.path} fetched with no dependencies; byTag not updated.`);
-    return;
-  }
-
+  // worst case they cause a redundant refresh.
   const table = getTagTable();
   await Promise.all(
     tags.map(tag =>
-      table.upsertEntity<TableEntity<{ refreshedAt: string }>>({
-        partitionKey: tagPartitionKey(config.uniform.projectId, tag),
-        rowKey,
-        refreshedAt: new Date().toISOString(),
-      }, 'Replace')
+      table.upsertEntity<TableEntity<{ refreshedAt: string }>>(
+        {
+          partitionKey: tagPartitionKey(config.uniform.projectId, tag),
+          rowKey,
+          refreshedAt: new Date().toISOString(),
+        },
+        'Replace'
+      )
     )
   );
+
+  return { blobKey, action: 'written', unchanged };
 };
 
 /**
  * Resolve a list of tags (from a dependencyInvalidationHookUrl payload) into
- * the distinct set of routes whose stored JSON references those tags.
+ * the distinct set of route paths whose stored JSON references those tags.
  */
-export const resolveRoutesForTags = async (tags: string[]): Promise<MirrorRoute[]> => {
+export const resolveRoutesForTags = async (tags: string[]): Promise<string[]> => {
   if (tags.length === 0) return [];
   const table = getTagTable();
-  const seen = new Map<string, MirrorRoute>();
+  const seen = new Set<string>();
 
   for (const tag of tags) {
     const pk = tagPartitionKey(config.uniform.projectId, tag);
@@ -77,21 +109,21 @@ export const resolveRoutesForTags = async (tags: string[]): Promise<MirrorRoute[
       queryOptions: { filter: odata`PartitionKey eq ${pk}` },
     });
     for await (const row of iter) {
-      const parsed = parseRouteRowKey(String(row.rowKey ?? ''));
-      if (!parsed) continue;
-      const key = `${parsed.locale}|${parsed.path}`;
-      if (!seen.has(key)) seen.set(key, parsed);
+      const path = parseRouteRowKey(String(row.rowKey ?? ''));
+      if (path) seen.add(path);
     }
   }
-  return Array.from(seen.values());
+  return Array.from(seen);
 };
 
 /**
- * Read a cached route JSON for the static-export build to consume. Returns the
- * raw bytes (as fetched from blob) or null if the mirror has no copy.
+ * Read the cached JSON for a path. Production app reads go directly to the
+ * blob URL via the fetch override (no Function hop), but this helper is used
+ * by the local-dev `read` endpoint to test the mirror without provisioning a
+ * public container.
  */
-export const readRoute = async (locale: string, path: string): Promise<Buffer | null> => {
-  return readRouteBlob(routeBlobKey(config.uniform.projectId, locale, path));
+export const readRoute = async (path: string): Promise<Buffer | null> => {
+  return readRouteBlob(routeBlobKey(config.uniform.projectId, path, STATE_PUBLISHED));
 };
 
 export const bootstrap = ensureStorage;

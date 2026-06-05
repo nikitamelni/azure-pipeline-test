@@ -1,165 +1,284 @@
-# Uniform Edge Mirror (Azure Function)
+# Uniform Static API on Azure
 
-Background mirror of Uniform's `/api/v1/route` responses into Azure Blob
-Storage, kept current by Uniform's `dependencyInvalidationHookUrl`. The PFG
-static-export build reads route JSON from this mirror instead of hitting
-`uniform.global` directly, so a 400-page build does not burst Uniform's API
-and never risks 429s during deployment.
+Azure-native equivalent of [`bell/static-route-api`][bell]. Mirrors Uniform's
+published `/api/v1/route` responses into Azure Blob Storage and keeps them
+current in the background via `dependencyInvalidationHookUrl`. The Next.js app
+reads composition JSON straight from the blob (or from Azure Front Door in
+front of the blob), with a small **fetch override** on the SDK clients that
+rewrites the URL on the way out.
 
-This service is intentionally **separate** from the Next.js application — it
-has its own deployment lifecycle and operational footprint.
+[bell]: https://github.com/uniformdev/static-route-api
 
 ---
 
 ## Architecture
 
 ```
-Editor edits in Uniform
-        │
-        ▼
-Uniform fires dependencyInvalidationHookUrl
-        │
-        ▼  POST /api/invalidate?code=<function-key>
-┌───────────────────────────┐         ┌──────────────────────┐
-│  Azure Function           │         │ Azure Storage        │
-│  (Consumption, Node 22)   │ ──────► │  edge-mirror (blob)  │
-│                           │         │  byTag (table)       │
-│  • invalidate (webhook)   │         └──────────────────────┘
-│  • route   (read API)     │
-│  • seed    (reconcile)    │                ▲
-│  • seedTimer (every 6h)   │                │ GET /api/v1/route
-└───────────────────────────┘                │
-                                   ┌──────────────────────────┐
-                                   │ Azure DevOps pipeline    │
-                                   │ next build → out → $web  │
-                                   │ (manually triggered      │
-                                   │  from Uniform UI)        │
-                                   └──────────────────────────┘
+   ┌──────────────┐  edits / publishes
+   │  Editor      ├──────────────────────────────────────────┐
+   └──────────────┘                                          │
+                                                             ▼
+                                              ┌───────────────────────────┐
+                                              │  Uniform                  │
+                                              │  • CDN cache purge        │
+                                              │  • dependency hook fired  │
+                                              └─────────────┬─────────────┘
+                                                            │ POST /api/invalidate
+                                                            │ { dependencies: { … } }
+                                                            ▼
+                                              ┌───────────────────────────┐
+                                              │  Azure Function           │
+   ┌────────────────────────────────┐         │  (Consumption, Node 22)   │
+   │  uniform.global                │ ◄───────┤  • invalidate (webhook)   │
+   │  /api/v1/route?…               │ refetch │  • seed (manual + timer)  │
+   └────────────────────────────────┘         └─────────────┬─────────────┘
+                                                            │ writes
+                                                            ▼
+                                              ┌───────────────────────────┐
+                                              │  Azure Storage            │
+                                              │  • blob  edge-mirror      │
+                                              │  • table byTag            │
+                                              └─────────────┬─────────────┘
+                                                            │ (Azure Front Door optional)
+                                                            ▼
+                                              ┌───────────────────────────┐
+                                              │  Next.js app              │
+                                              │  • Uniform SDK clients    │
+                                              │  • createStaticApiFetch() │
+                                              │    rewrites /api/v1/route │
+                                              │    → base64url(path) URL  │
+                                              │  SSR / CSR / SPA          │
+                                              └───────────────────────────┘
 ```
 
 **Key properties:**
 
-- `invalidate` is the **only** real-time update path. Strict invalidation
-  semantics — the mirror does **not** crawl Uniform on its own except via
-  the rate-limited seed.
-- `seed` is a slow rate-limited reconciliation pass that runs on a timer
-  (default every 6h) and is also exposed as an HTTP endpoint for manual
-  invocation after first deploy or whenever a forced refresh is needed.
-- `route` is the read endpoint consumed by `RouteClient` in the Next.js
-  build when `UNIFORM_API_HOST` points at this Function.
+- The Function is **write-only**. There is no `route` read endpoint — the app
+  fetches directly from blob storage (or Front Door), so the Function is off
+  the hot path for reads.
+- The blob key matches `bell/static-route-api` exactly:
+  `{projectId}/{base64url(path)}/64.json`. State `64` is the published state;
+  draft/preview is not mirrored.
+- `invalidate` is the only real-time update path. Strict
+  `dependencyInvalidationHookUrl`-driven semantics — no polling, no crawl.
+- `seed` is a slow rate-limited reconciliation (default 5 rps, hard-capped
+  by an in-process token bucket) that runs every 6h on a timer and is also
+  exposed as an HTTP endpoint for first-time population.
+- Optional Azure Front Door purge after each write, gated on the four `AFD_*`
+  env vars being set.
+
+---
+
+## Limitations
+
+Read these before deploying.
+
+1. **The base64url conversion happens on the app side.** The mirror does not
+   serve via a Function HTTP endpoint or via an AFD edge rule. Instead, the
+   Next.js app installs a [`fetch` override on the SDK clients][override]
+   that intercepts requests to `/api/v1/route`, base64url-encodes the path,
+   and rewrites the URL to the static-API base. This keeps Azure-side cost
+   and complexity low but couples app and Function around the encoding —
+   any change to the key scheme must ship to both sides simultaneously.
+
+2. **Not recommended for SSG.** The mirror is updated asynchronously after a
+   publish. If a static-export build is triggered immediately after editorial
+   activity, the build may read stale JSON. SSG with this static API will
+   work for steady-state content but produces a race during active editing.
+   **Recommended modes: SSR, CSR, or SPA**, where reads happen at request
+   time and benefit from the always-fresh background mirror.
+
+3. **Mirror serves `state=64` (published) only.** Draft/preview flows must
+   continue to hit `uniform.global` directly. The fetch override passes
+   through any non-`state=64` request unchanged.
+
+4. **`dependencyInvalidationHookUrl` fires on both draft AND published
+   saves.** The mirror always re-fetches `state=64`; when the payload was
+   for a draft-only change, the published JSON is byte-identical to what's
+   stored and the write/purge is skipped. Harmless but worth knowing.
+
+5. **One Uniform project per Function App.** `UNIFORM_PROJECT_ID` is
+   process-global. Multi-project mirroring needs a small refactor.
+
+6. **Stale `byTag` rows are not garbage-collected.** If a composition's
+   dependency set shrinks between refreshes, old tag rows linger. They cause
+   harmless no-op refreshes on invalidation. A future enhancement can sweep
+   them during seed.
+
+7. **The Function rate limit is per-instance.** Consumption Plan instances
+   scale out independently. Under a heavy burst the effective RPS to Uniform
+   can exceed `MIRROR_RATE_LIMIT_RPS`. The 429-backoff in `uniform.ts` is the
+   safety net.
+
+8. **The fetch override is route-only.** Calls to `/api/v1/entries`,
+   `/api/v1/project-map`, `/api/v1/canvas/{id}` continue to hit
+   `uniform.global`. The static API does not mirror those endpoints.
+
+[override]: ../src/utils/staticApi/createFetch.ts
 
 ---
 
 ## Prerequisites
 
 - **Azure CLI** ≥ 2.60 — `az --version`
-- **Azure Functions Core Tools v4** — `func --version` must print `4.x`
+- **Azure Functions Core Tools v4** — `func --version | grep ^4`
 - **Node 22** + npm — `node --version`
-- Azure subscription with rights to create a Resource Group, Storage Account,
-  App Service Plan (Consumption / Y1), Function App, App Insights, and a Log
-  Analytics workspace.
-- A Uniform API key scoped to the project being mirrored, with at least:
+- An Azure subscription where you can create a Resource Group, Storage
+  Account, Consumption-plan Function App, App Insights, and Log Analytics
+  workspace.
+- A Uniform API key scoped to the target project with at least:
   - Canvas: read
   - Project Map: read
   - Entries: read
 
 ---
 
-## One-time setup
+## Deploy
 
-### 1. Configure deployment parameters
+The deploy is a single shell script — `infra/deploy.sh` — that uses only
+`az` and `func`. No Bicep, no ARM, no IaC tooling beyond what's already on
+your machine.
 
-```bash
-cp mirror-function/infra/main.parameters.example.json \
-   mirror-function/infra/main.parameters.json
-```
-
-Edit `main.parameters.json`:
-
-| Parameter             | What to set                                                    |
-|-----------------------|----------------------------------------------------------------|
-| `namePrefix`          | Short lowercase prefix used for all resource names.            |
-| `uniformProjectId`    | The Uniform project ID (find in Uniform UI → project settings).|
-| `uniformApiKey`       | A scoped API key. **Do not commit this file.**                 |
-| `blobContainer`       | Leave default unless you have a naming convention.             |
-| `tableByTag`          | Leave default.                                                 |
-| `rateLimitRps`        | Lower if you see 429s from Uniform. Default 5 rps.             |
-| `defaultLocale`       | Locale prefix used by the Next.js app (`/en/...`).             |
-| `dynamicExpansions`   | JSON map of `:placeholder` → entry type. PFG: `{"location":"location"}`.|
-| `seedTimerCron`       | NCRONTAB (6-field). Default: every 6h.                         |
-
-`main.parameters.json` is in `.gitignore` — keep it that way.
-
-### 2. Deploy infrastructure + code
+### One-shot
 
 ```bash
-cd /path/to/performance-food-service
-./mirror-function/infra/deploy.sh <resource-group> ./mirror-function/infra/main.parameters.json
+./mirror-function/infra/deploy.sh \
+  --resource-group     my-mirror-rg \
+  --location           eastus \
+  --name-prefix        pfgmirror \
+  --uniform-project-id <UNIFORM_PROJECT_ID> \
+  --uniform-api-key    <UNIFORM_API_KEY>
 ```
 
-This does two things:
+What it does, in order:
 
-1. `az deployment group create` against `main.bicep` — provisions storage,
-   function app, app insights.
-2. `npm ci && npm run build && func azure functionapp publish ...` — pushes
-   the Function code.
+1. `az group create` (idempotent — no-op if already exists)
+2. `az storage account create` with `--allow-blob-public-access true` (the
+   blob URL is the app's read target; anonymous read is the standard model
+   for a static API)
+3. `az storage container create --public-access blob` for `edge-mirror`
+4. `az storage table create` for `byTag`
+5. `az monitor log-analytics workspace create`
+6. `az monitor app-insights component create` linked to the workspace
+7. `az functionapp create --consumption-plan-location --runtime node 22 --assign-identity` (system-assigned identity for optional AFD purge)
+8. `az functionapp config appsettings set` to inject all `UNIFORM_*` and `MIRROR_*` settings
+9. `npm ci && npm run build && func azure functionapp publish` (skippable with `--no-publish`)
 
-The script prints the function endpoints and the `az functionapp function
-keys list` commands you'll need next.
+The script ends by printing:
 
-### 3. Configure Uniform to call the invalidation webhook
+- The function endpoints (`/api/invalidate`, `/api/seed`)
+- The static-API base URL (`https://<account>.blob.core.windows.net/edge-mirror`) — paste this into the Next.js app's `UNIFORM_STATIC_API_BASE_URL` env var
+- The `az` command to fetch the invalidate function key
 
-In the Uniform project settings (the per-project API endpoint or UI surface
-for `dependencyInvalidationHookUrl`), set the URL to:
+### Common flags
 
-```
-https://<function-app>.azurewebsites.net/api/invalidate?code=<function-key>
-```
+| Flag                       | Default                     | Notes                                                                |
+|----------------------------|-----------------------------|----------------------------------------------------------------------|
+| `--name-prefix`            | `pfgmirror`                 | Used for all resource names. Lowercase, 3–11 chars.                  |
+| `--rate-limit-rps`         | `5`                         | Per-instance RPS cap to Uniform. Lower if you see 429s.              |
+| `--dynamic-expansions`     | `{"location":"location"}`   | JSON map of route-segment placeholder → entry type.                  |
+| `--locale-prefixes`        | `["en"]`                    | JSON array of locale prefixes to prepend during seed.                |
+| `--seed-cron`              | `0 0 */6 * * *`             | NCRONTAB (6-field) for the reconciliation timer.                     |
+| `--allow-anonymous-blob`   | `true`                      | Set to `false` if you front the blob with AFD-with-private-link.     |
+| `--no-publish`             | publish on                  | Skip the `func publish` step (useful when iterating on infra only).  |
 
-Retrieve `<function-key>` with:
+All flags can also be passed as uppercase env vars (e.g. `NAME_PREFIX`,
+`RATE_LIMIT_RPS`). CLI flags win when both are present.
+
+### Configuring Uniform
+
+After the deploy completes:
 
 ```bash
-az functionapp function keys list \
-  --resource-group <resource-group> \
-  --name <function-app> \
-  --function-name invalidate \
-  --query default -o tsv
+RG=my-mirror-rg
+FN=pfgmirror-fn
+
+INVALIDATE_KEY=$(az functionapp function keys list \
+  --resource-group $RG --name $FN --function-name invalidate \
+  --query default -o tsv)
+
+INVALIDATE_URL="https://${FN}.azurewebsites.net/api/invalidate?code=${INVALIDATE_KEY}"
+echo "$INVALIDATE_URL"
 ```
 
-### 4. Seed the mirror
+Set `INVALIDATE_URL` as the project's `dependencyInvalidationHookUrl` (Uniform
+project settings → API). Every subsequent publish (and every CDN-cacheable
+save) will POST to this endpoint and the affected route blobs will refresh.
 
-The first time you deploy, the mirror is empty. Run the seed once manually:
+### Seeding
+
+The mirror is empty after a fresh deploy. Run the seed once:
 
 ```bash
 SEED_KEY=$(az functionapp function keys list \
-  --resource-group <resource-group> \
-  --name <function-app> \
-  --function-name seed \
+  --resource-group $RG --name $FN --function-name seed \
   --query default -o tsv)
 
-curl -X POST "https://<function-app>.azurewebsites.net/api/seed?code=${SEED_KEY}"
+curl -X POST "https://${FN}.azurewebsites.net/api/seed?code=${SEED_KEY}"
 ```
 
-Expect this to take ~80s for 400 routes at the default 5 rps. The response
-is a JSON summary: `{ discovered, refreshed, skipped, failures, durationMs }`.
+Expect ~80s for ~400 routes at the default 5 rps. The response is a JSON
+summary: `{ discovered, refreshed, deleted, skippedAlreadyPresent, failures, durationMs }`.
+After this, the timer trigger keeps the mirror in sync.
 
-After this, the timer trigger handles ongoing reconciliation automatically.
+### Wiring the app
 
-### 5. Point the PFG build at the mirror
+Set in the Next.js app's environment:
 
-In the Azure DevOps pipeline variables for
-`azure-pipelines/generate-and-deploy-static-site.yml`, set:
-
+```dotenv
+UNIFORM_STATIC_API_BASE_URL=https://pfgmirrorst<hash>.blob.core.windows.net/edge-mirror
+NEXT_PUBLIC_UNIFORM_STATIC_API_BASE_URL=https://pfgmirrorst<hash>.blob.core.windows.net/edge-mirror
 ```
-UNIFORM_API_HOST = https://<function-app>.azurewebsites.net
+
+Both variables exist because the override has to work on both sides of the
+SSR/CSR boundary; Next.js inlines `NEXT_PUBLIC_*` into the browser bundle.
+
+That's the entire integration. The app's catch-all page wires the override
+in via `createStaticApiFetch` (see `src/utils/staticApi/`) and `RouteClient`
+calls now resolve from the blob.
+
+### Adding Azure Front Door (optional)
+
+To put AFD in front of the blob for edge caching + custom domain + TLS:
+
+```bash
+az afd profile create -g $RG --profile-name pfg-uniform --sku Standard_AzureFrontDoor
+az afd endpoint create -g $RG --profile-name pfg-uniform --endpoint-name pfg-uniform
+az afd origin-group create -g $RG --profile-name pfg-uniform --origin-group-name mirror \
+  --probe-request-type HEAD --probe-protocol Https --probe-interval-in-seconds 60 \
+  --sample-size 4 --successful-samples-required 3 --additional-latency-in-milliseconds 50
+az afd origin create -g $RG --profile-name pfg-uniform --origin-group-name mirror \
+  --origin-name mirror-origin \
+  --host-name "${STORAGE_ACCOUNT}.blob.core.windows.net" \
+  --origin-host-header "${STORAGE_ACCOUNT}.blob.core.windows.net" \
+  --enabled-state Enabled --priority 1 --weight 1000
+az afd route create -g $RG --profile-name pfg-uniform --endpoint-name pfg-uniform \
+  --route-name mirror-route --origin-group mirror \
+  --patterns-to-match "/edge-mirror/*" --forwarding-protocol HttpsOnly
 ```
 
-The `route` endpoint is anonymous (no function key required) since it's a
-read-only path that serves the same trust level as the public site. The
-build will now route `/api/v1/route` calls through the mirror.
+Then update the Function App's settings so it can purge AFD on writes:
 
-Trigger a build. Verify in Application Insights that the build agent's
-requests reach `route` and not `uniform.global` directly.
+```bash
+SUB_ID=$(az account show --query id -o tsv)
+az functionapp config appsettings set -g $RG -n $FN --settings \
+  "AFD_SUBSCRIPTION_ID=$SUB_ID" \
+  "AFD_RESOURCE_GROUP=$RG" \
+  "AFD_PROFILE_NAME=pfg-uniform" \
+  "AFD_ENDPOINT_NAME=pfg-uniform"
+```
+
+And grant the Function's system-assigned identity `CDN Profile Contributor`
+on the AFD profile:
+
+```bash
+FN_PRINCIPAL=$(az functionapp identity show -g $RG -n $FN --query principalId -o tsv)
+AFD_ID=$(az afd profile show -g $RG --profile-name pfg-uniform --query id -o tsv)
+az role assignment create --assignee "$FN_PRINCIPAL" --role "CDN Profile Contributor" --scope "$AFD_ID"
+```
+
+Now update the app's static-API base URL to the AFD endpoint
+(`https://pfg-uniform-<hash>.azurefd.net/edge-mirror`).
 
 ---
 
@@ -168,18 +287,15 @@ requests reach `route` and not `uniform.global` directly.
 ```bash
 cd mirror-function
 cp local.settings.json.example local.settings.json
-# Fill in UNIFORM_PROJECT_ID, UNIFORM_API_KEY at minimum.
-# Leave MIRROR_STORAGE_CONNECTION as `UseDevelopmentStorage=true` and run
-# Azurite for local blob + table emulation:
-#   npm install -g azurite
-#   azurite --silent --location ./.azurite
+# Fill UNIFORM_PROJECT_ID, UNIFORM_API_KEY, and (if using a real storage account)
+# MIRROR_STORAGE_CONNECTION. For Azurite (emulator), keep the defaults.
 
 npm install
 npm run build
 npm start
 ```
 
-The functions are exposed at `http://localhost:7071/api/...`. Test:
+The functions are exposed at `http://localhost:7071/api/...`. Test with:
 
 ```bash
 # Trigger invalidate manually
@@ -189,99 +305,45 @@ curl -X POST http://localhost:7071/api/invalidate \
 
 # Seed
 curl -X POST http://localhost:7071/api/seed
-
-# Read a route
-curl "http://localhost:7071/api/v1/route?projectId=<id>&path=/en/our-locations&state=64"
 ```
 
 ---
 
-## Environment variables
+## Environment variables (Function App)
 
-All set automatically by the Bicep template; listed here for reference.
+All set automatically by `deploy.sh`; documented here for reference.
 
-| Variable                      | Required | Default                  | Purpose                                                                 |
-|-------------------------------|----------|--------------------------|-------------------------------------------------------------------------|
-| `UNIFORM_PROJECT_ID`          | yes      | —                        | The Uniform project to mirror.                                          |
-| `UNIFORM_API_KEY`             | yes      | —                        | API key with canvas/project-map/entries read.                           |
-| `UNIFORM_API_BASE`            | no       | `https://uniform.global` | Edge API base.                                                          |
-| `UNIFORM_APP_BASE`            | no       | `https://uniform.app`    | Management API base (used by seed for project-map-nodes).               |
-| `MIRROR_STORAGE_CONNECTION`   | yes      | —                        | Connection string for blob + tables.                                    |
-| `MIRROR_BLOB_CONTAINER`       | no       | `edge-mirror`            | Blob container holding route JSONs.                                     |
-| `MIRROR_TABLE_BY_TAG`         | no       | `byTag`                  | Table mapping tag → route rows.                                         |
-| `MIRROR_RATE_LIMIT_RPS`       | no       | `5`                      | Per-instance max RPS to Uniform.                                        |
-| `MIRROR_LOCALE_DEFAULT`       | no       | `en`                     | Locale prefix for discovered paths.                                     |
-| `MIRROR_DYNAMIC_EXPANSIONS`   | no       | `{}`                     | JSON map of `:placeholder` → entry type.                                |
-| `MIRROR_SEED_TIMER_CRON`      | no       | `0 0 */6 * * *`          | NCRONTAB (6-field) schedule for the timer-driven seed.                  |
-
----
-
-## Operations
-
-### Monitoring
-
-- App Insights ingests every Function execution.
-- Useful queries:
-
-  ```kusto
-  // Webhook failures
-  requests
-  | where name == "invalidate" and success == false
-  | order by timestamp desc
-
-  // Seed duration trend
-  customEvents
-  | where name == "seedTimer"
-  | summarize avg(toint(customDimensions.durationMs)) by bin(timestamp, 1d)
-  ```
-
-### Function keys
-
-Rotate periodically:
-
-```bash
-az functionapp function keys set \
-  --resource-group <rg> --name <function-app> \
-  --function-name invalidate --key-name default --key-value <new-secret>
-```
-
-When you rotate, also update the `dependencyInvalidationHookUrl` in the
-Uniform project settings.
-
-### Scaling notes
-
-- Consumption Plan scales out automatically. Multiple instances each enforce
-  their own in-memory rate limit, so the effective RPS can exceed
-  `MIRROR_RATE_LIMIT_RPS` under heavy bursts. The 429-backoff in `uniform.ts`
-  is the backstop.
-- If 429s become routine, lower `MIRROR_RATE_LIMIT_RPS` and/or move to a
-  Premium Plan with `WEBSITE_FUNCTIONS_INSTANCE_LIMIT` set to 1 to serialize.
+| Variable                      | Required | Default                  | Purpose                                                          |
+|-------------------------------|----------|--------------------------|------------------------------------------------------------------|
+| `UNIFORM_PROJECT_ID`          | yes      | —                        | Project to mirror.                                                |
+| `UNIFORM_API_KEY`             | yes      | —                        | API key with canvas/project-map/entries read.                     |
+| `UNIFORM_API_BASE`            | no       | `https://uniform.global` | Edge API base.                                                    |
+| `UNIFORM_APP_BASE`            | no       | `https://uniform.app`    | Management API base (project-map lookups).                        |
+| `MIRROR_STORAGE_CONNECTION`   | yes      | —                        | Connection string for blob + table.                               |
+| `MIRROR_BLOB_CONTAINER`       | no       | `edge-mirror`            | Blob container holding route JSONs.                               |
+| `MIRROR_TABLE_BY_TAG`         | no       | `byTag`                  | Table mapping tag → route rows.                                   |
+| `MIRROR_RATE_LIMIT_RPS`       | no       | `5`                      | Per-instance max RPS to Uniform.                                  |
+| `MIRROR_DYNAMIC_EXPANSIONS`   | no       | `{}`                     | JSON map of `:placeholder` → entry type.                          |
+| `MIRROR_LOCALE_PREFIXES`      | no       | `["en"]`                 | JSON array of locale prefixes to prepend during seed.             |
+| `MIRROR_SEED_TIMER_CRON`      | no       | `0 0 */6 * * *`          | NCRONTAB schedule for the timer-driven seed.                      |
+| `AFD_SUBSCRIPTION_ID`         | no       | —                        | Azure subscription containing the AFD profile (purge gate).       |
+| `AFD_RESOURCE_GROUP`          | no       | —                        | RG of the AFD profile.                                            |
+| `AFD_PROFILE_NAME`            | no       | —                        | AFD profile name.                                                 |
+| `AFD_ENDPOINT_NAME`           | no       | —                        | AFD endpoint name.                                                |
 
 ---
 
-## Known limitations
+## Environment variables (Next.js app)
 
-1. **Brand-new dynamic-route entries before the next seed pass.** If an
-   editor adds a new `location` entry and immediately triggers a build, the
-   mirror may not yet contain `/en/locations/<new-slug>` and that specific
-   page will be missing from the build. Mitigations:
-   - Wait for the next timer-driven seed (default 6h cadence), or
-   - Manually `POST /api/seed` before triggering the pipeline, or
-   - Tighten `MIRROR_SEED_TIMER_CRON` if your editorial workflow is heavy.
-2. **Stale byTag rows.** If a composition's dependency set shrinks between
-   fetches, old rows in `byTag` are not deleted. They cause harmless no-op
-   refreshes on invalidation. A future enhancement can sweep them during
-   seed.
-3. **Mirror is published-state only (`state=64`).** Preview/draft flows
-   continue to hit `uniform.global` directly via the unchanged
-   `RUNNING_MODE=preview` path.
-4. **One Uniform project per Function App.** `UNIFORM_PROJECT_ID` is
-   process-global. Multi-project mirroring would need a small refactor.
-5. **No surrogate-key dataResource invalidation yet.** The byTag table
-   indexes `dataResources` entries verbatim from the dependency payload.
-   If Uniform's payload changes the shape of those entries, the tag strings
-   may not match between refresh and invalidation. Verify against a live
-   payload before relying on dataResource-driven invalidation.
+| Variable                                      | Where        | Purpose                                                              |
+|-----------------------------------------------|--------------|----------------------------------------------------------------------|
+| `UNIFORM_STATIC_API_BASE_URL`                 | server-side  | Base URL of the static API (blob container or AFD endpoint).         |
+| `NEXT_PUBLIC_UNIFORM_STATIC_API_BASE_URL`     | browser      | Same value, exposed to client bundles for CSR/SPA reads.             |
+| `UNIFORM_PROJECT_ID`                          | both         | Used by the override to validate that the request matches the mirror.|
+
+When neither base URL is set, `resolveStaticApiConfig()` returns `null` and
+the app falls back to direct `uniform.global` calls. This is the safe default
+for local dev where no mirror is provisioned.
 
 ---
 
@@ -292,25 +354,31 @@ mirror-function/
 ├── README.md                          ← this file
 ├── package.json
 ├── tsconfig.json
-├── host.json                          ← Azure Functions runtime config
+├── host.json
 ├── local.settings.json.example
-├── .gitignore
 ├── infra/
-│   ├── main.bicep                     ← infrastructure
-│   ├── main.parameters.example.json
-│   └── deploy.sh                      ← infra + code deploy wrapper
+│   └── deploy.sh                      ← pure az CLI deployment (no Bicep)
 └── src/
     ├── lib/
     │   ├── config.ts                  ← env var loader
-    │   ├── keys.ts                    ← blob/table key helpers
+    │   ├── keys.ts                    ← blob/table key helpers (matches bell)
     │   ├── storage.ts                 ← blob + table clients
     │   ├── uniform.ts                 ← Uniform fetch + rate limit + 429 retry
-    │   ├── tags.ts                    ← dep payload → tag list
+    │   ├── tags.ts                    ← dep payload → tag list ("bucket!value")
     │   ├── pathExpansion.ts           ← project-map walker + dynamic expansion
-    │   └── mirror.ts                  ← refreshRoute / resolveRoutesForTags / readRoute
+    │   ├── cdn.ts                     ← optional Azure Front Door purge
+    │   └── mirror.ts                  ← refreshRoute / resolveRoutesForTags
     └── functions/
         ├── invalidate.ts              ← POST /api/invalidate
-        ├── route.ts                   ← GET  /api/v1/route
         ├── seed.ts                    ← POST /api/seed
-        └── seedTimer.ts               ← Timer-triggered seed
+        └── seedTimer.ts               ← timer-driven seed
+```
+
+App-side (in the Next.js project):
+
+```
+src/utils/staticApi/
+├── encoding.ts                        ← browser + Node base64url
+├── createFetch.ts                     ← the fetch override
+└── index.ts                           ← public API + env reader
 ```

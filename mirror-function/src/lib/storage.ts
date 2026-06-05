@@ -34,11 +34,13 @@ export const getTagTable = (): TableClient => {
 };
 
 /**
- * Create the blob container and table if they don't exist. Safe to call on
- * every cold start; createIfNotExists is idempotent.
+ * Create the blob container and table if they don't exist. The container is
+ * created with anonymous blob read access so the Next.js app's fetch override
+ * can pull JSON directly without auth. The deploy script does the same on the
+ * storage account; this is a safety net for ad-hoc/local setups.
  */
 export const ensureStorage = async (): Promise<void> => {
-  await getBlobContainer().createIfNotExists();
+  await getBlobContainer().createIfNotExists({ access: 'blob' });
   try {
     await getTagTable().createTable();
   } catch (err) {
@@ -53,19 +55,31 @@ export const writeRouteBlob = async (blobKey: string, json: unknown): Promise<vo
   await block.upload(body, Buffer.byteLength(body), {
     blobHTTPHeaders: {
       blobContentType: 'application/json; charset=utf-8',
-      // Build agents fetch these blobs once per build; we don't want them to
-      // pin a stale copy. Editors will read them indirectly through Front Door
-      // on the final site, never directly from this container.
-      blobCacheControl: 'no-cache',
+      // Short TTL is a deliberate choice when no CDN is in front: the app
+      // hits blob storage on every request, but reads always see the latest
+      // version within 60s of a publish without needing an active purge.
+      // When Azure Front Door is configured (see purge in cdn.ts), the AFD
+      // cache rules override this.
+      blobCacheControl: 'public, max-age=60',
     },
   });
+};
+
+export const deleteRouteBlob = async (blobKey: string): Promise<void> => {
+  const block = getBlobContainer().getBlockBlobClient(blobKey);
+  try {
+    await block.delete({ deleteSnapshots: 'include' });
+  } catch (err) {
+    const e = err as { statusCode?: number };
+    if (e?.statusCode === 404) return; // already gone — idempotent
+    throw err;
+  }
 };
 
 export const readRouteBlob = async (blobKey: string): Promise<Buffer | null> => {
   const block = getBlobContainer().getBlockBlobClient(blobKey);
   try {
-    const res = await block.downloadToBuffer();
-    return res;
+    return await block.downloadToBuffer();
   } catch (err) {
     const e = err as { statusCode?: number };
     if (e?.statusCode === 404) return null;
